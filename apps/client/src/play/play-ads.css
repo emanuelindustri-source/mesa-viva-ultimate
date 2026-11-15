@@ -1,0 +1,15 @@
+﻿
+.anuncio-banner { display: flex; align-items: center; gap: 9px; width: 100%; margin: 8px 0; padding: 10px 14px; border: 1px solid var(--borde); border-radius: 12px; background: color-mix(in srgb, var(--oro) 8%, var(--panel)); color: var(--tenue); font: inherit; font-size: 0.78rem; text-align: left; cursor: pointer; }
+.anuncio-banner--vip { border-color: color-mix(in srgb, var(--oro) 45%, var(--borde)); color: var(--tinta); }
+.anuncio-banner span:nth-child(2) { flex: 1; }
+.anuncio-banner strong { color: var(--tinta); }
+.dialogo--anuncio { text-align: center; }
+.anuncio__cabecera { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid var(--borde); }
+.anuncio__sello { display: inline-flex; align-items: center; gap: 6px; color: var(--oro); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; }
+.anuncio__arte { position: relative; height: 110px; margin: 12px 0; background: radial-gradient(circle at 50% 70%, color-mix(in srgb, var(--oro) 25%, transparent), transparent 65%); }
+.anuncio__sol { position: absolute; left: 30%; top: 18%; width: 54px; height: 54px; border-radius: 50%; background: var(--oro); box-shadow: 0 0 40px var(--oro); }
+.anuncio__carta { position: absolute; left: 50%; top: 24%; transform: rotate(8deg); display: grid; place-items: center; width: 68px; height: 92px; border-radius: 10px; background: #fffaf0; color: #b3261e; font-weight: 900; font-size: 1.5rem; box-shadow: 0 10px 24px rgb(0 0 0 / 35%); }
+.anuncio__ficha { position: absolute; right: 30%; top: 38%; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #b3261e; border: 3px solid var(--oro); color: var(--oro); }
+.anuncio__cuenta { color: var(--oro); font-weight: 650; }
+.anuncio__nota { color: var(--tenue); font-size: 0.7rem; }
+.consentimiento__acciones { display: flex; flex-direction: column; gap: 8px; margin: 14px 0; }

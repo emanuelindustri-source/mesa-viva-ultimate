@@ -1,134 +1,105 @@
-import { FASES, JUEGOS, PAQUETES, REPO_URL, VERSIONES } from './content.js';
+import { HOLIDAY_IDS, holidayLabelKey } from '@mesa-viva/design-system';
+import { BookOpen, Bot, Headphones, Palette, Radio, Sparkles, Users } from 'lucide-react';
+import { DownloadSection } from './landing/download.js';
+import { GameGallery } from './landing/game-gallery.js';
+import { Hero } from './landing/hero.js';
+import { VersionHistory } from './landing/version-history.js';
+import './landing/landing.css';
+import { routeHref } from './routes.js';
 import { SensoryLab } from './sensory-lab.js';
+import { BrandMark } from './ui/brand-mark.js';
+import { TopNav } from './ui/top-nav.js';
+import { useI18n } from './ui/use-i18n.js';
+import { useAppTheme } from './ui/use-theme.js';
 
-export function App() {
+const PASOS = [
+  { icon: Users, title: 'Elige tu mesa', text: 'Solo contra bots, pasa y juega en el mismo dispositivo o abre una sala con PIN y QR.' },
+  { icon: Bot, title: 'Juega con reglas reales', text: 'El motor de core valida cada acción. Tres niveles de bots, sin trampas ni turnos saltados.' },
+  { icon: Headphones, title: 'Siente la partida', text: 'Audio 2.0–7.1, voz tarareando, háptica y destellos que responden a lo que ocurre en la mesa.' },
+];
+
+export function LandingPage() {
+  const { theme } = useAppTheme();
+  const { t } = useI18n();
   return (
     <div class="pagina">
-      <header class="cabecera">
-        <a class="marca" href="./">
-          <span class="marca__naipe" aria-hidden="true" />
-          <span>Mesa Viva</span>
-        </a>
-        <div class="cabecera__derecha">
-          <span class="pastilla pastilla--viva">Fase 4.5 completada</span>
-          <a class="enlace" href="#sensorial">
-            Sensorial
-          </a>
-          <a class="enlace" href={REPO_URL} target="_blank" rel="noreferrer">
-            GitHub
-          </a>
-        </div>
-      </header>
-
+      <TopNav active="home" />
       <main>
-        <section class="hero">
-          <p class="sobrelinea">Motor universal de juegos · Fase 4.5</p>
-          <h1>
-            El juego de mesa,
-            <span class="hero__brillo"> vivo.</span>
-          </h1>
-          <p class="hero__texto">
-            Clásicos del mundo, cartas venezolanas, estrategia original y un motor 2.5D
-            que se adapta a tu teléfono, tablet, laptop o televisor. Ahora la mesa suena
-            en 7.1, canta con voz humana y adapta su melodía a la partida.
-          </p>
-          <div class="hero__acciones">
-            <a class="boton boton--principal" href="#sensorial">
-              Probar el sonido
-            </a>
-            <a class="boton boton--secundario" href="#fases">
-              Ver hoja de ruta
-            </a>
-          </div>
-          <p class="hero__nota">
-            Fase 4.5 entregada: banda sonora multicanal 2.0–7.1, voz tarareando con
-            formantes, compositor de 32–64 compases, graves LFE y masterización a
-            −1 dBFS, verificada con 283 pruebas automáticas.
-          </p>
-        </section>
-
-        <section class="seccion" aria-labelledby="motores">
+        <Hero />
+        <section class="seccion" aria-labelledby="como">
           <div class="seccion__titulo">
-            <h2 id="motores">Cuatro motores, una mesa</h2>
-            <p>Arquitectura modular con archivos pequeños, pruebas automáticas y tipos estrictos.</p>
+            <p class="sobrelinea">Cómo se juega</p>
+            <h2 id="como">Tres pasos y la mesa está servida.</h2>
+            <p>Sin cuentas obligatorias, sin anuncios a mitad de partida y con todo el reglamento dentro.</p>
           </div>
-          <div class="rejilla rejilla--cuatro">
-            {PAQUETES.map((paquete) => (
-              <article class="tarjeta" key={paquete.nombre}>
-                <h3>{paquete.nombre}</h3>
-                <p>{paquete.detalle}</p>
-                <span class="version">v{paquete.version}</span>
+          <div class="rejilla rejilla--tres">
+            {PASOS.map(({ icon: Icon, title, text }) => (
+              <article class="tarjeta tarjeta--paso" key={title}>
+                <span class="tarjeta__icono"><Icon size={24} aria-hidden="true" /></span>
+                <h3>{title}</h3>
+                <p>{text}</p>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section class="seccion" aria-labelledby="juegos">
+          <div class="seccion__titulo">
+            <p class="sobrelinea">Catálogo jugable</p>
+            <h2 id="juegos">Cuatro mesas, cuatro formas de ganar.</h2>
+            <p>Toca un juego para ver sus reglas y abre la mesa cuando estés listo.</p>
+          </div>
+          <GameGallery />
+        </section>
+
+        <section class="seccion" aria-labelledby="historia">
+          <div class="historia">
+            <div>
+              <p class="sobrelinea">Historia e ideas</p>
+              <h2 id="historia">Nació de una mesa venezolana.</h2>
+              <p>Mesa Viva empezó como un proyecto para jugar Caída y Dominó sin depender de internet. La idea creció: una mesa que se adapta al teléfono, al televisor y a los plegables; que habla 11 idiomas, respeta el movimiento reducido y cambia de fiesta según el día.</p>
+              <p>La música no es un archivo pegado: es una orquesta procedural que respira con la tensión, la voz tarareando y los graves del LFE. La identidad tampoco es fija: el logo se transforma con cada festividad.</p>
+              <a class="boton boton--secundario" href={routeHref('play')}>{t('nav.play')} <Sparkles size={17} aria-hidden="true" /></a>
+            </div>
+            <fieldset class="historia__fiestas" aria-label="Logos de las festividades">
+              {HOLIDAY_IDS.map((id) => (
+                <span class="historia__fiesta" key={id} title={t(holidayLabelKey(id))}>
+                  <BrandMark holidayId={id} mode={theme.mode} size={44} label={t(holidayLabelKey(id))} />
+                </span>
+              ))}
+            </fieldset>
           </div>
         </section>
 
         <SensoryLab />
 
-        <section class="seccion" aria-labelledby="catalogo">
-          <div class="seccion__titulo">
-            <h2 id="catalogo">Primer catálogo jugable</h2>
-            <p>Cuatro juegos funcionan de punta a punta en el motor, con reglas y bots verificados.</p>
-          </div>
-          <div class="rejilla rejilla--cuatro">
-            {JUEGOS.map((juego) => (
-              <article class="tarjeta" key={juego.nombre}>
-                <h3>{juego.nombre}</h3>
-                <p>{juego.detalle}</p>
-                <span class="version">{juego.etiqueta}</span>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section class="seccion" id="fases" aria-labelledby="titulo-fases">
-          <div class="seccion__titulo">
-            <h2 id="titulo-fases">Siete fases verificables</h2>
-            <p>Cada entrega termina con pruebas, compilación y despliegue automático.</p>
-          </div>
-          <ol class="fases">
-            {FASES.map((fase) => {
-              const estado = fase.estado === 'Completada' ? 'hecha' : fase.estado === 'Siguiente' ? 'siguiente' : 'pendiente';
-              return (
-                <li class={`fase fase--${estado}`} key={fase.n}>
-                  <span class="fase__numero">{String(fase.n).padStart(2, '0')}</span>
-                  <div class="fase__contenido">
-                    <h3>{fase.nombre}</h3>
-                    <p>{fase.detalle}</p>
-                  </div>
-                  <span class="fase__estado">{fase.estado}</span>
-                </li>
-              );
-            })}
-          </ol>
-        </section>
-
         <section class="seccion" aria-labelledby="versiones">
           <div class="seccion__titulo">
-            <h2 id="versiones">Historial de versiones</h2>
-            <p>Cada versión queda documentada en el repositorio y publicada aquí.</p>
+            <p class="sobrelinea">Trazabilidad</p>
+            <h2 id="versiones">Cada fase deja una nota.</h2>
+            <p>El portal lee el historial real de <code>docs/versiones/</code>. Nada se borra: cada entrega queda publicada.</p>
           </div>
-          <div class="versiones-lista">
-            {VERSIONES.map((version) => (
-              <article class="version-card" key={version.version}>
-                <div>
-                  <span class="pastilla">{version.version}</span>
-                  <h3>{version.titulo}</h3>
-                  <p>{version.detalle}</p>
-                </div>
-                <a class="enlace" href={`${REPO_URL}/blob/main/${version.nota}`} target="_blank" rel="noreferrer">
-                  Leer la nota completa →
-                </a>
-              </article>
-            ))}
+          <VersionHistory />
+        </section>
+
+        <section class="seccion" aria-labelledby="descarga">
+          <DownloadSection />
+        </section>
+
+        <section class="seccion" aria-labelledby="valores">
+          <div class="rejilla rejilla--tres">
+            <article class="tarjeta"><span class="tarjeta__icono"><Palette size={22} /></span><h3>Identidad propia</h3><p>Material You, modo claro/oscuro y un logo distinto para cada festividad.</p></article>
+            <article class="tarjeta"><span class="tarjeta__icono"><Radio size={22} /></span><h3>Audio de estudio</h3><p>8 instrumentos, voz, LFE, surround y masterización a −1 dBFS.</p></article>
+            <article class="tarjeta"><span class="tarjeta__icono"><BookOpen size={22} /></span><h3>Juego limpio</h3><p>Fichas virtuales, sin apuestas. Anuncios con límite y nunca durante la partida.</p></article>
           </div>
         </section>
       </main>
-
       <footer class="pie">
-        <p>Mesa Viva · Construido por emanuelindustri-source</p>
-        <p>Fichas virtuales sin valor monetario. Sin apuestas. Audio original y procedural. Próximamente en Google Play.</p>
+        <p><strong>Mesa Viva</strong> · Hecho con cariño para Venezuela y el mundo.</p>
+        <p><a class="enlace" href={routeHref('privacy')}>Privacidad</a> · <a class="enlace" href={routeHref('terms')}>Términos</a> · Fichas virtuales sin valor monetario real.</p>
       </footer>
     </div>
   );
 }
+
+export const App = LandingPage;

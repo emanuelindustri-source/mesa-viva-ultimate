@@ -39,7 +39,7 @@ export class PlayerSeat extends Container {
     this.theme = theme;
     this.size = Math.max(48, size);
     this.reducedMotion = reducedMotion;
-    this.initials = new Text({ text: '', style: { fontFamily: 'system-ui, sans-serif', fontSize: this.size * 0.34, fontWeight: '700', fill: theme.scheme['on-primary-container'] } });
+    this.initials = new Text({ text: '', style: { fontFamily: 'system-ui, sans-serif', fontSize: this.size * 0.34, fontWeight: '700', fill: theme.scheme['on-primary'] } });
     this.initials.anchor.set(0.5);
     this.nameText = new Text({ text: '', style: { fontFamily: 'system-ui, sans-serif', fontSize: Math.max(11, this.size * 0.18), fontWeight: '600', fill: theme.scheme['on-surface'] } });
     this.nameText.anchor.set(0.5, 0);
@@ -82,7 +82,7 @@ export class PlayerSeat extends Container {
     this.avatar
       .clear()
       .circle(0, 0, r)
-      .fill(this.theme.scheme['primary-container'])
+      .fill(this.theme.scheme.primary)
       .stroke({ width: isViewer ? 4 : 3, color: frame, alpha: 0.95 });
     this.avatar.circle(0, -r * 0.16, r * 0.62).fill({ color: this.theme.scheme.primary, alpha: 0.18 });
     this.turnRing.clear().circle(0, 0, r + 6).stroke({ width: 3, color: frame, alpha: 0.25 });

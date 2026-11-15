@@ -1,0 +1,121 @@
+﻿.historia {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.8fr);
+  gap: clamp(24px, 5vw, 60px);
+  align-items: center;
+}
+
+.historia h2 {
+  font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+  margin: 0 0 12px;
+}
+
+.historia p {
+  color: var(--tenue);
+  line-height: 1.7;
+}
+
+.historia__fiestas {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.historia__fiesta {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  background: var(--panel);
+}
+
+.descarga {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(240px, 0.85fr);
+  gap: clamp(24px, 5vw, 56px);
+  padding: clamp(24px, 4vw, 38px);
+  border: 1px solid var(--borde);
+  border-radius: 24px;
+  background:
+    radial-gradient(40rem 18rem at 100% 0%, color-mix(in srgb, var(--oro) 14%, transparent), transparent 60%),
+    var(--panel);
+  box-shadow: var(--sombra);
+}
+
+.descarga h3 {
+  margin: 6px 0 12px;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+}
+
+.descarga p {
+  color: var(--tenue);
+  line-height: 1.7;
+}
+
+.descarga__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-self: center;
+}
+
+.descarga__lista li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: var(--tenue);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.descarga__lista svg {
+  color: var(--oro);
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.version-card small {
+  color: var(--tenue);
+  font-size: 0.72rem;
+}
+
+.version-card .enlace {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 900px) {
+  .hero--nuevo,
+  .galeria,
+  .historia,
+  .descarga {
+    grid-template-columns: 1fr;
+  }
+
+  .hero__marca {
+    display: none;
+  }
+
+  .historia__fiestas {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .hero__datos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .historia__fiestas {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}

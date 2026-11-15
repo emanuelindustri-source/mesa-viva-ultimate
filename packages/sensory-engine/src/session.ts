@@ -1,6 +1,6 @@
 import type { SpatialPoint } from './audio/params.js';
 import type { TableSpatialLayout } from './audio/spatial-layout.js';
-import type { PerformanceState } from './composer/types.js';
+import type { ComposerInstrument, PerformanceState } from './composer/types.js';
 import type { OutputMode } from './output/types.js';
 import { SensorySessionCore } from './session-core.js';
 import type { SensorySessionOptions } from './session-types.js';
@@ -39,6 +39,22 @@ export class SensorySession extends SensorySessionCore {
 
   setBinauralEnabled(enabled: boolean): void {
     this.soundtrack.setBinauralEnabled(enabled);
+  }
+
+  setStudioMix(mix: Partial<Record<ComposerInstrument, number>>): void {
+    this.soundtrack.setUserMix(mix);
+  }
+
+  setBinauralIntensity(intensity: number): void {
+    this.soundtrack.setBinauralIntensity(intensity);
+  }
+
+  setHarmonicSfxVolume(volume: number): void {
+    this.soundtrack.setSfxVolume(volume);
+  }
+
+  playTableImpact(): void {
+    this.soundtrack.playTableImpact();
   }
 
   setPlayerState(input: PlayerStateInput): PerformanceState {

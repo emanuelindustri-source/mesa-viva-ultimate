@@ -1,0 +1,137 @@
+﻿.play-app {
+  padding-bottom: 40px;
+}
+
+.play-barra {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--borde);
+}
+
+.play-barra .boton {
+  min-height: 38px;
+  padding: 0 12px;
+  font-size: 0.78rem;
+}
+
+.play-barra__fichas {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--oro);
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+
+.play-hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: clamp(28px, 5vw, 54px) 0 24px;
+}
+
+.play-hero h1 {
+  font-size: clamp(2rem, 4.4vw, 3.6rem);
+  margin: 6px 0 10px;
+  letter-spacing: -0.03em;
+}
+
+.play-hero p {
+  color: var(--tenue);
+  max-width: 620px;
+  line-height: 1.65;
+}
+
+.play-hero__perfil {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  background: var(--panel);
+}
+
+.play-hero__perfil div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.play-hero__perfil small {
+  color: var(--tenue);
+  font-size: 0.7rem;
+}
+
+.play-hero__nivel {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--oro) 20%, transparent);
+  color: var(--oro);
+  font-weight: 800;
+}
+
+.play-seccion {
+  padding: 20px 0;
+  border-top: 1px solid var(--borde);
+}
+
+.play-seccion h2 {
+  font-size: 1.25rem;
+  margin: 0 0 14px;
+}
+
+.play-juegos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.play-juego {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  background: var(--panel);
+  color: var(--tinta);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.play-juego--activo,
+.play-juego:hover {
+  border-color: var(--oro);
+}
+
+.play-juego span {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.play-juego strong {
+  font-size: 0.9rem;
+}
+
+.play-juego small {
+  color: var(--tenue);
+  font-size: 0.72rem;
+}
+
+.play-juego .pastilla {
+  margin-left: auto;
+}
+

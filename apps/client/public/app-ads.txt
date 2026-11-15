@@ -1,0 +1,4 @@
+# Mesa Viva Ultimate — app-ads.txt
+# Plantilla de AdMob. Sustituir pub-0000000000000000 por el Publisher ID
+# real antes de publicar en Google Play (Fase 6).
+google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0

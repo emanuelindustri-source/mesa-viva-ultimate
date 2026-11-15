@@ -1,7 +1,8 @@
 # Arquitectura de Mesa Viva Ultimate
 
-**Estado:** Fase 4.5 entregada. Banda sonora profesional multicanal 2.0 binaural,
-2.1, 5.1/5.2 y 7.1, voz tarareando, orquesta orgánica y compositor de forma larga.
+**Estado:** Fase 5 entregada. Portal `/`, app jugable `/play/`, salas QR/PIN,
+PWA offline-first, identidad procedural y mezcla de audio multicanal conectados.
+La Fase 6 prepara el catálogo mundial y el `.aab` Android.
 
 ## Visión
 
@@ -33,6 +34,8 @@ apps/client ──> engine-25d ──> design-system ──> core
 - `HolidayEngine`: 19 festividades + Día Normal, según fecha y país (`Intl`).
 - Seis formatos: móvil, tablet, televisor, laptop, ultrawide y plegable.
 - `VectorAtlasGenerator`: SVG procedural en siete familias, sin imágenes externas.
+- `BrandAssetGenerator`: logo mutante por festividad, emblemas por juego, iconos
+  PWA/Android, monocromo Material You, splash y banner del repositorio.
 
 ### `@mesa-viva/engine-25d`
 
@@ -66,11 +69,23 @@ apps/client ──> engine-25d ──> design-system ──> core
 
 ### `@mesa-viva/client`
 
-- Portal informativo `/` y aplicación jugable `/play/` en el mismo despliegue.
-- PWA offline-first con Service Worker (Workbox) y aviso de actualización.
-- Multijugador híbrido: misma pantalla, Wi-Fi local y WebRTC con PIN/QR.
-- AdMob/H5 Ads con límite de frecuencia, Billing VIP y cumplimiento UMP/GDPR.
-- Capacitor 8 para Android, con Kotlin nativo (WakeLock, Material You, Play Games).
+- Portal multipágina `/`, `/play/`, `/privacy/` y `/terms/` con Vite y Preact;
+  `preact/compat` permite `framer-motion`, `lucide-react` y `qrcode.react` sin
+  cargar React completo.
+- Matriz claro/oscuro/sistema × festividad × Material You aplicada como variables
+  CSS y `color-scheme`, con el logo mutante sincronizado.
+- `GameSession` conecta los cuatro módulos de `core` con bots, semilla, vistas por
+  jugador, snapshot 2.5D y `GameVFXController` por juego.
+- `useSensory` y el estudio de audio aplican salida física, mezcla independiente,
+  binaural, háptica y preferencias de accesibilidad.
+- Salas host-autoritativas sobre PeerJS con PIN/QR, chat saneado y una vista por
+  jugador; el invitado nunca recibe manos ajenas.
+- PWA offline-first con Service Worker (Workbox), precache completo y aviso de
+  actualización.
+- Monetización: `AdService` con mínimo de tres minutos, recompensados, `BillingService`
+  VIP, UMP, `app-ads.txt` y telemetría con cola local.
+- Capacitor 8 para Android; los puentes nativos de AdMob/Billing y el `.aab`
+  firmado se completan en la Fase 6.
 
 ## Despliegue
 

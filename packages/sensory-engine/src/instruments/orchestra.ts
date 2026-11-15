@@ -53,6 +53,8 @@ export class OrganicOrchestra {
   private readonly percussion: LatinPercussionSynth;
   private readonly beatbox: BeatboxSynth;
   readonly vocal: VocalHumSynth;
+  private state: PerformanceState = 'calma';
+  private readonly userMix: Partial<Record<ComposerInstrument, number>> = {};
 
   constructor(context: AudioContextLike, router: MultiChannelRouter, seed = 1) {
     this.context = context;
@@ -81,11 +83,23 @@ export class OrganicOrchestra {
   }
 
   setEnergy(state: PerformanceState): void {
-    const mix = energyMix(state);
+    this.state = state;
+    this.applyMix();
+  }
+
+  setUserMix(mix: Partial<Record<ComposerInstrument, number>>): void {
+    for (const [instrument, value] of Object.entries(mix) as [ComposerInstrument, number][]) {
+      this.userMix[instrument] = Math.min(1.4, Math.max(0, value));
+    }
+    this.applyMix();
+  }
+
+  private applyMix(): void {
+    const mix = energyMix(this.state);
     const time = this.context.currentTime;
     for (const [instrument, bus] of this.buses) {
       const base = BUSES[instrument].gain ?? 0.9;
-      const target = base * (mix[instrument] ?? 1);
+      const target = base * (mix[instrument] ?? 1) * (this.userMix[instrument] ?? 1);
       this.targets.set(instrument, target);
       rampParam(bus.input.gain, target, time, 0.6);
     }

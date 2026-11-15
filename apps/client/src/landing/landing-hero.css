@@ -1,0 +1,179 @@
+﻿.hero--nuevo {
+  display: grid;
+  grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(24px, 5vw, 64px);
+  max-width: none;
+  padding-top: clamp(40px, 7vw, 86px);
+}
+
+.hero__marca {
+  display: grid;
+  place-items: center;
+}
+
+.hero__marca .brand-mark {
+  filter: drop-shadow(0 30px 50px rgb(0 0 0 / 22%));
+}
+
+.hero__datos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 30px 0 0;
+  max-width: 620px;
+}
+
+.hero__datos div {
+  padding: 12px 14px;
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  background: var(--panel);
+}
+
+.hero__datos dt {
+  font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+  font-weight: 800;
+  color: var(--oro);
+  line-height: 1;
+}
+
+.hero__datos dd {
+  margin: 5px 0 0;
+  color: var(--tenue);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+.rejilla--tres {
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+.tarjeta--paso {
+  min-height: 190px;
+}
+
+.tarjeta__icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--oro) 16%, transparent);
+  color: var(--oro);
+  margin-bottom: 6px;
+}
+
+.galeria {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.82fr) minmax(0, 1.18fr);
+  gap: 18px;
+}
+
+.galeria__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.galeria__item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  background: var(--panel);
+  color: var(--tinta);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.galeria__item:hover {
+  border-color: var(--oro);
+  transform: translateX(3px);
+}
+
+.galeria__item--activo {
+  border-color: var(--oro);
+  background: color-mix(in srgb, var(--oro) 9%, var(--panel));
+}
+
+.galeria__item span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.galeria__item strong {
+  font-size: 0.92rem;
+}
+
+.galeria__item small {
+  color: var(--tenue);
+  font-size: 0.74rem;
+}
+
+.galeria__item svg {
+  margin-left: auto;
+  color: var(--tenue);
+  flex: 0 0 auto;
+}
+
+.galeria__detalle {
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid var(--borde);
+  border-radius: 22px;
+  background: var(--panel);
+  box-shadow: var(--sombra);
+}
+
+.galeria__cabecera {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 12px;
+}
+
+.galeria__cabecera h3 {
+  margin: 5px 0 2px;
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+}
+
+.galeria__cartel {
+  color: var(--tenue);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.galeria__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  color: var(--oro);
+  font-size: 0.78rem;
+}
+
+.galeria__detalle p {
+  color: var(--tenue);
+  line-height: 1.65;
+}
+
+.galeria__reglas {
+  margin: 18px 0;
+  padding-left: 20px;
+  color: var(--tenue);
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+
+.galeria__reglas li {
+  margin-bottom: 7px;
+}
+

@@ -1,4 +1,4 @@
-export const SENSORY_ENGINE_VERSION = '0.6.0';
+export const SENSORY_ENGINE_VERSION = '0.7.0';
 
 /** Frecuencia de trabajo del motor de audio. */
 export const AUDIO_SAMPLE_RATE = 48_000;

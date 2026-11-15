@@ -2,7 +2,7 @@ import type { AudioRuntime } from '../audio/runtime.js';
 import { composeLongForm } from '../composer/compose.js';
 import { chordAtBeat } from '../composer/harmony.js';
 import { derivePerformanceState } from '../composer/performance.js';
-import type { LongFormScore, PerformanceState } from '../composer/types.js';
+import type { ComposerInstrument, LongFormScore, PerformanceState } from '../composer/types.js';
 import { OrganicOrchestra } from '../instruments/orchestra.js';
 import { festivalProfile } from '../music/festivals.js';
 import type { FestivalId, FestivalProfile, MusicPhase } from '../music/types.js';
@@ -10,11 +10,11 @@ import { outputStatus } from '../output/layouts.js';
 import { MultiChannelRouter } from '../output/router.js';
 import { StudioMasterBus } from '../output/studio-master.js';
 import type { OutputMode, OutputStatus } from '../output/types.js';
-import { type HarmonicSfxKind, HarmonicSfxPlayer } from './harmonic-sfx.js';
+import type { HarmonicSfxKind } from './harmonic-sfx.js';
 import { ScoreScheduler } from './scheduler.js';
+import { StudioSfxMixer } from './sfx-mixer.js';
 import { buildSoundtrackStatus } from './status.js';
 import type { PlayerStateInput, SoundtrackOptions, SoundtrackStatus } from './types.js';
-
 /** Banda sonora de estudio: orquesta multicanal, voz y compositor de forma larga. */
 export class SoundtrackEngine {
   private readonly runtime: AudioRuntime;
@@ -31,14 +31,16 @@ export class SoundtrackEngine {
   private master: StudioMasterBus | null = null;
   private router: MultiChannelRouter | null = null;
   private orchestra: OrganicOrchestra | null = null;
-  private sfx: HarmonicSfxPlayer | null = null;
+  private sfxMixer: StudioSfxMixer | null = null;
   private scheduler: ScoreScheduler | null = null;
+  private readonly userMix: Partial<Record<ComposerInstrument, number>> = {};
+  private sfxVolume = 0.8;
+  private binauralIntensity = 0.7;
   private output: OutputStatus;
   private running = false;
   private muted = false;
   private volume: number;
   private timer: ReturnType<typeof setInterval> | null = null;
-
   constructor(runtime: AudioRuntime, options: SoundtrackOptions = {}) {
     this.runtime = runtime;
     this.seed = options.seed ?? 101;
@@ -53,7 +55,6 @@ export class SoundtrackEngine {
     this.output = outputStatus(this.outputMode, 2);
     this.score = composeLongForm(this.profile, this.seed, { bars: this.bars, state: this.state });
   }
-
   get soundtrackStatus(): SoundtrackStatus {
     return buildSoundtrackStatus({
       running: this.running, profile: this.profile, seed: this.seed, score: this.score,
@@ -61,12 +62,10 @@ export class SoundtrackEngine {
       master: this.master, orchestra: this.orchestra, chord: this.currentChord,
     });
   }
-
   get currentChord(): readonly number[] {
     if (this.scheduler !== null) return this.scheduler.currentChord;
     return chordAtBeat(this.score.chords, 0);
   }
-
   get outputStatus(): OutputStatus {
     return this.output;
   }
@@ -80,7 +79,9 @@ export class SoundtrackEngine {
       this.router = new MultiChannelRouter(context, this.master, { mode: this.outputMode });
       this.output = this.router.status;
       this.orchestra = new OrganicOrchestra(context, this.router, this.seed);
-      this.sfx = new HarmonicSfxPlayer(context, this.seed);
+      this.orchestra.setUserMix(this.userMix);
+      this.router.setBinauralIntensity(this.binauralIntensity);
+      this.sfxMixer = new StudioSfxMixer(context, this.master.input, this.orchestra.bus('bass')?.input ?? this.master.input, this.seed, this.sfxVolume);
       this.orchestra.setEnergy(this.state);
       this.score = composeLongForm(this.profile, this.seed, { bars: this.bars, state: this.state });
       this.scheduler = new ScoreScheduler(this.runtime, this.score, {
@@ -97,7 +98,6 @@ export class SoundtrackEngine {
       return false;
     }
   }
-
   advance(untilTime: number): number {
     return this.running ? this.scheduler?.advance(untilTime) ?? 0 : 0;
   }
@@ -111,7 +111,6 @@ export class SoundtrackEngine {
     this.score = composeLongForm(this.profile, this.seed, { bars: this.bars, state: this.state });
     this.scheduler.reset(this.score, context.currentTime + 0.08);
   }
-
   setOutputMode(mode: OutputMode): void {
     if (mode === this.outputMode) return;
     this.outputMode = mode;
@@ -123,7 +122,6 @@ export class SoundtrackEngine {
     this.disposeGraph();
     this.start();
   }
-
   setBinauralEnabled(enabled: boolean): void {
     this.router?.setBinauralEnabled(enabled);
   }
@@ -135,35 +133,41 @@ export class SoundtrackEngine {
     }
     return next;
   }
-
+  setUserMix(mix: Partial<Record<ComposerInstrument, number>>): void {
+    for (const [instrument, value] of Object.entries(mix) as [ComposerInstrument, number][]) {
+      this.userMix[instrument] = value;
+    }
+    this.orchestra?.setUserMix(mix);
+  }
+  setBinauralIntensity(intensity: number): void {
+    this.binauralIntensity = Math.min(1, Math.max(0, intensity));
+    this.router?.setBinauralIntensity(this.binauralIntensity);
+  }
+  setSfxVolume(volume: number): void {
+    this.sfxVolume = Math.min(1, Math.max(0, volume));
+    this.sfxMixer?.setVolume(this.sfxVolume);
+  }
   setPhase(phase: MusicPhase): void {
     this.phase = phase;
   }
-
   setVolume(volume: number): void {
     this.volume = Math.min(1, Math.max(0, volume));
     this.master?.setVolume(this.volume);
   }
-
   setMuted(muted: boolean): void {
     this.muted = muted;
     this.master?.setMuted(muted);
   }
-
   playHarmonicSfx(kind: HarmonicSfxKind, baseMidi = 69) {
     const context = this.runtime.context;
-    const bus = this.orchestra?.bus('hum');
-    if (context === null || this.sfx === null || bus === undefined) return null;
-    return this.sfx.play(kind, baseMidi, this.profile, this.currentChord, bus.input, context.currentTime + 0.02);
+    if (context === null || this.sfxMixer === null) return null;
+    return this.sfxMixer.playHarmonic(kind, baseMidi, this.profile, this.currentChord, context.currentTime + 0.02);
   }
-
   playTableImpact(baseMidi = 36) {
     const context = this.runtime.context;
-    const bus = this.orchestra?.bus('bass');
-    if (context === null || this.sfx === null || bus === undefined) return null;
-    return this.sfx.play('impact', baseMidi, this.profile, this.currentChord, bus.input, context.currentTime + 0.01);
+    if (context === null || this.sfxMixer === null) return null;
+    return this.sfxMixer.playImpact(baseMidi, this.profile, this.currentChord, context.currentTime + 0.01);
   }
-
   stop(): void {
     if (this.timer !== null) {
       clearInterval(this.timer);
@@ -172,20 +176,19 @@ export class SoundtrackEngine {
     this.running = false;
     this.scheduler?.stop();
   }
-
   dispose(): void {
     this.stop();
     this.disposeGraph();
   }
-
   private disposeGraph(): void {
     this.orchestra?.dispose();
     this.router?.dispose();
     this.master?.dispose();
+    this.sfxMixer?.dispose();
+    this.sfxMixer = null;
     this.orchestra = null;
     this.router = null;
     this.master = null;
     this.scheduler = null;
-    this.sfx = null;
   }
 }

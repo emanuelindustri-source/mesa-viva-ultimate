@@ -131,7 +131,7 @@ export function SensoryLab() {
   return (
     <section class="seccion" id="sensorial" aria-labelledby="titulo-sensorial">
       <div class="seccion__titulo">
-        <p class="sobrelinea">Fase 4.5 · Banda Sonora Profesional</p>
+        <p class="sobrelinea">Fase 5 · Audio de estudio en vivo</p>
         <h2 id="titulo-sensorial">La mesa suena, vibra y respira.</h2>
         <p>
           Ocho instrumentos orgánicos, voz tarareando y salida multicanal 2.0–7.1.

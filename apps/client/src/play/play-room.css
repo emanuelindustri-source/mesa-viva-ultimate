@@ -1,0 +1,38 @@
+﻿
+.sala__cabecera { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 20px 0; }
+.sala__cabecera h2 { margin: 4px 0; }
+.sala__cabecera p { color: var(--tenue); margin: 0; }
+.sala__entrada, .sala__cuerpo { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.sala__pin { display: block; margin: 4px 0 10px; font-size: clamp(2.2rem, 7vw, 4rem); letter-spacing: 0.18em; color: var(--oro); font-variant-numeric: tabular-nums; }
+.sala__qr { display: inline-grid; place-items: center; padding: 10px; border-radius: 14px; background: #fff; }
+.sala__fila { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.sala__jugadores { list-style: none; margin: 0 0 14px; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.sala__jugadores li { display: flex; align-items: center; gap: 8px; padding: 7px 8px; border: 1px solid var(--borde); border-radius: 10px; font-size: 0.8rem; }
+.sala__jugadores .pastilla { margin-left: auto; }
+.sala__chat { min-height: 80px; max-height: 150px; overflow: auto; padding: 8px; border: 1px solid var(--borde); border-radius: 10px; font-size: 0.78rem; }
+.sala__chat p { margin: 3px 0; }
+.sala__chat-input { flex: 1; padding: 9px 10px; border: 1px solid var(--borde); border-radius: 10px; background: var(--fondo-alto); color: var(--tinta); font: inherit; }
+.sala__error { color: #ffb4a0; font-size: 0.8rem; }
+.sala__nota { color: var(--tenue); font-size: 0.76rem; line-height: 1.5; }
+.escaner { margin-top: 10px; padding: 12px; border: 1px solid var(--borde); border-radius: 14px; background: var(--fondo-alto); }
+.escaner__cabecera { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.escaner__cabecera span { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; }
+.escaner__region { min-height: 180px; border-radius: 10px; overflow: hidden; background: #000; }
+.escaner p { color: var(--tenue); font-size: 0.74rem; margin: 6px 0 0; }
+
+@media (max-width: 900px) {
+  .juego__cuerpo, .play-config { grid-template-columns: 1fr; }
+  .juego__acciones { position: static; }
+  .play-modos { grid-template-columns: 1fr; }
+.mesa-25d { min-height: 320px; }
+}
+
+@media (max-width: 560px) {
+  .play-hero { padding-top: 20px; }
+  .play-hero__perfil { width: 100%; }
+  .play-barra { gap: 5px; }
+  .play-barra .boton { padding: 0 8px; }
+  .play-barra__fichas { width: 100%; margin-left: 0; }
+  .carta { width: 42px; height: 62px; }
+  .ficha-dominio { width: 46px; height: 68px; }
+}

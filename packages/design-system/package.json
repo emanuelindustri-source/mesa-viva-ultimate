@@ -1,6 +1,6 @@
 {
   "name": "@mesa-viva/design-system",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "description": "Material You, calendario festivo, formatos de pantalla y atlas vectorial de Mesa Viva",

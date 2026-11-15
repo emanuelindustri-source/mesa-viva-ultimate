@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="432" height="432" viewBox="0 0 128 128" role="img" aria-label="Mesa Viva">
+    <rect width="128" height="128" fill="#12100e"/>
+    <g transform="translate(16.64 16.64) scale(0.74)"><rect x="8" y="8" width="112" height="112" rx="28" fill="none" stroke="#fff" stroke-width="6"/>
+       <path d="M34 46 H62 V86 H34 Z M66 36 H88 V86 H66 Z" fill="#fff"/>
+       <path d="M18 28 L21 37 L30 40 L21 43 L18 52 L15 43 L6 40 L15 37 Z" fill="#fff"/><title>Mesa Viva · Día Normal</title></g>
+  </svg>

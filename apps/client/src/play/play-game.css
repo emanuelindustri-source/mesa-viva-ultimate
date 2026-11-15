@@ -1,0 +1,71 @@
+﻿
+.juego { padding-top: 10px; }
+.juego__cabecera { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0 16px; flex-wrap: wrap; }
+.juego__cabecera h1 { margin: 4px 0 0; font-size: clamp(1.3rem, 3vw, 2rem); }
+.juego__turno { display: flex; align-items: center; gap: 8px; color: var(--tenue); font-size: 0.8rem; }
+.juego__cuerpo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 330px); gap: 16px; align-items: start; }
+.juego__mesa { position: relative; overflow: hidden; border: 1px solid var(--borde); border-radius: 22px; background: var(--panel); }
+.mesa-25d { width: 100%; min-height: 320px; }
+.juego__acciones { display: flex; flex-direction: column; gap: 10px; padding: 14px; border: 1px solid var(--borde); border-radius: 18px; background: var(--panel); position: sticky; top: 14px; }
+.juego__acciones-cabecera { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-weight: 650; }
+.juego__botones { display: flex; flex-direction: column; gap: 7px; }
+.juego__botones .boton { width: 100%; min-height: 42px; padding: 6px 12px; font-size: 0.78rem; }
+.juego__pie { display: flex; gap: 6px; flex-wrap: wrap; padding-top: 8px; border-top: 1px solid var(--borde); }
+
+.asientos { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 12px; border-bottom: 1px solid var(--borde); }
+.asiento { display: flex; align-items: center; gap: 6px; padding: 6px 8px; border: 1px solid var(--borde); border-radius: 999px; background: var(--fondo-alto); font-size: 0.72rem; }
+.asiento--turno { border-color: var(--oro); background: color-mix(in srgb, var(--oro) 12%, var(--fondo-alto)); }
+.asiento__avatar { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: color-mix(in srgb, var(--oro) 18%, transparent); color: var(--oro); font-size: 0.6rem; font-weight: 800; }
+.asiento small { display: block; color: var(--tenue); font-size: 0.62rem; }
+
+.mesa-cartas,
+.tablero-dominio,
+.mesa-colores,
+.crupier {
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; padding: 16px 12px; margin: 0; border: 0; min-width: 0;
+}
+.mi-mano { padding: 12px; border-top: 1px solid var(--borde); }
+.mi-mano--activa { background: color-mix(in srgb, var(--oro) 6%, transparent); }
+.mi-mano__titulo { display: block; margin-bottom: 8px; color: var(--tenue); font-size: 0.76rem; letter-spacing: 0.04em; }
+.mi-mano__cartas { display: flex; flex-wrap: wrap; gap: 6px; }
+.registro { padding: 10px 14px 14px; border-top: 1px solid var(--borde); color: var(--tenue); font-size: 0.72rem; }
+.registro p { margin: 3px 0; }
+.vacio { color: var(--tenue); font-size: 0.8rem; text-align: center; }
+
+.carta { position: relative; display: inline-flex; flex-direction: column; align-items: center; justify-content: space-between; width: 54px; height: 78px; padding: 5px; border-radius: 8px; border: 2px solid #d9cfb8; background: #fffaf0; color: #1a1508; box-shadow: 0 6px 14px rgb(0 0 0 / 18%); font-weight: 750; }
+.carta strong { font-size: 1.15rem; line-height: 1; }
+.carta span { font-size: 1.1rem; line-height: 1; }
+.carta--mini { width: 38px; height: 54px; padding: 3px; }
+.carta--mini strong { font-size: 0.85rem; }
+.carta--mini span { font-size: 0.8rem; }
+.carta--roja { color: #b3261e; }
+.carta--oculta { background: linear-gradient(145deg, #1b3a5c, #0e2034); border-color: #6f8aa6; }
+.carta__dorso { color: #d9cfb8; }
+.carta--color { background: var(--carta-color, #263238); border-color: #fff4e0; color: #fff4e0; }
+.carta__brillo { position: absolute; inset: 4px; border-radius: 5px; border: 1px solid rgb(255 255 255 / 25%); }
+.carta--espanola .carta { color: #1a1508; }
+
+.ficha-dominio { display: inline-flex; flex-direction: column; width: 58px; height: 86px; border-radius: 8px; background: #f4e6c1; border: 2px solid #8d5a2b; box-shadow: 0 6px 14px rgb(0 0 0 / 18%); }
+.ficha-dominio--vertical { transform: rotate(90deg); }
+.ficha-dominio--mini { width: 40px; height: 60px; }
+.ficha-dominio__lado { position: relative; flex: 1; }
+.ficha-dominio__lado i { position: absolute; width: 7px; height: 7px; border-radius: 50%; background: #4a2b12; transform: translate(-50%, -50%); }
+.ficha-dominio__linea { height: 2px; background: #8d5a2b; margin: 0 5px; }
+
+.cortina, .resultado {
+  position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 18px; background: rgb(0 0 0 / 62%); backdrop-filter: blur(6px);
+}
+.cortina__tarjeta, .resultado__tarjeta { width: min(460px, 94vw); padding: 26px; border: 1px solid var(--borde); border-radius: 22px; background: var(--panel); text-align: center; box-shadow: var(--sombra); }
+.cortina__tarjeta h2, .resultado__tarjeta h2 { margin: 8px 0; }
+.cortina__tarjeta p, .resultado__tarjeta p { color: var(--tenue); line-height: 1.6; }
+.resultado__icono { display: grid; place-items: center; width: 62px; height: 62px; margin: 0 auto 8px; border-radius: 50%; background: color-mix(in srgb, var(--oro) 18%, transparent); color: var(--oro); }
+.resultado__puntos { display: flex; flex-direction: column; gap: 4px; margin: 14px 0; color: var(--tenue); font-size: 0.8rem; }
+.resultado__puntos strong { color: var(--tinta); }
+.resultado__acciones { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; }
+.resultado-inline { display: flex; flex-direction: column; gap: 4px; padding: 10px; border: 1px solid var(--oro); border-radius: 12px; color: var(--tenue); font-size: 0.78rem; }
+
+.vfx-onda { position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; border: 2px solid var(--oro); border-radius: 50%; transform: translate(-50%, -50%); animation: vfx-wave 0.85s ease-out forwards; pointer-events: none; }
+@keyframes vfx-wave { to { width: 90%; padding-bottom: 90%; opacity: 0; border-width: 1px; } }
+.vfx-aura { box-shadow: 0 0 60px var(--vfx-aura), inset 0 0 40px var(--vfx-aura); transition: box-shadow 0.4s ease; }
+.vfx-brillo { animation: vfx-shine 0.7s ease; }
+@keyframes vfx-shine { 0%, 100% { filter: brightness(1); } 40% { filter: brightness(1.25); } }

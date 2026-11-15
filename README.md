@@ -1,12 +1,32 @@
 # Mesa Viva Ultimate
 
+![Mesa Viva Ultimate](./docs/assets/github-banner.svg)
+
 [![CI](https://github.com/emanuelindustri-source/mesa-viva-ultimate/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/emanuelindustri-source/mesa-viva-ultimate/actions/workflows/ci.yml)
 
 Plataforma multiplataforma de juegos de cartas y juegos de mesa con motor 2.5D,
 modo offline, multijugador híbrido y monetización compatible con Google Play.
 
-**Estado actual:** Fase 4.5 — Banda Sonora Profesional entregada. Salida multicanal
-2.0–7.1, voz tarareando, orquesta orgánica y compositor de 32–64 compases.
+**Estado actual:** Fase 5 — Portal y Online entregada (v0.7.0). Portal `/`,
+app jugable `/play/`, 19 festividades × claro/oscuro, salas QR/PIN, audio
+multicanal, PWA offline-first y monetización con límites de frecuencia.
+
+## Identidad visual y experiencia
+
+- `BrandAssetGenerator`: logo mutante por festividad, emblemas por juego, favicon,
+  iconos Android/Material You, splash screens y banner del repositorio.
+- Modo claro, oscuro y automático del sistema combinado con Material You,
+  paletas propias y las 19 festividades + Día Normal.
+- `GameVFXController`: chispas doradas en la Caída, ondas de madera en el Dominó,
+  estelas neón en Colores y lluvia de fichas en Blackjack.
+- Portal `/` con historia, galería interactiva de reglas, historial real de
+  versiones, descarga Android y acceso directo a la mesa.
+- App `/play/` con perfil, XP, rangos, Fichas de Mesa firmadas con HMAC, racha,
+  misiones, tienda, bots de tres niveles y modo Pasa y Juega.
+- Salón híbrido sobre WebRTC/PeerJS con PIN de 6 dígitos, QR, chat y cambio de
+  juego sin salir de la sala.
+- PWA con precache completo y aviso elegante de actualización; `app-ads.txt`,
+  `/privacy`, `/terms` y consentimiento UMP listos para Android.
 
 ## Estructura
 

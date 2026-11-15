@@ -1,4 +1,4 @@
-export const DESIGN_SYSTEM_VERSION = '0.3.0';
+export const DESIGN_SYSTEM_VERSION = '0.4.0';
 
 /** Los 6 formatos de pantalla objetivo del diseño adaptativo universal. */
 export const SCREEN_FORMATS = [

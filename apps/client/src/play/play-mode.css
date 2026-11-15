@@ -1,0 +1,72 @@
+﻿.play-config {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.7fr);
+  gap: 22px;
+}
+
+.play-modos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.play-modo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  background: var(--panel);
+  color: var(--tinta);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.play-modo--activo {
+  border-color: var(--oro);
+  background: color-mix(in srgb, var(--oro) 10%, var(--panel));
+}
+
+.play-modo span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.play-modo small {
+  color: var(--tenue);
+  font-size: 0.68rem;
+}
+
+.play-config__resumen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px;
+  border: 1px solid var(--borde);
+  border-radius: 20px;
+  background: var(--panel);
+  text-align: center;
+}
+
+.play-config__resumen h3 {
+  margin: 0;
+}
+
+.play-config__resumen p {
+  color: var(--tenue);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.play-config__resumen .boton {
+  width: 100%;
+}
+
+.play-config__nota {
+  color: var(--tenue);
+  font-size: 0.68rem;
+}

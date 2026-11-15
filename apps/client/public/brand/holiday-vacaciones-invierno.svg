@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Mesa Viva · vacaciones-invierno"><defs>
+    <linearGradient id="bg-vacaciones-invierno" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1d1915"/><stop offset="1" stop-color="#12100e"/>
+    </linearGradient>
+    <linearGradient id="gold-vacaciones-invierno" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4d06f"/><stop offset="0.55" stop-color="#b3e5fc"/><stop offset="1" stop-color="#8a6410"/>
+    </linearGradient>
+    <linearGradient id="felt-vacaciones-invierno" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0277bd"/><stop offset="1" stop-color="#0d3b32"/>
+    </linearGradient>
+  </defs><rect x="2" y="2" width="124" height="124" rx="30" fill="url(#bg-vacaciones-invierno)" stroke="#b3e5fc" stroke-width="2"/><ellipse cx="64" cy="85" rx="48" ry="24" fill="url(#felt-vacaciones-invierno)"/>
+    <ellipse cx="64" cy="85" rx="38" ry="17" fill="none" stroke="#b3e5fc" stroke-width="1.5" opacity="0.55"/>
+    <g transform="rotate(-10 52 58)">
+      <rect x="27" y="30" width="38" height="54" rx="6" fill="#1d1915" stroke="#f4e6c1" stroke-width="2"/>
+      <path d="M31 38 H61 M31 56 H61 M31 74 H61" stroke="#0277bd" stroke-width="2" opacity="0.35"/>
+      <path d="M46 44 L56 58 L46 72 L36 58 Z" fill="url(#gold-vacaciones-invierno)"/>
+    </g>
+    <g transform="rotate(9 82 52)">
+      <rect x="60" y="24" width="38" height="54" rx="6" fill="#b3261e" stroke="#5f130f" stroke-width="2"/>
+      <path d="M68 32 H90 M68 50 H90 M68 68 H90" stroke="#fff4e0" stroke-width="2" opacity="0.7"/>
+      <path d="M79 38 C73 48 77 58 79 62 C81 58 85 48 79 38 Z" fill="#fff4e0" opacity="0.9"/>
+    </g>
+    <g transform="translate(94 64) rotate(8)">
+      <rect width="18" height="18" rx="4" fill="#f4e6c1"/>
+      <circle cx="5" cy="5" r="1.6" fill="#1d1915"/><circle cx="13" cy="5" r="1.6" fill="#1d1915"/>
+      <circle cx="9" cy="9" r="1.6" fill="#1d1915"/><circle cx="5" cy="13" r="1.6" fill="#1d1915"/>
+      <circle cx="13" cy="13" r="1.6" fill="#1d1915"/>
+    </g>
+    <path d="M18 28 L21 37 L30 40 L21 43 L18 52 L15 43 L6 40 L15 37 Z" fill="#fff4e0" opacity="0.9"/><g transform="translate(84 2)" stroke="#b3e5fc" stroke-width="3" stroke-linecap="round">
+    <path d="M20 2 V40 M2 21 H38 M7 8 L33 34 M33 8 L7 34"/>
+    <circle cx="20" cy="21" r="4" fill="#b3e5fc" stroke="none"/>
+  </g><title>Mesa Viva · vacaciones-invierno</title></svg>

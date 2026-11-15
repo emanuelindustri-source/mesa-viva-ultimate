@@ -1,0 +1,197 @@
+.lab {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--borde);
+  border-radius: 24px;
+  background:
+    radial-gradient(50rem 22rem at 12% -10%, color-mix(in srgb, var(--oro) 16%, transparent), transparent 60%),
+    radial-gradient(40rem 20rem at 100% 0%, color-mix(in srgb, var(--rojo) 10%, transparent), transparent 55%),
+    linear-gradient(165deg, var(--fondo-alto), var(--fondo));
+  box-shadow: var(--sombra);
+}
+
+.lab::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, transparent 40%, rgb(255 255 255 / 3%) 50%, transparent 60%);
+}
+
+.lab__cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(22px, 4vw, 34px);
+  border-bottom: 1px solid var(--borde);
+}
+
+.lab__cabecera h3 {
+  margin: 8px 0 8px;
+  font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+  letter-spacing: -0.01em;
+}
+
+.lab__cabecera p {
+  margin: 0;
+  max-width: 560px;
+  color: var(--tenue);
+  line-height: 1.6;
+  font-size: 0.92rem;
+}
+
+.lab__sello {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgb(124 199 255 / 35%);
+  background: rgb(124 199 255 / 10%);
+  color: #a9d9ff;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.lab__botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.boton--activo {
+  background: linear-gradient(140deg, #2f6f4f, #1d4d36);
+  border: 1px solid rgb(111 227 176 / 50%);
+  color: #d9ffec;
+  box-shadow: 0 12px 30px rgb(47 111 79 / 28%);
+}
+
+.boton:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.boton:disabled:hover {
+  transform: none;
+  filter: none;
+}
+
+.lab__cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
+  gap: clamp(20px, 4vw, 38px);
+  padding: clamp(22px, 4vw, 34px);
+}
+
+.stems {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 8px;
+  align-items: end;
+  align-self: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  padding: 9px 5px 10px;
+  border: 1px solid rgb(255 255 255 / 5%);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--tinta) 3%, transparent);
+}
+
+.stem__pista {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 104px;
+  padding: 3px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--fondo) 60%, transparent);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 4%);
+}
+
+.stem__relleno {
+  display: block;
+  width: 100%;
+  min-height: 5px;
+  border-radius: 5px;
+  background: linear-gradient(180deg, var(--stem-color), color-mix(in srgb, var(--stem-color) 18%, var(--fondo)));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--stem-color) 40%, transparent);
+  transition: height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.stem strong {
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.stem__valor {
+  color: var(--tenue);
+  font-size: 0.62rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.stem p {
+  margin: 0;
+  color: var(--tenue);
+  font-size: 0.58rem;
+  line-height: 1.35;
+  text-align: center;
+  min-height: 2.7em;
+}
+
+.stem--hum { --stem-color: #ffd166; }
+.stem--rhodes { --stem-color: #f4e6c1; }
+.stem--guitar { --stem-color: #d9a066; }
+.stem--bass { --stem-color: #e06c75; }
+.stem--marimba { --stem-color: #64d8cb; }
+.stem--strings { --stem-color: #c39bff; }
+.stem--percussion { --stem-color: #ffb347; }
+.stem--beatbox { --stem-color: #7cc7ff; }
+
+.lab__controles {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.lab__tension {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 12px;
+  align-items: center;
+  padding: 14px 16px;
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--fondo) 24%, transparent);
+  font-size: 0.82rem;
+}
+
+.lab__tension span {
+  grid-column: 1 / -1;
+  color: var(--tenue);
+  letter-spacing: 0.04em;
+}
+
+.lab__tension input {
+  width: 100%;
+  accent-color: var(--oro);
+  cursor: pointer;
+}
+
+.lab__tension strong {
+  color: var(--oro);
+  font-variant-numeric: tabular-nums;
+}
+

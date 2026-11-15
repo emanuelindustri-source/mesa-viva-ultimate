@@ -1,0 +1,121 @@
+﻿.tarjeta,
+.version-card,
+.fase,
+.dialogo,
+.panel {
+  background: var(--panel);
+  border-color: var(--borde);
+  color: var(--tinta);
+}
+
+.dialogo-fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgb(0 0 0 / 58%);
+  backdrop-filter: blur(8px);
+}
+
+.dialogo {
+  width: min(560px, 96vw);
+  max-height: 90vh;
+  overflow: auto;
+  border: 1px solid var(--borde);
+  border-radius: 22px;
+  box-shadow: var(--sombra);
+}
+
+.dialogo--ancho {
+  width: min(880px, 96vw);
+}
+
+.dialogo__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--borde);
+}
+
+.dialogo__cabecera h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.dialogo__cuerpo {
+  padding: 20px;
+}
+
+.sin-scroll {
+  overflow: hidden;
+}
+
+.mezclador {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mezclador__fila {
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) minmax(100px, 1.2fr) 44px;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.84rem;
+}
+
+.mezclador__etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--tenue);
+}
+
+.mezclador__fila input[type='range'] {
+  accent-color: var(--oro);
+}
+
+.mezclador__fila strong {
+  text-align: right;
+  color: var(--oro);
+  font-variant-numeric: tabular-nums;
+}
+
+.aviso-flotante {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(92vw, 620px);
+  padding: 12px 16px;
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  background: var(--panel);
+  color: var(--tinta);
+  box-shadow: var(--sombra);
+  font-size: 0.82rem;
+}
+
+.aviso-flotante--offline {
+  border-color: color-mix(in srgb, var(--rojo) 45%, var(--borde));
+}
+
+.aviso-flotante__accion {
+  border: 0;
+  border-radius: 999px;
+  padding: 7px 12px;
+  background: var(--oro);
+  color: #17120b;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+

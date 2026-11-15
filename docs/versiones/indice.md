@@ -11,8 +11,9 @@ reciente. Cada nota describe qué se entregó, cómo se verificó y qué falta.
 | v0.4.0 | Fase 3 · Motor 2.5D | 15/11/2026 | Entregada | [Abrir](./v0.4.0-fase3-motor-25d.md) |
 | v0.5.0 | Fase 4 · Motor Sensorial | 15/11/2026 | Entregada | [Abrir](./v0.5.0-fase4-motor-sensorial.md) |
 | v0.6.0 | Fase 4.5 · Banda Sonora Profesional | 15/11/2026 | Entregada | [Abrir](./v0.6.0-banda-sonora-profesional.md) |
+| v0.7.0 | Fase 5 · Portal, Online e Identidad Visual | 15/11/2026 | Entregada | [Abrir](./v0.7.0-fase5-portal-online.md) |
 
 ## Próxima versión
 
-La nota de trabajo activa está en [FUTURO.md](./FUTURO.md). Describe la Fase 5 y el
-punto exacto de retorno.
+La nota de trabajo activa está en [FUTURO.md](./FUTURO.md). Describe la Fase 6,
+la expansión del catálogo mundial y el empaquetado Android `.aab`.

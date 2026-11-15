@@ -73,6 +73,18 @@ export class SoundtrackController {
     this.engine.setBinauralEnabled(enabled);
   }
 
+  setUserMix(mix: Partial<Record<import('../composer/types.js').ComposerInstrument, number>>): void {
+    this.engine.setUserMix(mix);
+  }
+
+  setBinauralIntensity(intensity: number): void {
+    this.engine.setBinauralIntensity(intensity);
+  }
+
+  setSfxVolume(volume: number): void {
+    this.engine.setSfxVolume(volume);
+  }
+
   setPlayerState(input: PlayerStateInput): PerformanceState {
     return this.engine.setPlayerState(input);
   }
