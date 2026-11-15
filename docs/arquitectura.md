@@ -1,7 +1,7 @@
 # Arquitectura de Mesa Viva Ultimate
 
-**Estado:** Fase 4 entregada. Motor sensorial con audio espacial HRTF a 48 kHz,
-música adaptativa de ocho stems para 19 festividades y háptica Capacitor/Web.
+**Estado:** Fase 4.5 entregada. Banda sonora profesional multicanal 2.0 binaural,
+2.1, 5.1/5.2 y 7.1, voz tarareando, orquesta orgánica y compositor de forma larga.
 
 ## Visión
 
@@ -47,17 +47,22 @@ apps/client ──> engine-25d ──> design-system ──> core
 ### `@mesa-viva/sensory-engine`
 
 - `AudioRuntime` perezoso a 48 kHz con desbloqueo por gesto, suspensión y cierre.
-- Cuatro buses con compresor-limitador maestro; cero archivos de audio externos.
-- `SpatialAudioEngine` HRTF atado a asientos/cartas, 8 fuentes espaciales y
-  degradación a estéreo o mono.
-- Director adaptativo de 8 stems sincronizados, 19 festividades + Día Normal,
-  tensión de partida, patrones deterministas y límite de voces.
-- Doce efectos procedurales y háptica de precisión con puente Capacitor y fallback
-  `navigator.vibrate`.
-- `SensorySession` + `createTableSensoryHooks` integran audio, háptica, silencio
-  boca abajo y agitado con `TableStage`, sin bloquear reglas ni turnos.
-- Render offline determinista y benchmark de latencia/voces para CI.
-- Laboratorio sensorial en `/` para probar tensión, festividades y gestos.
+- `MultiChannelRouter` con detección de `maxChannelCount`, `ChannelMerger` discreto
+  y modos binaural 2.0, 2.1, 5.1, 5.2 y 7.1; LFE dedicado y EQ por canal.
+- `StudioMasterBus` con convolución procedural de sala de madera y limitador
+  brickwall a −1,0 dBFS.
+- `VocalHumSynth`: formantes /m/, /u/, /o/, portamento, respiración y vibrato
+  progresivo; la voz va al canal central.
+- Orquesta orgánica: Rhodes, Karplus para cuatro/guitarra, contrabajo LFE, marimba,
+  cuerdas, percusión latina y beatbox.
+- `LongFormComposer`: movimientos de 32–64 compases, cuatro secciones moduladas,
+  motivos transformados, pregunta/respuesta, 19 festividades y estados de jugador.
+- `SoundtrackEngine`/`SoundtrackController` integran salida, festival, energía,
+  acorde activo, SFX armónicos y ciclo de vida.
+- `SensorySession` conserva el modo de ocho stems y añade `musicEngine: 'studio'`,
+  salida multicanal, estado del jugador y SFX.
+- Render offline determinista, benchmark de latencia/voces y laboratorio multicanal
+  en el portal.
 
 ### `@mesa-viva/client`
 

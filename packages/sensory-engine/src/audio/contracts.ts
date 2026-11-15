@@ -10,8 +10,22 @@ export interface AudioParamLike {
 }
 
 export interface AudioNodeLike {
-  connect(destination: AudioNodeLike): AudioNodeLike;
+  connect(destination: AudioNodeLike, output?: number, input?: number): AudioNodeLike;
   disconnect(): void;
+}
+
+export interface AudioDestinationLike extends AudioNodeLike {
+  channelCount: number;
+  channelCountMode: string;
+  channelInterpretation: string;
+  readonly maxChannelCount: number;
+}
+
+export interface ChannelMergerNodeLike extends AudioNodeLike {
+  readonly channelCount: number;
+  readonly channelCountMode: string;
+  channelInterpretation: string;
+  readonly numberOfInputs: number;
 }
 
 export interface AudioScheduledSourceLike extends AudioNodeLike {
@@ -106,7 +120,7 @@ export interface AudioContextLike {
   readonly sampleRate: number;
   readonly currentTime: number;
   readonly state: string;
-  readonly destination: AudioNodeLike;
+  readonly destination: AudioDestinationLike;
   readonly listener: AudioListenerLike;
   createGain(): GainNodeLike;
   createBiquadFilter(): BiquadFilterLike;
@@ -119,6 +133,7 @@ export interface AudioContextLike {
   createDelay(maxDelaySeconds?: number): DelayNodeLike;
   createConvolver(): ConvolverNodeLike;
   createWaveShaper(): WaveShaperNodeLike;
+  createChannelMerger(numberOfInputs?: number): ChannelMergerNodeLike;
   resume(): Promise<void>;
   suspend(): Promise<void>;
   close(): Promise<void>;

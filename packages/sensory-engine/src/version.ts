@@ -1,4 +1,4 @@
-export const SENSORY_ENGINE_VERSION = '0.5.0';
+export const SENSORY_ENGINE_VERSION = '0.6.0';
 
 /** Frecuencia de trabajo del motor de audio. */
 export const AUDIO_SAMPLE_RATE = 48_000;
@@ -27,6 +27,10 @@ export type HapticGesture = keyof typeof HAPTIC_GESTURES;
 export const SENSORY_FEATURES = [
   'audio-espacial-hrtf',
   'musica-adaptativa-8-stems',
+  'multicanal-2.0-7.1',
+  'voz-tarareando-formantes',
+  'compositor-32-64-compases',
+  'masterizacion-brickwall',
   'festividades-19',
   'haptica-capacitor',
   'haptica-web',

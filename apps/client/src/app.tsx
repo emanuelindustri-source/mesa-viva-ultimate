@@ -10,7 +10,7 @@ export function App() {
           <span>Mesa Viva</span>
         </a>
         <div class="cabecera__derecha">
-          <span class="pastilla pastilla--viva">Fase 4 completada</span>
+          <span class="pastilla pastilla--viva">Fase 4.5 completada</span>
           <a class="enlace" href="#sensorial">
             Sensorial
           </a>
@@ -22,15 +22,15 @@ export function App() {
 
       <main>
         <section class="hero">
-          <p class="sobrelinea">Motor universal de juegos · Fase 4</p>
+          <p class="sobrelinea">Motor universal de juegos · Fase 4.5</p>
           <h1>
             El juego de mesa,
             <span class="hero__brillo"> vivo.</span>
           </h1>
           <p class="hero__texto">
             Clásicos del mundo, cartas venezolanas, estrategia original y un motor 2.5D
-            que se adapta a tu teléfono, tablet, laptop o televisor. Ahora la mesa también
-            suena en 3D, cambia de música con la tensión y vibra en tu mano.
+            que se adapta a tu teléfono, tablet, laptop o televisor. Ahora la mesa suena
+            en 7.1, canta con voz humana y adapta su melodía a la partida.
           </p>
           <div class="hero__acciones">
             <a class="boton boton--principal" href="#sensorial">
@@ -41,9 +41,9 @@ export function App() {
             </a>
           </div>
           <p class="hero__nota">
-            Fase 4 entregada: audio espacial HRTF a 48 kHz, música adaptativa de ocho
-            stems, 19 festividades, mezcla con limitador maestro y háptica Capacitor/Web,
-            verificados con 257 pruebas automáticas.
+            Fase 4.5 entregada: banda sonora multicanal 2.0–7.1, voz tarareando con
+            formantes, compositor de 32–64 compases, graves LFE y masterización a
+            −1 dBFS, verificada con 283 pruebas automáticas.
           </p>
         </section>
 

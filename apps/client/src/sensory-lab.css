@@ -150,14 +150,14 @@
   min-height: 2.7em;
 }
 
-.stem--pulso { --stem-color: #ffb347; }
-.stem--bajo { --stem-color: #e06c75; }
-.stem--pad { --stem-color: #7c9cff; }
-.stem--arpegio { --stem-color: #64d8cb; }
-.stem--melodia { --stem-color: #ffd166; }
-.stem--campanas { --stem-color: #f4e6c1; }
-.stem--coro { --stem-color: #c39bff; }
-.stem--acento { --stem-color: #ff8a5c; }
+.stem--hum { --stem-color: #ffd166; }
+.stem--rhodes { --stem-color: #f4e6c1; }
+.stem--guitar { --stem-color: #d9a066; }
+.stem--bass { --stem-color: #e06c75; }
+.stem--marimba { --stem-color: #64d8cb; }
+.stem--strings { --stem-color: #c39bff; }
+.stem--percussion { --stem-color: #ffb347; }
+.stem--beatbox { --stem-color: #7cc7ff; }
 
 .lab__controles {
   display: flex;

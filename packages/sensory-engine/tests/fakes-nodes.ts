@@ -35,15 +35,22 @@ export class FakeNode {
   readonly nodeId = nodeSequence++;
   readonly kind = 'node';
   readonly connections: FakeNode[] = [];
+  readonly incoming: FakeNode[] = [];
+  readonly inputConnections = new Map<number, FakeNode[]>();
   disconnected = false;
 
-  connect(destination: FakeNode): FakeNode {
+  connect(destination: FakeNode, _output = 0, input = 0): FakeNode {
     this.connections.push(destination);
+    if (destination instanceof FakeNode) destination.incoming.push(this);
+    const bucket = this.inputConnections.get(input) ?? [];
+    bucket.push(destination);
+    this.inputConnections.set(input, bucket);
     return destination;
   }
 
   disconnect(): void {
     this.connections.length = 0;
+    this.inputConnections.clear();
     this.disconnected = true;
   }
 }
@@ -78,6 +85,32 @@ export class FakeStereoPanner extends FakeNode {
   readonly pan = new FakeParam();
 }
 
+export class FakeChannelMerger extends FakeNode {
+  override readonly kind = 'channel-merger';
+  readonly numberOfInputs: number;
+  channelCount = 1;
+  channelCountMode = 'explicit';
+  channelInterpretation = 'speakers';
+
+  constructor(numberOfInputs = 6) {
+    super();
+    this.numberOfInputs = numberOfInputs;
+  }
+}
+
+export class FakeDestination extends FakeNode {
+  override readonly kind = 'destination';
+  channelCount = 2;
+  channelCountMode = 'explicit';
+  channelInterpretation = 'speakers';
+  readonly maxChannelCount: number;
+
+  constructor(maxChannelCount = 8) {
+    super();
+    this.maxChannelCount = maxChannelCount;
+  }
+}
+
 export class FakeCompressor extends FakeNode {
   override readonly kind = 'compressor';
   readonly threshold = new FakeParam();
@@ -86,6 +119,23 @@ export class FakeCompressor extends FakeNode {
   readonly attack = new FakeParam();
   readonly release = new FakeParam();
   reduction = 0;
+}
+
+export class FakeDelay extends FakeNode {
+  override readonly kind = 'delay';
+  readonly delayTime = new FakeParam();
+}
+
+export class FakeConvolver extends FakeNode {
+  override readonly kind = 'convolver';
+  buffer: AudioBufferLike | null = null;
+  normalize = true;
+}
+
+export class FakeWaveShaper extends FakeNode {
+  override readonly kind = 'wave-shaper';
+  curve: Float32Array | null = null;
+  oversample = 'none';
 }
 
 export class FakeSource extends FakeNode {

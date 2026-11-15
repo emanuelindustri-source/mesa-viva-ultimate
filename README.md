@@ -5,9 +5,8 @@
 Plataforma multiplataforma de juegos de cartas y juegos de mesa con motor 2.5D,
 modo offline, multijugador híbrido y monetización compatible con Google Play.
 
-**Estado actual:** Fase 4 — Motor Sensorial entregada. Audio espacial HRTF a
-48 kHz, música adaptativa de ocho stems para 19 festividades y háptica
-Capacitor/Web, con laboratorio interactivo en el portal.
+**Estado actual:** Fase 4.5 — Banda Sonora Profesional entregada. Salida multicanal
+2.0–7.1, voz tarareando, orquesta orgánica y compositor de 32–64 compases.
 
 ## Estructura
 
@@ -33,12 +32,15 @@ Capacitor/Web, con laboratorio interactivo en el portal.
 ## Motor sensorial
 
 - `AudioRuntime` perezoso a 48 kHz: el navegador no crea audio hasta un gesto.
-- Cuatro buses con limitador maestro y cero archivos externos.
-- Audio 3D HRTF atado a asientos y cartas, con degradación a estéreo/mono.
-- Ocho stems sincronizados; 19 festividades + Día Normal cambian escala, tempo,
-  timbre y acentos. La tensión de partida decide qué capas dominan.
-- Doce efectos procedurales y háptica de precisión para Capacitor y web.
-- Laboratorio interactivo en el portal para probar tensión, festividades y gestos.
+- `MultiChannelRouter` binaural 2.0, 2.1, 5.1/5.2 y 7.1 con canales discretos,
+  LFE dedicado y degradación segura.
+- `StudioMasterBus` con reverb de sala de madera y limitador brickwall −1 dBFS.
+- Voz tarareando con formantes /m/, /u/, /o/, portamento y vibrato progresivo.
+- Rhodes, cuatro Karplus, contrabajo LFE, marimba, cuerdas, percusión y beatbox.
+- Compositor de 32–64 compases con motivos, modulación, pregunta/respuesta y
+  adaptación a concentración, energía y clímax.
+- 19 festividades + Día Normal y SFX armónicos afinados al acorde activo.
+- Laboratorio multicanal interactivo en el portal.
 
 ## Comandos
 

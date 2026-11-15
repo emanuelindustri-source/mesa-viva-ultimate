@@ -10,6 +10,7 @@ reciente. Cada nota describe qué se entregó, cómo se verificó y qué falta.
 | v0.3.0 | Fase 2 · Diseño Universal | 14/11/2026 | Entregada | [Abrir](./v0.3.0-fase2-diseno-universal.md) |
 | v0.4.0 | Fase 3 · Motor 2.5D | 15/11/2026 | Entregada | [Abrir](./v0.4.0-fase3-motor-25d.md) |
 | v0.5.0 | Fase 4 · Motor Sensorial | 15/11/2026 | Entregada | [Abrir](./v0.5.0-fase4-motor-sensorial.md) |
+| v0.6.0 | Fase 4.5 · Banda Sonora Profesional | 15/11/2026 | Entregada | [Abrir](./v0.6.0-banda-sonora-profesional.md) |
 
 ## Próxima versión
 

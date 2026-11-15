@@ -9,7 +9,7 @@ export const PAQUETES = [
   { nombre: 'Motor Core', detalle: 'Reglas, bots y economía', version: CORE_VERSION },
   { nombre: 'Diseño', detalle: 'Material You, 19 festividades, 11 idiomas y atlas SVG', version: DESIGN_SYSTEM_VERSION },
   { nombre: 'Motor 2.5D', detalle: 'PixiJS v8, atlas GPU, físicas táctiles y sensores', version: ENGINE_25D_VERSION },
-  { nombre: 'Sensorial', detalle: 'Audio 3D HRTF, 8 stems adaptativos y háptica de precisión', version: SENSORY_ENGINE_VERSION },
+  { nombre: 'Sensorial', detalle: 'Banda sonora multicanal 2.0–7.1, voz tarareando y compositor de 64 compases', version: SENSORY_ENGINE_VERSION },
 ] as const;
 
 export const FASES = [
@@ -17,7 +17,7 @@ export const FASES = [
   { n: 1, nombre: 'Motor Core', detalle: 'Reglas universales, primeros juegos, bots y economía.', estado: 'Completada' },
   { n: 2, nombre: 'Diseño Universal', detalle: 'Material You, 19 festividades, 6 pantallas y 11 idiomas.', estado: 'Completada' },
   { n: 3, nombre: 'Motor 2.5D', detalle: 'Entidades, perspectiva, sombras y sensores de movimiento.', estado: 'Completada' },
-  { n: 4, nombre: 'Motor Sensorial', detalle: 'Audio HRTF a 48 kHz, 8 stems adaptativos y háptica Capacitor.', estado: 'Completada' },
+  { n: 4, nombre: 'Motor Sensorial', detalle: 'Audio HRTF, banda sonora multicanal 2.0–7.1, voz y compositor de forma larga.', estado: 'Completada' },
   { n: 5, nombre: 'Portal y Online', detalle: 'Landing, app offline, P2P por QR/PIN y monetización.', estado: 'Siguiente' },
   { n: 6, nombre: 'Catálogo Completo', detalle: 'Todos los juegos, enciclopedia y empaquetado Android.', estado: 'Planificada' },
 ] as const;
@@ -30,6 +30,13 @@ export const JUEGOS = [
 ] as const;
 
 export const VERSIONES = [
+  {
+    version: 'v0.6.0',
+    titulo: 'Fase 4.5 · Banda Sonora Profesional',
+    detalle:
+      'Salida multicanal 2.0 binaural, 2.1, 5.1/5.2 y 7.1; voz tarareando con formantes; Rhodes, Karplus, contrabajo LFE, marimba, cuerdas, percusión y beatbox; compositor de 32–64 compases y masterización a -1 dBFS. 283 pruebas.',
+    nota: 'docs/versiones/v0.6.0-banda-sonora-profesional.md',
+  },
   {
     version: 'v0.5.0',
     titulo: 'Fase 4 · Motor Sensorial',

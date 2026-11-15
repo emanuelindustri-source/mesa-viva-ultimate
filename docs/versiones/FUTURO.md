@@ -1,20 +1,21 @@
-# Próxima versión — v0.6.0 · Fase 5: Portal y Online
+# Próxima versión — v0.7.0 · Fase 5: Portal y Online
 
 **Estado:** pendiente de inicio
-**Depende de:** v0.5.0 (Fase 4 entregada)
+**Depende de:** v0.6.0 (Fase 4.5 entregada)
 **Objetivo:** convertir el monorepo en una aplicación jugable real: portal `/`,
-experiencia `/play/` con `TableStage` y sensorial conectados, PWA offline-first,
-salas locales y online con QR/PIN, y monetización con límites de frecuencia.
+experiencia `/play/` con `TableStage` y la banda sonora multicanal conectados,
+PWA offline-first, salas locales y online con QR/PIN, y monetización con límites
+de frecuencia.
 
 ## Punto de retorno
 
 1. Leer `AGENTS.md`, esta nota y `docs/versiones/indice.md`.
 2. Ejecutar `pnpm install`, `pnpm lint`, `pnpm typecheck`, `pnpm build` y
    `pnpm test:coverage`.
-3. Confirmar que la Fase 4 sigue en verde: **257 pruebas**, 96,33% líneas y
-   paquete cliente de 147,39 KB JS.
+3. Confirmar que la Fase 4.5 sigue en verde: **283 pruebas**, 96,18% líneas y
+   paquete cliente de 190,45 KB JS.
 4. Revisar `apps/client/src/`, `packages/engine-25d/src/pixi/app/table-stage.ts`,
-   `packages/sensory-engine/src/session.ts` y `docs/arquitectura.md`.
+   `packages/sensory-engine/src/soundtrack/` y `docs/arquitectura.md`.
 5. Continuar con el primer objetivo pendiente de la lista siguiente.
 
 ## Entregables de la Fase 5
@@ -23,6 +24,8 @@ salas locales y online con QR/PIN, y monetización con límites de frecuencia.
 - [ ] Mesa jugable con `TableStage`, adaptadores de `core` y snapshots en vivo.
 - [ ] Sesión sensorial conectada: `onShake`, `onFaceDown`, `celebrate`, layout y
       tensión enviada desde el estado real de la partida.
+- [ ] Banda sonora de estudio conectada al estado real de cada juego: salida
+      elegida, energía, concentración, acorde activo y SFX armónicos.
 - [ ] Guardado local firmado, reanudación de partida y preferencias persistentes.
 - [ ] PWA offline-first con Service Worker, precache y aviso de actualización.
 - [ ] Salas locales en la misma pantalla y por Wi-Fi con PIN/QR.
@@ -37,14 +40,14 @@ salas locales y online con QR/PIN, y monetización con límites de frecuencia.
 ## Criterios de aceptación
 
 - `pnpm lint`, `pnpm typecheck`, `pnpm build` y `pnpm test:coverage` en verde.
-- Las 257 pruebas de la Fase 4 más las nuevas, sin hardware real en CI.
+- Las 283 pruebas de la Fase 4.5 más las nuevas, sin hardware real en CI.
 - Ningún archivo supera 200 líneas y `core` sigue sin DOM, red ni UI.
 - El audio no arranca sin gesto; la app muestra "activar sonido" una sola vez.
 - La mesa funciona con teclado, ratón, tacto y D-pad.
 - Una partida se reanuda desde el guardado y produce el mismo resultado.
 - La PWA carga sin red después de la primera visita.
 - El paquete web final sigue por debajo de 10 MB.
-- Nota `v0.6.0-fase5-portal-online.md` y esta nota reescrita para la Fase 6.
+- Nota `v0.7.0-fase5-portal-online.md` y esta nota reescrita para la Fase 6.
 
 ## Alcance que NO entra en esta fase
 

@@ -5,6 +5,8 @@ import type { SpatialStats } from './audio/spatial.js';
 import type { HapticEngine } from './haptics/engine.js';
 import type { HapticCapabilities, HapticPlayback } from './haptics/types.js';
 import type { FestivalId, MusicDirectorStatus, MusicPhase, TensionInput, TensionSnapshot } from './music/types.js';
+import type { OutputMode, OutputStatus } from './output/types.js';
+import type { SoundtrackStatus } from './soundtrack/types.js';
 import type { AudioEngineStatus, SensoryPreferences, Vec3 } from './types.js';
 
 export interface SensoryEvent {
@@ -32,6 +34,10 @@ export interface SensorySessionOptions {
   readonly maxHrtfVoices?: number;
   readonly shakeAction?: 'dados' | 'barajar';
   readonly now?: () => number;
+  readonly musicEngine?: 'stems' | 'studio';
+  readonly outputMode?: OutputMode;
+  readonly soundtrackBars?: number;
+  readonly binaural?: boolean;
 }
 
 export interface SensorySessionStatus {
@@ -43,6 +49,8 @@ export interface SensorySessionStatus {
   readonly preferences: SensoryPreferences;
   readonly faceDown: boolean;
   readonly tension: TensionSnapshot;
+  readonly output: OutputStatus | null;
+  readonly soundtrack: SoundtrackStatus | null;
 }
 
 export type { MusicPhase, TensionInput, TensionSnapshot };

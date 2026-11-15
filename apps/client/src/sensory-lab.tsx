@@ -1,19 +1,24 @@
 import {
+  type ComposerInstrument,
   type EffectId,
   type FestivalId,
   festivalProfile,
+  type OutputMode,
+  type PerformanceState,
   SensorySession,
-  type StemId,
-  stemMix,
 } from '@mesa-viva/sensory-engine';
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { SENSORY_FESTIVALS, SENSORY_GESTURES, SENSORY_STEMS } from './sensory-data.js';
+import { FestivalPicker, GestureButtons, OutputModes, StateModes } from './sensory-controls.js';
+import {
+  INITIAL_LEVELS,
+  SENSORY_INSTRUMENTS,
+} from './sensory-data.js';
 import './sensory-lab.css';
 
-type Levels = Readonly<Record<StemId, number>>;
+type Levels = Readonly<Record<ComposerInstrument, number>>;
 
 function percent(value: number): string {
-  return `${Math.round(value * 100)}%`;
+  return `${Math.min(100, Math.round(value * 100))}%`;
 }
 
 export function SensoryLab() {
@@ -21,10 +26,12 @@ export function SensoryLab() {
   const [active, setActive] = useState(false);
   const [muted, setMuted] = useState(false);
   const [festival, setFestival] = useState<FestivalId>('dia-normal');
-  const [tension, setTension] = useState(18);
-  const [levels, setLevels] = useState<Levels>(() => stemMix(0.18, festivalProfile('dia-normal')));
-  const [message, setMessage] = useState('El audio espera tu primer toque. Nada suena hasta que tú quieras.');
-  const [engine, setEngine] = useState('Audio perezoso · 48 kHz · HRTF');
+  const [outputMode, setOutputMode] = useState<OutputMode>('auto');
+  const [state, setState] = useState<PerformanceState>('calma');
+  const [levels, setLevels] = useState<Levels>(INITIAL_LEVELS);
+  const [outputLabel, setOutputLabel] = useState('Auto · se detecta al activar');
+  const [message, setMessage] = useState('La banda sonora espera tu primer toque. Nada suena hasta que tú quieras.');
+  const [engine, setEngine] = useState('Estudio · 48 kHz · limitador -1 dBFS');
 
   useEffect(() => () => {
     void sessionRef.current?.dispose();
@@ -35,8 +42,11 @@ export function SensoryLab() {
     if (sessionRef.current === null) {
       sessionRef.current = new SensorySession({
         festival,
+        musicEngine: 'studio',
+        outputMode,
+        soundtrackBars: 48,
         autoTick: true,
-        preferences: { musicVolume: 0.5, effectsVolume: 0.8, hapticsEnabled: true },
+        preferences: { musicVolume: 0.55, effectsVolume: 0.8, hapticsEnabled: true },
       });
     }
     return sessionRef.current;
@@ -44,7 +54,10 @@ export function SensoryLab() {
 
   const sync = (session: SensorySession): void => {
     session.setFestival(festival);
-    session.setTension(tension / 100);
+    session.setPlayerState(state);
+    session.setOutputMode(outputMode);
+    setLevels(session.status.soundtrack?.instrumentLevels ?? INITIAL_LEVELS);
+    setOutputLabel(`${session.outputStatus.label} · ${session.outputStatus.channels} canales`);
   };
 
   const activate = async (): Promise<void> => {
@@ -54,9 +67,8 @@ export function SensoryLab() {
     if (status.state === 'activo') {
       setActive(true);
       const haptics = session.status.haptics;
-      const hapticLabel = haptics.source === 'capacitor' ? 'Capacitor' : haptics.source === 'web' ? 'háptica web' : 'sin háptica';
-      setEngine(`${Math.round(status.sampleRate / 1000)} kHz · ${haptics.available ? hapticLabel : 'háptica no disponible'}`);
-      setMessage('Mesa activa. Mueve la tensión y escucha cómo entran los ocho stems.');
+      setEngine(`${session.outputStatus.label} · 48 kHz · ${haptics.available ? haptics.source : 'sin háptica'}`);
+      setMessage('Banda sonora activa. Cambia de estado, festividad o salida y escucha la orquesta.');
     } else {
       setMessage(status.reason);
     }
@@ -64,27 +76,49 @@ export function SensoryLab() {
 
   const chooseFestival = (id: FestivalId): void => {
     setFestival(id);
-    setLevels(stemMix(tension / 100, festivalProfile(id)));
     sessionRef.current?.setFestival(id);
-    setMessage(`${festivalProfile(id).label} · tempo ${festivalProfile(id).tempo} BPM · ${festivalProfile(id).motif}`);
+    const profile = festivalProfile(id);
+    setMessage(`${profile.label} · ${profile.tempo} BPM · ${profile.motif}`);
   };
 
-  const moveTension = (value: number): void => {
-    const safe = Math.min(100, Math.max(0, value));
-    setTension(safe);
-    setLevels(stemMix(safe / 100, festivalProfile(festival)));
-    sessionRef.current?.setTension(safe / 100);
+  const chooseOutput = (mode: OutputMode): void => {
+    setOutputMode(mode);
+    sessionRef.current?.setOutputMode(mode);
+    const status = sessionRef.current?.outputStatus;
+    if (status === undefined) {
+      setOutputLabel(`${mode} · al activar`);
+      setMessage(`${mode} seleccionado para el próximo arranque.`);
+      return;
+    }
+    setOutputLabel(`${status.label} · ${status.channels} canales`);
+    setLevels(sessionRef.current?.status.soundtrack?.instrumentLevels ?? INITIAL_LEVELS);
+    setMessage(status.fallback ? `${mode} no disponible; usando ${status.label} (${status.channels} canales).` : status.description);
   };
 
-  const trigger = (event: EffectId, label: string): void => {
+  const chooseState = (next: PerformanceState): void => {
+    setState(next);
+    const applied = sessionRef.current?.setPlayerState(next) ?? next;
+    setLevels(sessionRef.current?.status.soundtrack?.instrumentLevels ?? INITIAL_LEVELS);
+    setMessage(`Estado ${applied}. La orquesta ajusta densidad, graves y percusión.`);
+  };
+
+  const trigger = (event: EffectId, label: string, modal: string): void => {
     const session = ensureSession();
     void session.unlock().then((status) => {
       if (status.state === 'activo') setActive(true);
       sync(session);
       const result = session.play(event);
-      const mode = result?.effect?.mode === 'hrtf' ? '3D HRTF' : result?.effect?.mode ?? 'sin audio';
-      setMessage(`${label} · ${mode}${result?.haptic === null || result?.haptic === undefined ? '' : ' · háptica'}`);
+      setMessage(`${label} · ${result?.effect?.mode ?? modal}${result?.haptic === null || result?.haptic === undefined ? '' : ' · háptica'}`);
     }).catch(() => setMessage('El navegador bloqueó el audio. Toca de nuevo.'));
+  };
+
+  const sparkle = (): void => {
+    const session = ensureSession();
+    void session.unlock().then(() => {
+      sync(session);
+      const sfx = session.playHarmonicSfx('sparkle', 69);
+      setMessage(sfx === null ? 'El SFX armónico espera al acorde activo.' : `Chime afinado en ${sfx.midi} · ${Math.round(sfx.frequency)} Hz`);
+    });
   };
 
   const toggleMute = (): void => {
@@ -97,23 +131,23 @@ export function SensoryLab() {
   return (
     <section class="seccion" id="sensorial" aria-labelledby="titulo-sensorial">
       <div class="seccion__titulo">
-        <p class="sobrelinea">Fase 4 · Motor Sensorial</p>
+        <p class="sobrelinea">Fase 4.5 · Banda Sonora Profesional</p>
         <h2 id="titulo-sensorial">La mesa suena, vibra y respira.</h2>
         <p>
-          Ocho stems sincronizados, audio 3D HRTF y háptica de precisión reaccionan a la tensión
-          de la partida y a las 19 festividades locales. Todo se sintetiza en tu dispositivo.
+          Ocho instrumentos orgánicos, voz tarareando y salida multicanal 2.0–7.1.
+          Todo se sintetiza a 48 kHz en tu dispositivo, sin archivos externos.
         </p>
       </div>
       <div class="lab">
         <div class="lab__cabecera">
           <div>
-            <span class="lab__sello">Laboratorio sensorial</span>
-            <h3>Mezcla adaptativa en vivo</h3>
-            <p>Sube la tensión y observa cómo el pad cede el paso al pulso, el bajo, la melodía y el acento festivo.</p>
+            <span class="lab__sello">Estudio · compositor de forma larga</span>
+            <h3>Banda sonora multicanal en vivo</h3>
+            <p>Movimientos de 32–64 compases con pregunta y respuesta entre voz, Rhodes y cuatro. Los graves viajan al LFE.</p>
           </div>
           <div class="lab__botones">
             <button class={`boton ${active ? 'boton--activo' : 'boton--principal'}`} type="button" onClick={activate}>
-              {active ? '✓ Sonido activo' : 'Activar sonido'}
+              {active ? '✓ Banda sonora activa' : 'Activar banda sonora'}
             </button>
             <button class="boton boton--secundario" type="button" aria-pressed={muted} disabled={!active} onClick={toggleMute}>
               {muted ? 'Reactivar audio' : 'Silenciar'}
@@ -122,64 +156,34 @@ export function SensoryLab() {
         </div>
 
         <div class="lab__cuerpo">
-          <ol class="stems" aria-label="Mezcla de los ocho stems musicales">
-            {SENSORY_STEMS.map((stem) => {
-              const level = levels[stem.id] ?? 0;
+          <ol class="stems" aria-label="Instrumentos de la banda sonora">
+            {SENSORY_INSTRUMENTS.map((instrument) => {
+              const level = levels[instrument.id] ?? 0;
+              const max = Math.max(0.001, ...Object.values(levels));
               return (
-                <li class={`stem stem--${stem.id}`} key={stem.id}>
+                <li class={`stem stem--${instrument.id}`} key={instrument.id}>
                   <div class="stem__pista">
-                    <span class="stem__relleno" style={{ height: `${Math.max(5, Math.round(level * 100))}%` }} />
+                    <span class="stem__relleno" style={{ height: `${Math.max(6, Math.round((level / max) * 100))}%` }} />
                   </div>
-                  <strong>{stem.label}</strong>
+                  <strong>{instrument.label}</strong>
                   <span class="stem__valor">{percent(level)}</span>
-                  <p>{stem.role}</p>
+                  <p>{instrument.role} · {instrument.zone}</p>
                 </li>
               );
             })}
           </ol>
 
           <div class="lab__controles">
-            <label class="lab__tension">
-              <span>Tensión de la partida</span>
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={tension}
-                aria-valuetext={`${tension} por ciento`}
-                onInput={(event) => moveTension(Number(event.currentTarget.value))}
-              />
-              <strong>{tension}%</strong>
-            </label>
-            <fieldset class="festivales">
-              <legend class="lab__leyenda">Festividad local</legend>
-              {SENSORY_FESTIVALS.map((choice) => (
-                <button
-                  class={`festival ${festival === choice.id ? 'festival--activo' : ''}`}
-                  key={choice.id}
-                  type="button"
-                  aria-pressed={festival === choice.id}
-                  onClick={() => chooseFestival(choice.id)}
-                >
-                  <span class="festival__punto" style={{ background: choice.color }} />
-                  {choice.label}
-                </button>
-              ))}
-            </fieldset>
-            <fieldset class="gestos">
-              <legend class="lab__leyenda">Probar gestos</legend>
-              {SENSORY_GESTURES.map((gesture) => (
-                <button class="gesto" key={gesture.event} type="button" onClick={() => trigger(gesture.event, gesture.label)}>
-                  <span aria-hidden="true">{gesture.icon}</span>
-                  {gesture.label}
-                </button>
-              ))}
-            </fieldset>
+            <OutputModes selected={outputMode} onSelect={chooseOutput} />
+            <StateModes selected={state} onSelect={chooseState} />
+            <FestivalPicker selected={festival} onSelect={chooseFestival} />
+            <GestureButtons onTrigger={(event, label) => trigger(event, label, 'mono')} onSparkle={sparkle} />
             <p class="lab__estado" aria-live="polite">{message}</p>
             <div class="lab__ficha">
               <span>{engine}</span>
-              <span>Limitador maestro</span>
-              <span>8 voces HRTF</span>
+              <span>{outputLabel}</span>
+              <span>32–64 compases</span>
+              <span>Voz · formantes /m/ /u/ /o/</span>
               <span>Cero archivos externos</span>
             </div>
           </div>

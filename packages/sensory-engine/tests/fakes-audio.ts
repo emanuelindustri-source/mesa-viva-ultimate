@@ -2,14 +2,19 @@ import type { AudioContextLike } from '../src/audio/contracts.js';
 import {
   FakeBuffer,
   FakeBufferSource,
+  FakeChannelMerger,
   FakeCompressor,
+  FakeConvolver,
+  FakeDelay,
+  FakeDestination,
   FakeFilter,
   FakeGain,
   FakeListener,
-  FakeNode,
+  type FakeNode,
   FakeOscillator,
   FakePanner,
   FakeStereoPanner,
+  FakeWaveShaper,
 } from './fakes-nodes.js';
 
 export * from './fakes-nodes.js';
@@ -18,14 +23,15 @@ export class FakeContext {
   readonly sampleRate: number;
   currentTime = 0;
   state = 'suspended';
-  readonly destination = new FakeNode();
+  readonly destination: FakeDestination;
   readonly listener = new FakeListener();
   readonly created: FakeNode[] = [];
   resumeCalls = 0;
   closeCalls = 0;
 
-  constructor(sampleRate = 48_000) {
+  constructor(sampleRate = 48_000, maxChannelCount = 8) {
     this.sampleRate = sampleRate;
+    this.destination = new FakeDestination(maxChannelCount);
   }
 
   createGain(): FakeGain {
@@ -58,6 +64,12 @@ export class FakeContext {
     return node;
   }
 
+  createChannelMerger(numberOfInputs = 6): FakeChannelMerger {
+    const node = new FakeChannelMerger(numberOfInputs);
+    this.created.push(node);
+    return node;
+  }
+
   createOscillator(): FakeOscillator {
     const node = new FakeOscillator();
     this.created.push(node);
@@ -74,20 +86,20 @@ export class FakeContext {
     return new FakeBuffer(channels, length, sampleRate, (_channel, index) => (index % 7) / 7 - 0.5);
   }
 
-  createDelay(): FakeNode {
-    const node = new FakeNode();
+  createDelay(): FakeDelay {
+    const node = new FakeDelay();
     this.created.push(node);
     return node;
   }
 
-  createConvolver(): FakeNode {
-    const node = new FakeNode();
+  createConvolver(): FakeConvolver {
+    const node = new FakeConvolver();
     this.created.push(node);
     return node;
   }
 
-  createWaveShaper(): FakeNode {
-    const node = new FakeNode();
+  createWaveShaper(): FakeWaveShaper {
+    const node = new FakeWaveShaper();
     this.created.push(node);
     return node;
   }
