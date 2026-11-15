@@ -1,7 +1,7 @@
 # Arquitectura de Mesa Viva Ultimate
 
-**Estado:** Fase 3 entregada. Motor 2.5D con PixiJS v8 y GSAP, entidades
-universales, atlas SVG en GPU, físicas táctiles y sensores de movimiento.
+**Estado:** Fase 4 entregada. Motor sensorial con audio espacial HRTF a 48 kHz,
+música adaptativa de ocho stems para 19 festividades y háptica Capacitor/Web.
 
 ## Visión
 
@@ -46,9 +46,18 @@ apps/client ──> engine-25d ──> design-system ──> core
 
 ### `@mesa-viva/sensory-engine`
 
-- Audio espacial HRTF y música adaptativa de ocho stems según tensión y festividad.
-- Háptica por primitivas reales con puente nativo y fallback web.
-- La Fase 4 incorporará estos sistemas al motor gráfico.
+- `AudioRuntime` perezoso a 48 kHz con desbloqueo por gesto, suspensión y cierre.
+- Cuatro buses con compresor-limitador maestro; cero archivos de audio externos.
+- `SpatialAudioEngine` HRTF atado a asientos/cartas, 8 fuentes espaciales y
+  degradación a estéreo o mono.
+- Director adaptativo de 8 stems sincronizados, 19 festividades + Día Normal,
+  tensión de partida, patrones deterministas y límite de voces.
+- Doce efectos procedurales y háptica de precisión con puente Capacitor y fallback
+  `navigator.vibrate`.
+- `SensorySession` + `createTableSensoryHooks` integran audio, háptica, silencio
+  boca abajo y agitado con `TableStage`, sin bloquear reglas ni turnos.
+- Render offline determinista y benchmark de latencia/voces para CI.
+- Laboratorio sensorial en `/` para probar tensión, festividades y gestos.
 
 ### `@mesa-viva/client`
 

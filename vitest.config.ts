@@ -10,7 +10,11 @@ export default defineConfig({
     environment: 'node',
     coverage: {
       provider: 'v8',
-      include: ['packages/core/src/**/*.ts', 'packages/design-system/src/**/*.ts'],
+      include: [
+        'packages/core/src/**/*.ts',
+        'packages/design-system/src/**/*.ts',
+        'packages/sensory-engine/src/**/*.ts',
+      ],
       exclude: [
         'packages/core/src/index.ts',
         'packages/core/src/**/types.ts',
@@ -19,6 +23,11 @@ export default defineConfig({
         'packages/design-system/src/**/types.ts',
         'packages/design-system/src/**/*-types.ts',
         'packages/design-system/src/version.ts',
+        'packages/sensory-engine/src/index.ts',
+        'packages/sensory-engine/src/version.ts',
+        'packages/sensory-engine/src/**/types.ts',
+        'packages/sensory-engine/src/audio/contracts.ts',
+        'packages/sensory-engine/src/session-types.ts',
       ],
       reporter: ['text', 'json-summary'],
       thresholds: {

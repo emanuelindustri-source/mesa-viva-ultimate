@@ -1,4 +1,7 @@
-export const SENSORY_ENGINE_VERSION = '0.1.0';
+export const SENSORY_ENGINE_VERSION = '0.5.0';
+
+/** Frecuencia de trabajo del motor de audio. */
+export const AUDIO_SAMPLE_RATE = 48_000;
 
 /** Primitivas hápticas nativas que se combinan para cada gesto del juego. */
 export const HAPTIC_PRIMITIVES = ['tick', 'click', 'thud', 'spin'] as const;
@@ -11,6 +14,22 @@ export const HAPTIC_GESTURES = {
   colocarFicha: ['click', 'thud'],
   lanzarDados: ['spin', 'thud'],
   barajar: ['click', 'click', 'tick'],
+  turno: ['tick', 'tick'],
+  victoria: ['click', 'click', 'thud'],
+  derrota: ['thud'],
+  alerta: ['click', 'click'],
+  silencio: ['tick'],
 } as const satisfies Record<string, readonly HapticPrimitive[]>;
 
 export type HapticGesture = keyof typeof HAPTIC_GESTURES;
+
+/** Rasgos que la capa de presentación puede anunciar sin cargar audio. */
+export const SENSORY_FEATURES = [
+  'audio-espacial-hrtf',
+  'musica-adaptativa-8-stems',
+  'festividades-19',
+  'haptica-capacitor',
+  'haptica-web',
+  'silencio-boca-abajo',
+  'movimiento-reducido',
+] as const;

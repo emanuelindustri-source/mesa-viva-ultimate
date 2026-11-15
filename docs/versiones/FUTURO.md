@@ -1,65 +1,66 @@
-# Próxima versión — v0.5.0 · Fase 4: Motor Sensorial
+# Próxima versión — v0.6.0 · Fase 5: Portal y Online
 
 **Estado:** pendiente de inicio
-**Depende de:** v0.4.0 (Fase 3 entregada)
-**Objetivo:** construir `@mesa-viva/sensory-engine` sobre Web Audio API para
-audio espacial HRTF, música adaptativa de ocho stems, háptica nativa/web y mezcla
-con la festividad activa, consumiendo los eventos de `core` y del motor 2.5D sin
-duplicar reglas.
+**Depende de:** v0.5.0 (Fase 4 entregada)
+**Objetivo:** convertir el monorepo en una aplicación jugable real: portal `/`,
+experiencia `/play/` con `TableStage` y sensorial conectados, PWA offline-first,
+salas locales y online con QR/PIN, y monetización con límites de frecuencia.
 
 ## Punto de retorno
 
 1. Leer `AGENTS.md`, esta nota y `docs/versiones/indice.md`.
 2. Ejecutar `pnpm install`, `pnpm lint`, `pnpm typecheck`, `pnpm build` y
    `pnpm test:coverage`.
-3. Confirmar que la Fase 3 sigue en verde (203 pruebas, 97,20% líneas).
-4. Revisar `packages/sensory-engine/`, `docs/arquitectura.md` y los hooks de
-   `TableStage` (`onShake`, `onFaceDown`, `celebrate`).
+3. Confirmar que la Fase 4 sigue en verde: **257 pruebas**, 96,33% líneas y
+   paquete cliente de 147,39 KB JS.
+4. Revisar `apps/client/src/`, `packages/engine-25d/src/pixi/app/table-stage.ts`,
+   `packages/sensory-engine/src/session.ts` y `docs/arquitectura.md`.
 5. Continuar con el primer objetivo pendiente de la lista siguiente.
 
-## Entregables de la Fase 4
+## Entregables de la Fase 5
 
-- [ ] `AudioContext` perezoso con desbloqueo por gesto y cierre sin fugas.
-- [ ] Buses de música, efectos, ambiente y UI con compresor/limitador maestro.
-- [ ] PannerNode HRTF atado a los asientos y cartas de `TableStage`.
-- [ ] Música adaptativa de ocho stems sincronizados, sin archivos externos.
-- [ ] Transiciones por tensión, turno, fase y festividad con crossfade corto.
-- [ ] Catálogo de efectos procedurales u originales, sin música con derechos.
-- [ ] Voice pooling y límite de voces simultáneas en móviles de gama media.
-- [ ] Háptica web (`navigator.vibrate`) y puente estructural Capacitor.
-- [ ] Modo silencioso, respeto de movimiento reducido y preferencia del usuario.
-- [ ] Agitar = dados/baraja; boca abajo = silenciar; sin bloquear la partida.
-- [ ] Mezcla con `festiveTheme.musicId` y acentos por festividad.
-- [ ] Pruebas deterministas con `OfflineAudioContext` y mocks ligeros.
-- [ ] Benchmark de latencia, voces y memoria; paquete total < 10 MB.
+- [ ] Shell `/play/` con Preact, selector de juegos, perfiles y ajustes.
+- [ ] Mesa jugable con `TableStage`, adaptadores de `core` y snapshots en vivo.
+- [ ] Sesión sensorial conectada: `onShake`, `onFaceDown`, `celebrate`, layout y
+      tensión enviada desde el estado real de la partida.
+- [ ] Guardado local firmado, reanudación de partida y preferencias persistentes.
+- [ ] PWA offline-first con Service Worker, precache y aviso de actualización.
+- [ ] Salas locales en la misma pantalla y por Wi-Fi con PIN/QR.
+- [ ] Salas online con WebRTC, señalización mínima, reconexión y bots de reemplazo.
+- [ ] Chat rápido, asientos, espectadores y privacidad de manos.
+- [ ] Anuncios con frecuencia limitada, nunca a mitad de jugada.
+- [ ] Billing VIP de prueba, sin fichas con valor monetario ni apuestas.
+- [ ] Accesibilidad: foco D-pad, regiones vivas, cartas descritas y contraste.
+- [ ] Pruebas de integración de la app, golden replays y smoke de navegador.
+- [ ] Presupuesto de rendimiento: 60–120 FPS y paquete total < 10 MB.
 
 ## Criterios de aceptación
 
 - `pnpm lint`, `pnpm typecheck`, `pnpm build` y `pnpm test:coverage` en verde.
-- 203 pruebas de la Fase 3 más las nuevas, sin requerir audio físico en CI.
-- Ningún archivo supera 200 líneas y `sensory-engine` no importa DOM en pruebas.
-- Arranque silencioso y sin errores si el navegador bloquea audio o háptica.
-- Latencia de disparo objetivo < 50 ms en escritorio de gama media.
-- La música no satura: limitador activo y pruebas de picos.
-- Todo audio es original/procedural; cero licencias de terceros.
-- Nota `v0.5.0-fase4-motor-sensorial.md` y esta nota reescrita para la Fase 5.
+- Las 257 pruebas de la Fase 4 más las nuevas, sin hardware real en CI.
+- Ningún archivo supera 200 líneas y `core` sigue sin DOM, red ni UI.
+- El audio no arranca sin gesto; la app muestra "activar sonido" una sola vez.
+- La mesa funciona con teclado, ratón, tacto y D-pad.
+- Una partida se reanuda desde el guardado y produce el mismo resultado.
+- La PWA carga sin red después de la primera visita.
+- El paquete web final sigue por debajo de 10 MB.
+- Nota `v0.6.0-fase5-portal-online.md` y esta nota reescrita para la Fase 6.
 
 ## Alcance que NO entra en esta fase
 
-- App jugable `/play/`, lobby online y monetización (Fase 5).
-- Expansión del catálogo de juegos de mesa (Fase 6).
+- Catálogo completo de 30 juegos y enciclopedia (Fase 6).
 - Empaquetado Android firmado y publicación en Google Play (Fase 6).
-- Voces grabadas, actores o música licenciada.
-- Audio 3D de personajes completos o motores externos.
+- Pagos reales, apuestas o premios con valor monetario.
+- Voceo grabado, actores o música licenciada.
+- Infraestructura de servidores dedicados: la señalización será mínima.
 
 ## Riesgos conocidos
 
-- Las políticas de autoplay exigen un gesto; la UI deberá mostrar "activar sonido".
-- HRTF consume CPU; se limitará el número de fuentes espaciales y se degradará a
-  estéreo si el presupuesto de audio se agota.
-- Android puede perder el foco de audio al cambiar de app; hay que pausar y
-  reanudar sin reiniciar la partida.
-- Los stems deben compartir reloj y tempo para no desincronizarse.
-- La háptica no existe en todos los navegadores; nunca debe ser requisito.
-- La generación procedural debe ser determinista para pruebas, aunque la mezcla
-  final dependa del dispositivo.
+- WebRTC necesita STUN/TURN; sin TURN algunas redes no conectan. Habrá fallback
+  a sala LAN y a bots.
+- El autoplay y la háptica cambian entre navegadores; la app debe seguir jugable
+  sin ambos.
+- La sesión sensorial consume CPU; se reutilizarán presupuestos y degradación.
+- El Service Worker puede servir versiones viejas; se mostrará aviso y se
+  invalidará caché por build.
+- El guardado firmado no debe romper partidas antiguas; habrá migración versionada.

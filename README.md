@@ -5,8 +5,9 @@
 Plataforma multiplataforma de juegos de cartas y juegos de mesa con motor 2.5D,
 modo offline, multijugador híbrido y monetización compatible con Google Play.
 
-**Estado actual:** Fase 3 — Motor 2.5D entregada. PixiJS v8 + GSAP, entidades
-universales, cámara para seis formatos, atlas SVG en GPU y sensores de movimiento.
+**Estado actual:** Fase 4 — Motor Sensorial entregada. Audio espacial HRTF a
+48 kHz, música adaptativa de ocho stems para 19 festividades y háptica
+Capacitor/Web, con laboratorio interactivo en el portal.
 
 ## Estructura
 
@@ -28,6 +29,16 @@ universales, cámara para seis formatos, atlas SVG en GPU y sensores de movimien
 - Cartas, fichas, dados, peones, pilas de fichas y asientos con pooling.
 - Atlas temático rasterizado desde SVG, sin imágenes externas.
 - `MotionSensorEngine` con giroscopio, agitado, boca abajo y watchdog seguro.
+
+## Motor sensorial
+
+- `AudioRuntime` perezoso a 48 kHz: el navegador no crea audio hasta un gesto.
+- Cuatro buses con limitador maestro y cero archivos externos.
+- Audio 3D HRTF atado a asientos y cartas, con degradación a estéreo/mono.
+- Ocho stems sincronizados; 19 festividades + Día Normal cambian escala, tempo,
+  timbre y acentos. La tensión de partida decide qué capas dominan.
+- Doce efectos procedurales y háptica de precisión para Capacitor y web.
+- Laboratorio interactivo en el portal para probar tensión, festividades y gestos.
 
 ## Comandos
 

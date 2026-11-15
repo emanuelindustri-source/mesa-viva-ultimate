@@ -160,8 +160,13 @@ a {
   background: linear-gradient(140deg, #e0b93a, #a8801c);
   color: #1a1508;
   box-shadow: 0 16px 34px rgb(201 162 39 / 22%);
-  cursor: not-allowed;
-  opacity: 0.9;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.boton--principal:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
 }
 
 .boton--secundario {
@@ -267,6 +272,11 @@ a {
   background: linear-gradient(120deg, rgb(47 111 79 / 16%), var(--fondo-alto) 55%);
 }
 
+.fase--siguiente {
+  border-color: rgb(201 162 39 / 55%);
+  background: linear-gradient(120deg, rgb(201 162 39 / 12%), var(--fondo-alto) 55%);
+}
+
 .fase__numero {
   font-variant-numeric: tabular-nums;
   color: var(--oro);
@@ -295,6 +305,10 @@ a {
 
 .fase--hecha .fase__estado {
   color: #a8e0c2;
+}
+
+.fase--siguiente .fase__estado {
+  color: var(--oro);
 }
 
 .versiones-lista {
@@ -362,6 +376,10 @@ a {
   }
 
   .boton--secundario:hover {
+    transform: none;
+  }
+
+  .boton--principal:hover {
     transform: none;
   }
 }
