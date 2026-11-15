@@ -297,6 +297,12 @@ a {
   color: #a8e0c2;
 }
 
+.versiones-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .version-card {
   display: flex;
   flex-wrap: wrap;

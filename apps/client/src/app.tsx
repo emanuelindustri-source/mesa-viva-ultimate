@@ -14,12 +14,36 @@ const PAQUETES = [
 
 const FASES = [
   { n: 0, nombre: 'Fundación', detalle: 'Monorepo, Git, CI/CD y repositorio público.', estado: 'Completada' },
-  { n: 1, nombre: 'Motor Core', detalle: 'Reglas universales, primeros juegos, bots y economía.', estado: 'Siguiente' },
-  { n: 2, nombre: 'Diseño Universal', detalle: 'Material You, 19 festividades, 6 pantallas y 11 idiomas.', estado: 'Planificada' },
+  { n: 1, nombre: 'Motor Core', detalle: 'Reglas universales, primeros juegos, bots y economía.', estado: 'Completada' },
+  { n: 2, nombre: 'Diseño Universal', detalle: 'Material You, 19 festividades, 6 pantallas y 11 idiomas.', estado: 'Siguiente' },
   { n: 3, nombre: 'Motor 2.5D', detalle: 'Entidades, perspectiva, sombras y sensores de movimiento.', estado: 'Planificada' },
   { n: 4, nombre: 'Motor Sensorial', detalle: 'Audio HRTF, música adaptativa de 8 stems y háptica.', estado: 'Planificada' },
   { n: 5, nombre: 'Portal y Online', detalle: 'Landing, app offline, P2P por QR/PIN y monetización.', estado: 'Planificada' },
   { n: 6, nombre: 'Catálogo Completo', detalle: 'Todos los juegos, enciclopedia y empaquetado Android.', estado: 'Planificada' },
+] as const;
+
+const JUEGOS = [
+  { nombre: 'Caída Venezolana', detalle: 'Seis cantos, entrega de mesa, capturas y carrera a 24 puntos.', etiqueta: '2–4 jugadores' },
+  { nombre: 'Dominó Venezolano', detalle: 'Doble seis, equipos 1v1 y 2v2, pases, tranca y 100 puntos.', etiqueta: '1v1 · 2v2' },
+  { nombre: 'Blackjack 21', detalle: 'Apuestas, pedir, plantar y doblar contra el crupier. Paga 3:2.', etiqueta: '1–4 jugadores' },
+  { nombre: 'Cartas de Colores', detalle: 'Salta, reversa, roba dos y comodines en una baraja original.', etiqueta: '2–4 jugadores' },
+] as const;
+
+const VERSIONES = [
+  {
+    version: 'v0.2.0',
+    titulo: 'Fase 1 · Motor Core',
+    detalle:
+      'Cuatro juegos completos, bots Novato/Competitivo/Maestro, economía de largo plazo con misiones, racha, tienda y guardado HMAC.',
+    nota: 'docs/versiones/v0.2.0-fase1-motor-core.md',
+  },
+  {
+    version: 'v0.1.0',
+    titulo: 'Fase 0 · Fundación',
+    detalle:
+      'Monorepo pnpm con cuatro paquetes y cliente Preact, TypeScript estricto, Vitest, CI/CD y sistema de notas de versión.',
+    nota: 'docs/versiones/v0.1.0-fase0-fundacion.md',
+  },
 ] as const;
 
 export function App() {
@@ -31,7 +55,7 @@ export function App() {
           <span>Mesa Viva</span>
         </a>
         <div class="cabecera__derecha">
-          <span class="pastilla pastilla--viva">Fase 0 completada</span>
+          <span class="pastilla pastilla--viva">Fase 1 completada</span>
           <a class="enlace" href={REPO_URL} target="_blank" rel="noreferrer">
             GitHub
           </a>
@@ -40,7 +64,7 @@ export function App() {
 
       <main>
         <section class="hero">
-          <p class="sobrelinea">Plataforma multiplataforma de juegos de mesa</p>
+          <p class="sobrelinea">Motor universal de juegos · Fase 1</p>
           <h1>
             El juego de mesa,
             <span class="hero__brillo"> vivo.</span>
@@ -59,8 +83,8 @@ export function App() {
             </a>
           </div>
           <p class="hero__nota">
-            Fase 0 entregada: la fundación técnica está compilando y verificándose de
-            forma automática en GitHub Actions.
+            Fase 1 entregada: cuatro juegos, tres niveles de bots y una economía de
+            largo plazo, verificados con 67 pruebas y 4.000 partidas simuladas.
           </p>
         </section>
 
@@ -75,6 +99,22 @@ export function App() {
                 <h3>{paquete.nombre}</h3>
                 <p>{paquete.detalle}</p>
                 <span class="version">v{paquete.version}</span>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section class="seccion" aria-labelledby="catalogo">
+          <div class="seccion__titulo">
+            <h2 id="catalogo">Primer catálogo jugable</h2>
+            <p>Cuatro juegos funcionan de punta a punta en el motor, con reglas y bots verificados.</p>
+          </div>
+          <div class="rejilla rejilla--cuatro">
+            {JUEGOS.map((juego) => (
+              <article class="tarjeta" key={juego.nombre}>
+                <h3>{juego.nombre}</h3>
+                <p>{juego.detalle}</p>
+                <span class="version">{juego.etiqueta}</span>
               </article>
             ))}
           </div>
@@ -104,19 +144,20 @@ export function App() {
             <h2 id="versiones">Historial de versiones</h2>
             <p>Cada versión queda documentada en el repositorio y publicada aquí.</p>
           </div>
-          <article class="version-card">
-            <div>
-              <span class="pastilla">v0.1.0</span>
-              <h3>Fase 0 · Fundación</h3>
-              <p>
-                Monorepo pnpm con cuatro paquetes y cliente Preact, TypeScript estricto,
-                Vitest, CI/CD y sistema de notas de versión.
-              </p>
-            </div>
-            <a class="enlace" href={`${REPO_URL}/blob/main/docs/versiones/v0.1.0-fase0-fundacion.md`} target="_blank" rel="noreferrer">
-              Leer la nota completa →
-            </a>
-          </article>
+          <div class="versiones-lista">
+            {VERSIONES.map((version) => (
+              <article class="version-card" key={version.version}>
+                <div>
+                  <span class="pastilla">{version.version}</span>
+                  <h3>{version.titulo}</h3>
+                  <p>{version.detalle}</p>
+                </div>
+                <a class="enlace" href={`${REPO_URL}/blob/main/${version.nota}`} target="_blank" rel="noreferrer">
+                  Leer la nota completa →
+                </a>
+              </article>
+            ))}
+          </div>
         </section>
       </main>
 

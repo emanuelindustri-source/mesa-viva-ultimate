@@ -5,7 +5,8 @@
 Plataforma multiplataforma de juegos de cartas y juegos de mesa con motor 2.5D,
 modo offline, multijugador híbrido y monetización compatible con Google Play.
 
-**Estado actual:** Fase 0 — Fundación entregada.
+**Estado actual:** Fase 1 — Motor Core entregada. Cuatro juegos, bots de tres
+niveles y economía de largo plazo con guardado HMAC.
 
 ## Estructura
 

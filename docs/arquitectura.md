@@ -1,5 +1,8 @@
 # Arquitectura de Mesa Viva Ultimate
 
+**Estado:** Fase 1 entregada. Motor universal, cuatro juegos, bots de tres niveles
+y economía de largo plazo verificados con 4.000 partidas simuladas.
+
 ## Visión
 
 Un monorepo pnpm con cuatro motores independientes y un cliente Preact ligero.

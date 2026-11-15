@@ -41,5 +41,5 @@ jobs:
       - name: Compilar paquetes y cliente
         run: pnpm build
 
-      - name: Ejecutar pruebas automáticas
-        run: pnpm test
+      - name: Ejecutar pruebas con cobertura
+        run: pnpm test:coverage
