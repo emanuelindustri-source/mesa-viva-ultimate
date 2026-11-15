@@ -12,8 +12,8 @@ calidad visual ya establecida.
    `v0.7.0-fase5-portal-online.md`.
 2. Ejecutar `pnpm install`, `pnpm lint`, `pnpm typecheck`, `pnpm build` y
    `pnpm test:coverage`.
-3. Confirmar la línea base: **306 pruebas**, 95,87 % líneas, 82,71 % ramas,
-   precache PWA de 3.826,45 KiB y paquete total de 3,76 MB bajo el límite de 10 MB.
+3. Confirmar la línea base: **307 pruebas**, 95,87 % líneas, 82,71 % ramas,
+   precache PWA de 3.874,75 KiB y paquete total de 3,81 MB bajo el límite de 10 MB.
 4. Revisar `apps/client/src/play/`, `packages/core/src/games/`,
    `apps/client/vite.config.ts`, `apps/client/scripts/generate-brand-assets.mjs`
    y `docs/arquitectura.md`.

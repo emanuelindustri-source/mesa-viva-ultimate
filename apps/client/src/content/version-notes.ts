@@ -1,4 +1,4 @@
-const MODULES = import.meta.glob('../../../docs/versiones/*.md', {
+const MODULES = import.meta.glob('../../../../docs/versiones/*.md', {
   query: '?raw',
   import: 'default',
   eager: true,
@@ -30,7 +30,7 @@ function parse(file: string, source: string): VersionNote | null {
   return { file: name, version: match[1] ?? '', title: title.replace(/^v[\d.]+\s*[—-]\s*/, ''), date, summary };
 }
 
-export const VERSION_NOTES: readonly VersionNote[] = Object.values(MODULES)
-  .map((source, index) => parse(Object.keys(MODULES)[index] ?? '', source))
+export const VERSION_NOTES: readonly VersionNote[] = Object.entries(MODULES)
+  .map(([file, source]) => parse(file, source))
   .filter((note): note is VersionNote => note !== null)
   .sort((a, b) => b.version.localeCompare(a.version, undefined, { numeric: true }));
