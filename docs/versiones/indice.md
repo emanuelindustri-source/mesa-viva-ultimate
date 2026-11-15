@@ -8,8 +8,9 @@ reciente. Cada nota describe qué se entregó, cómo se verificó y qué falta.
 | v0.1.0 | Fase 0 · Fundación | 14/11/2026 | Entregada | [Abrir](./v0.1.0-fase0-fundacion.md) |
 | v0.2.0 | Fase 1 · Motor Core | 14/11/2026 | Entregada | [Abrir](./v0.2.0-fase1-motor-core.md) |
 | v0.3.0 | Fase 2 · Diseño Universal | 14/11/2026 | Entregada | [Abrir](./v0.3.0-fase2-diseno-universal.md) |
+| v0.4.0 | Fase 3 · Motor 2.5D | 15/11/2026 | Entregada | [Abrir](./v0.4.0-fase3-motor-25d.md) |
 
 ## Próxima versión
 
-La nota de trabajo activa está en [FUTURO.md](./FUTURO.md). Describe la Fase 3 y el
+La nota de trabajo activa está en [FUTURO.md](./FUTURO.md). Describe la Fase 4 y el
 punto exacto de retorno.

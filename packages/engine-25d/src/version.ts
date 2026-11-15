@@ -1,4 +1,4 @@
-export const ENGINE_25D_VERSION = '0.1.0';
+export const ENGINE_25D_VERSION = '0.4.0';
 
 /** Vector tridimensional del espacio de mesa (X: ancho, Y: alto, Z: elevación). */
 export interface Vec3 {

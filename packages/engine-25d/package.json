@@ -1,6 +1,6 @@
 {
   "name": "@mesa-viva/engine-25d",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "description": "Motor gráfico 2.5D de Mesa Viva sobre PixiJS v8 y GSAP",
@@ -10,14 +10,26 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./pixi": {
+      "types": "./dist/pixi/index.d.ts",
+      "import": "./dist/pixi/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
     "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@mesa-viva/core": "workspace:*",
+    "@mesa-viva/design-system": "workspace:*",
+    "gsap": "^3.15.1",
+    "pixi.js": "^8.23.0"
   }
 }

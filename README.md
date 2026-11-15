@@ -5,8 +5,8 @@
 Plataforma multiplataforma de juegos de cartas y juegos de mesa con motor 2.5D,
 modo offline, multijugador híbrido y monetización compatible con Google Play.
 
-**Estado actual:** Fase 2 — Diseño Universal entregada. Material You, 19
-festividades, once idiomas, seis formatos de pantalla y atlas vectorial procedural.
+**Estado actual:** Fase 3 — Motor 2.5D entregada. PixiJS v8 + GSAP, entidades
+universales, cámara para seis formatos, atlas SVG en GPU y sensores de movimiento.
 
 ## Estructura
 
@@ -14,10 +14,20 @@ festividades, once idiomas, seis formatos de pantalla y atlas vectorial procedur
 | --- | --- |
 | `packages/core` | Motor universal de reglas, catálogo, bots y economía |
 | `packages/design-system` | Material You, festividades, formatos de pantalla y atlas vectorial |
-| `packages/engine-25d` | Motor gráfico PixiJS v8 + GSAP |
+| `packages/engine-25d` | Motor gráfico PixiJS v8 + GSAP, entidades y sensores |
 | `packages/sensory-engine` | Audio espacial, música adaptativa, háptica y sensores |
 | `apps/client` | Portal web `/`, app jugable `/play/` y proyecto Capacitor |
 | `docs/versiones` | Notas de versión cronológicas y próxima versión |
+
+## Motor 2.5D
+
+- Punto de entrada puro `@mesa-viva/engine-25d` para Node, CI y reglas.
+- Runtime gráfico en `@mesa-viva/engine-25d/pixi` para navegador con WebGL.
+- `TableStage` adapta cámara, área segura y paneles a móvil, tablet, televisor,
+  laptop, ultrawide y plegable.
+- Cartas, fichas, dados, peones, pilas de fichas y asientos con pooling.
+- Atlas temático rasterizado desde SVG, sin imágenes externas.
+- `MotionSensorEngine` con giroscopio, agitado, boca abajo y watchdog seguro.
 
 ## Comandos
 

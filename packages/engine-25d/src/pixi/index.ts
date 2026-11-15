@@ -1,0 +1,41 @@
+// Runtime PixiJS v8 + GSAP. Importar solo desde navegador con canvas/WebGL.
+// El índice raíz "./" permanece puro para Node, CI y pruebas sin GPU.
+
+export { createTableStage } from './app/create-stage.js';
+export type { FallbackStageOptions } from './app/fallback-stage.js';
+export { FallbackStage } from './app/fallback-stage.js';
+export type { StageHandle, StageKind } from './app/stage-handle.js';
+export type { StageMotionOptions } from './app/stage-motion.js';
+export { StageMotionBinding } from './app/stage-motion.js';
+export { TableFelt } from './app/table-felt.js';
+export type { TableStageOptions } from './app/table-stage.js';
+export { TableStage } from './app/table-stage.js';
+export { buildThemeTextureAtlas } from './atlas/build-stage-atlas.js';
+export type { ThemeTextureAtlasOptions } from './atlas/texture-atlas.js';
+export { ThemeTextureAtlas } from './atlas/texture-atlas.js';
+export { disposeThemeAtlasCache, loadThemeAtlas } from './atlas/texture-cache.js';
+export type { DragControllerOptions } from './drag/drag-controller.js';
+export { DragController } from './drag/drag-controller.js';
+export { ParticleSystem } from './effects/particle-system.js';
+export { boardAssetId, cardAssetId, tileAssetId } from './entities/asset-id.js';
+export { BoardGrid } from './entities/board-grid.js';
+export type { CardVisual } from './entities/card-entity.js';
+export { CardEntity } from './entities/card-entity.js';
+export { ChipEntity } from './entities/chip-entity.js';
+export { DiceEntity } from './entities/dice-entity.js';
+export { MedalEntity } from './entities/medal-entity.js';
+export { PlayerSeat } from './entities/player-seat.js';
+export { disposeShadowTexture, ShadowView, shadowTexture } from './entities/shadow.js';
+export type { EntityShadowState } from './entities/table-entity.js';
+export { TableEntity } from './entities/table-entity.js';
+export type { TextureProvider } from './entities/texture-provider.js';
+export { TileEntity } from './entities/tile-entity.js';
+export { TokenEntity } from './entities/token-entity.js';
+export { createDomMotionSource } from './motion/dom-motion-source.js';
+export type { FocusBounds } from './picking/focus-ring.js';
+export { FocusRing } from './picking/focus-ring.js';
+export { FocusController, PixiPicker } from './picking/picker.js';
+export type { StageLayers } from './presenter/layers.js';
+export { PropPresenter } from './presenter/props.js';
+export { TablePresenter } from './presenter/table-presenter.js';
+export { browserCapabilities } from './render/capabilities.js';

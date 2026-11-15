@@ -1,19 +1,19 @@
 # Arquitectura de Mesa Viva Ultimate
 
-**Estado:** Fase 2 entregada. Material You, calendario de 19 festividades, once
-idiomas, seis formatos de pantalla y atlas vectorial procedural verificados.
+**Estado:** Fase 3 entregada. Motor 2.5D con PixiJS v8 y GSAP, entidades
+universales, atlas SVG en GPU, físicas táctiles y sensores de movimiento.
 
 ## Visión
 
 Un monorepo pnpm con cuatro motores independientes y un cliente Preact ligero.
-La lógica de juego es 100% TypeScript puro, determinista y testeable sin navegador.
+La lógica de juego es TypeScript puro, determinista y testeable sin navegador.
 La presentación (2.5D, sonido, háptica) consume esos estados, nunca al revés.
 
 ```
-apps/client ──► engine-25d ──► design-system ──► core
-      │                                          ▲
-      ├────────► sensory-engine ─────────────────┘
-      └────────► core
+apps/client ──> engine-25d ──> design-system ──> core
+      │                                            ▲
+      ├────────> sensory-engine ───────────────────┘
+      └────────> core
 ```
 
 ## Paquetes
@@ -32,19 +32,23 @@ apps/client ──► engine-25d ──► design-system ──► core
 - Tokens Material You, incluido color dinámico Android 12+.
 - `HolidayEngine`: 19 festividades + Día Normal, según fecha y país (`Intl`).
 - Seis formatos: móvil, tablet, televisor, laptop, ultrawide y plegable.
-- `VectorAtlasGenerator`: SVG procedural a atlas de GPU, sin imágenes pesadas.
+- `VectorAtlasGenerator`: SVG procedural en siete familias, sin imágenes externas.
 
 ### `@mesa-viva/engine-25d`
 
-- PixiJS v8 + GSAP. Cámara 2.5D, elevación Z, sombras proyectadas y físicas táctiles.
-- Entidades universales reutilizables con object pooling.
-- Objetivo: 60–120 FPS en hardware modesto.
+- Superficie pura (`.`) sin PixiJS: cámara, layout, físicas, pooling, picking,
+  sensores y adaptadores de estado de `core`.
+- Runtime `./pixi`: `TableStage`, entidades, atlas de GPU, partículas, D-pad y
+  fallback DOM cuando no existe WebGL.
+- Cámara 2.5D por formato, elevación Z, sombras proyectadas y aterrizaje con rebote.
+- Object pooling para cartas, fichas, peones, sombras y partículas; culling por
+  viewport y cero objetos temporales en el ticker.
 
 ### `@mesa-viva/sensory-engine`
 
 - Audio espacial HRTF y música adaptativa de ocho stems según tensión y festividad.
 - Háptica por primitivas reales con puente nativo y fallback web.
-- Sensores: paralaje con giroscopio, agitado para dados y boca abajo para ocultar.
+- La Fase 4 incorporará estos sistemas al motor gráfico.
 
 ### `@mesa-viva/client`
 
@@ -56,7 +60,7 @@ apps/client ──► engine-25d ──► design-system ──► core
 
 ## Despliegue
 
-- `main` → CI (lint, build, test) → GitHub Pages en
+- `main` → CI (lint, tipos, build y cobertura) → GitHub Pages en
   `https://emanuelindustri-source.github.io/mesa-viva-ultimate/`.
 - Android se empaqueta en la Fase 6 y se publica como artefacto firmado `.aab`.
 
