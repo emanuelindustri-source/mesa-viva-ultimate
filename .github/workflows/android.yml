@@ -1,0 +1,32 @@
+name: Android
+
+# Flujo preparado para la Fase 6. Hasta que exista apps/client/android,
+# la verificación termina en verde informando que aún no hay proyecto nativo.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  comprobar:
+    name: Comprobar proyecto Android
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Verificar carpeta nativa
+        run: |
+          if [ ! -d "apps/client/android" ]; then
+            echo "El proyecto Android todavía no existe. Se generará en la Fase 6."
+            exit 0
+          fi
+          echo "Proyecto Android detectado. La compilación .aab se activará en la Fase 6."

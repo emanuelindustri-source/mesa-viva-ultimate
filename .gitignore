@@ -1,0 +1,33 @@
+# Dependencias
+node_modules/
+.pnpm-store/
+
+# Compilados
+dist/
+build/
+coverage/
+*.tsbuildinfo
+.vite/
+
+# Android / Capacitor
+apps/client/android/.gradle/
+apps/client/android/app/build/
+apps/client/android/build/
+apps/client/android/local.properties
+*.apk
+*.aab
+*.jks
+*.keystore
+
+# Secretos y configuración local
+.env
+.env.*
+!.env.example
+*.local
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log

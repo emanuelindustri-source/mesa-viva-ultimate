@@ -1,0 +1,24 @@
+{
+  "name": "mesa-viva-ultimate",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mesa Viva Ultimate: plataforma multiplataforma de juegos de cartas y mesa con motor 2.5D",
+  "packageManager": "pnpm@12.21.0",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "biome check .",
+    "format": "biome check --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.0",
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}

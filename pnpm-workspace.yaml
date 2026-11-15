@@ -1,0 +1,7 @@
+packages:
+  - packages/*
+  - apps/*
+
+# Scripts de instalación permitidos explícitamente (pnpm 12 los bloquea por defecto).
+allowBuilds:
+  esbuild: true
