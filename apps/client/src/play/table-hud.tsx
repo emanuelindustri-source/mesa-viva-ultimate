@@ -8,8 +8,8 @@ interface TableHudProps {
   readonly isMyTurn: boolean;
   readonly onExit: () => void;
   readonly onHistory: () => void;
-  readonly onAudio: () => void;
-  readonly onSettings: () => void;
+  readonly onAudio?: () => void;
+  readonly onSettings?: () => void;
 }
 
 /** HUD de una sola línea y botones flotantes de solo iconos. */
@@ -28,8 +28,8 @@ export function TableHud({ title, phaseLabel, turnName, chips, isMyTurn, onExit,
       </header>
       <nav class="hud-lateral" aria-label="Controles de mesa">
         <button class="boton-hud" type="button" onClick={onHistory} aria-label="Historial de jugadas"><History size={20} /></button>
-        <button class="boton-hud" type="button" onClick={onAudio} aria-label="Audio multicanal"><Volume2 size={20} /></button>
-        <button class="boton-hud" type="button" onClick={onSettings} aria-label="Ajustes"><Settings size={20} /></button>
+        {onAudio !== undefined && <button class="boton-hud" type="button" onClick={onAudio} aria-label="Audio multicanal"><Volume2 size={20} /></button>}
+        {onSettings !== undefined && <button class="boton-hud" type="button" onClick={onSettings} aria-label="Ajustes"><Settings size={20} /></button>}
       </nav>
     </>
   );

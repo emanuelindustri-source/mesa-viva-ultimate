@@ -1,9 +1,15 @@
 import type { GameResult } from '@mesa-viva/core';
 import type { Theme } from '@mesa-viva/design-system';
-import { ArrowLeft, Crown } from 'lucide-react';
+import { Trophy } from 'lucide-react';
+import { useMemo, useState } from 'preact/hooks';
 import type { AppSettings } from '../ui/settings.js';
-import { GameDetailsView } from './game-details.js';
+import { gameDefinition } from './game-defs.js';
+import { buildHistory } from './history.js';
+import { PlayHistoryDrawer } from './play-history-drawer.js';
 import type { RoomState } from './room-protocol.js';
+import { SeatOverlay } from './seat-overlay.js';
+import { PHASE_LABEL } from './session-view.js';
+import { TableHud } from './table-hud.js';
 import { TableStageView } from './table-stage.js';
 
 interface RemoteGamePanelProps {
@@ -15,37 +21,60 @@ interface RemoteGamePanelProps {
   readonly onExit: () => void;
 }
 
-/** Vista de invitado: el anfitrión envía solo la mano y acciones de este jugador. */
+/** Vista de invitado con la misma mesa inmersiva; sin paneles de depuración. */
 export function RemoteGamePanel({ state, playerId, theme, settings, onAction, onExit }: RemoteGamePanelProps) {
   const view = state.views[playerId];
+  const [historyOpen, setHistoryOpen] = useState(false);
+  const entries = useMemo(() => {
+    const log = (view?.view as { log?: readonly string[] } | undefined)?.log ?? [];
+    return buildHistory(log, view?.snapshot.seats ?? []);
+  }, [view]);
   if (view === undefined) {
     return <div class="panel"><p>Cargando tu vista de la mesa…</p></div>;
   }
   const result = state.result as GameResult | null;
+  const snapshot = view.snapshot;
+  const turnSeat = snapshot.seats.find((seat) => seat.id === view.currentPlayer) ?? snapshot.seats.find((seat) => seat.isTurn);
+  const viewerSeat = snapshot.seats.find((seat) => seat.isViewer);
+  const chips = viewerSeat?.bankroll ?? viewerSeat?.score ?? 0;
   return (
-    <div class="juego">
-      <header class="juego__cabecera">
-        <button class="icono-boton" type="button" onClick={onExit} aria-label="Salir de la sala"><ArrowLeft size={20} /></button>
-        <div><p class="sobrelinea">Sala online · {state.turnPlayer ?? 'mesa'}</p><h1>{state.gameKey}</h1></div>
-        <span class="pastilla">{state.phase}</span>
-      </header>
-      <div class="juego__cuerpo">
-        <div class="juego__mesa">
-          <TableStageView theme={theme} snapshot={view.snapshot} rotation={settings.tableRotation} reducedMotion={settings.reducedMotion} />
-          <GameDetailsView gameKey={state.gameKey} view={view.view} viewerId={playerId} />
-        </div>
-        <aside class="juego__acciones">
-          <div class="juego__acciones-cabecera"><span>Tu turno</span><span class="pastilla">{view.actions.length} acciones</span></div>
-          {view.actions.length === 0 ? <p class="vacio">Esperando a los demás jugadores…</p> : (
-            <div class="juego__botones">
-              {view.actions.map((action) => <button class="boton boton--principal" type="button" key={action.id} onClick={() => onAction(action.action)}>{action.label}</button>)}
-            </div>
-          )}
-          {result !== null && (
-            <div class="resultado-inline"><Crown size={18} /><strong>{result.winners.length > 0 ? 'Mesa terminada' : 'Empate'}</strong><span>{result.reason}</span></div>
-          )}
-        </aside>
+    <div class="mesa-pantalla">
+      <div class="mesa-pantalla__lienzo">
+        <TableStageView theme={theme} snapshot={snapshot} rotation={settings.tableRotation} reducedMotion={settings.reducedMotion} />
       </div>
+      <TableHud
+        title={gameDefinition(state.gameKey).name}
+        phaseLabel={PHASE_LABEL[state.phase] ?? 'Mesa'}
+        turnName={turnSeat?.name ?? 'Mesa'}
+        chips={chips}
+        isMyTurn={view.currentPlayer === playerId}
+        onExit={onExit}
+        onHistory={() => setHistoryOpen((value) => !value)}
+      />
+      <SeatOverlay seats={snapshot.seats} bubbles={{}} />
+      {view.actions.length > 0 && (
+        <div class="barra-accion" role="toolbar" aria-label="Acciones de la mesa">
+          <div class="barra-accion__contenido">
+            {view.actions.map((action) => (
+              <button class="boton-accion" type="button" key={action.id} onClick={() => onAction(action.action)}>{action.label}</button>
+            ))}
+          </div>
+        </div>
+      )}
+      <PlayHistoryDrawer open={historyOpen} entries={entries} players={snapshot.seats.map((seat) => ({ id: seat.id, name: seat.name, score: seat.score }))} onClose={() => setHistoryOpen(false)} />
+      {result !== null && (
+        <div class="resultado">
+          <div class="resultado__tarjeta">
+            <span class="resultado__icono"><Trophy size={30} /></span>
+            <h2>{result.winners.length > 0 ? 'Mesa terminada' : 'Tablas'}</h2>
+            <p>{result.reason}</p>
+            <div class="resultado__puntos">
+              {Object.entries(result.scores).map(([id, score]) => <span key={id}>{snapshot.seats.find((seat) => seat.id === id)?.name ?? id}: <strong>{score}</strong></span>)}
+            </div>
+            <div class="resultado__acciones"><button class="boton-accion boton-accion--oro" type="button" onClick={onExit}>Volver al salón</button></div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
