@@ -10,10 +10,15 @@ export default defineConfig({
     environment: 'node',
     coverage: {
       provider: 'v8',
-      include: ['packages/core/src/**/*.ts'],
+      include: ['packages/core/src/**/*.ts', 'packages/design-system/src/**/*.ts'],
       exclude: [
         'packages/core/src/index.ts',
         'packages/core/src/**/types.ts',
+        'packages/design-system/src/index.ts',
+        'packages/design-system/src/**/index.ts',
+        'packages/design-system/src/**/types.ts',
+        'packages/design-system/src/**/*-types.ts',
+        'packages/design-system/src/version.ts',
       ],
       reporter: ['text', 'json-summary'],
       thresholds: {

@@ -5,8 +5,8 @@
 Plataforma multiplataforma de juegos de cartas y juegos de mesa con motor 2.5D,
 modo offline, multijugador híbrido y monetización compatible con Google Play.
 
-**Estado actual:** Fase 1 — Motor Core entregada. Cuatro juegos, bots de tres
-niveles y economía de largo plazo con guardado HMAC.
+**Estado actual:** Fase 2 — Diseño Universal entregada. Material You, 19
+festividades, once idiomas, seis formatos de pantalla y atlas vectorial procedural.
 
 ## Estructura
 

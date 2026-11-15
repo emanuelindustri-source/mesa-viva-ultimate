@@ -7,7 +7,7 @@ const REPO_URL = 'https://github.com/emanuelindustri-source/mesa-viva-ultimate';
 
 const PAQUETES = [
   { nombre: 'Motor Core', detalle: 'Reglas, bots y economía', version: CORE_VERSION },
-  { nombre: 'Diseño', detalle: 'Material You y festividades', version: DESIGN_SYSTEM_VERSION },
+  { nombre: 'Diseño', detalle: 'Material You, 19 festividades, 11 idiomas y atlas SVG', version: DESIGN_SYSTEM_VERSION },
   { nombre: 'Motor 2.5D', detalle: 'PixiJS, sombras y físicas', version: ENGINE_25D_VERSION },
   { nombre: 'Sensorial', detalle: 'Audio espacial y háptica', version: SENSORY_ENGINE_VERSION },
 ] as const;
@@ -15,8 +15,8 @@ const PAQUETES = [
 const FASES = [
   { n: 0, nombre: 'Fundación', detalle: 'Monorepo, Git, CI/CD y repositorio público.', estado: 'Completada' },
   { n: 1, nombre: 'Motor Core', detalle: 'Reglas universales, primeros juegos, bots y economía.', estado: 'Completada' },
-  { n: 2, nombre: 'Diseño Universal', detalle: 'Material You, 19 festividades, 6 pantallas y 11 idiomas.', estado: 'Siguiente' },
-  { n: 3, nombre: 'Motor 2.5D', detalle: 'Entidades, perspectiva, sombras y sensores de movimiento.', estado: 'Planificada' },
+  { n: 2, nombre: 'Diseño Universal', detalle: 'Material You, 19 festividades, 6 pantallas y 11 idiomas.', estado: 'Completada' },
+  { n: 3, nombre: 'Motor 2.5D', detalle: 'Entidades, perspectiva, sombras y sensores de movimiento.', estado: 'Siguiente' },
   { n: 4, nombre: 'Motor Sensorial', detalle: 'Audio HRTF, música adaptativa de 8 stems y háptica.', estado: 'Planificada' },
   { n: 5, nombre: 'Portal y Online', detalle: 'Landing, app offline, P2P por QR/PIN y monetización.', estado: 'Planificada' },
   { n: 6, nombre: 'Catálogo Completo', detalle: 'Todos los juegos, enciclopedia y empaquetado Android.', estado: 'Planificada' },
@@ -30,6 +30,13 @@ const JUEGOS = [
 ] as const;
 
 const VERSIONES = [
+  {
+    version: 'v0.3.0',
+    titulo: 'Fase 2 · Diseño Universal',
+    detalle:
+      'Material You con color dinámico, 19 festividades, 11 idiomas, seis formatos de pantalla y 200 assets SVG procedurales.',
+    nota: 'docs/versiones/v0.3.0-fase2-diseno-universal.md',
+  },
   {
     version: 'v0.2.0',
     titulo: 'Fase 1 · Motor Core',
@@ -55,7 +62,7 @@ export function App() {
           <span>Mesa Viva</span>
         </a>
         <div class="cabecera__derecha">
-          <span class="pastilla pastilla--viva">Fase 1 completada</span>
+          <span class="pastilla pastilla--viva">Fase 2 completada</span>
           <a class="enlace" href={REPO_URL} target="_blank" rel="noreferrer">
             GitHub
           </a>
@@ -64,7 +71,7 @@ export function App() {
 
       <main>
         <section class="hero">
-          <p class="sobrelinea">Motor universal de juegos · Fase 1</p>
+          <p class="sobrelinea">Motor universal de juegos · Fase 2</p>
           <h1>
             El juego de mesa,
             <span class="hero__brillo"> vivo.</span>
@@ -83,8 +90,8 @@ export function App() {
             </a>
           </div>
           <p class="hero__nota">
-            Fase 1 entregada: cuatro juegos, tres niveles de bots y una economía de
-            largo plazo, verificados con 67 pruebas y 4.000 partidas simuladas.
+            Fase 2 entregada: Material You, 19 festividades, once idiomas, seis formatos
+            de pantalla y 200 assets SVG procedurales, verificados con 159 pruebas.
           </p>
         </section>
 

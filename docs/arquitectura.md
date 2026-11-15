@@ -1,7 +1,7 @@
 # Arquitectura de Mesa Viva Ultimate
 
-**Estado:** Fase 1 entregada. Motor universal, cuatro juegos, bots de tres niveles
-y economía de largo plazo verificados con 4.000 partidas simuladas.
+**Estado:** Fase 2 entregada. Material You, calendario de 19 festividades, once
+idiomas, seis formatos de pantalla y atlas vectorial procedural verificados.
 
 ## Visión
 
