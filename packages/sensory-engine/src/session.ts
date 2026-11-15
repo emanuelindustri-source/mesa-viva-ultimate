@@ -181,9 +181,7 @@ export class SensorySession {
   celebrate(kind: 'victoria' | 'derrota' = 'victoria'): SensoryPlayResult | null {
     this.director.setPhase('final');
     this.setTension({ phase: 'final', decisive: true, pressure: 1 });
-    const result = this.play(kind === 'victoria' ? 'celebracion' : 'derrota');
-    this.haptics.celebrate(kind);
-    return result;
+    return this.play(kind === 'victoria' ? 'celebracion' : 'derrota');
   }
 
   async dispose(): Promise<void> {

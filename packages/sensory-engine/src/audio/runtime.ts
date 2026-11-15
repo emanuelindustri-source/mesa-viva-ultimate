@@ -84,6 +84,14 @@ export class AudioRuntime {
       } catch (error) {
         this.unavailable = true;
         this.reason = error instanceof Error ? error.message : 'Audio no disponible';
+        if (this.ctx !== null) {
+          try {
+            await this.ctx.close();
+          } catch {
+            // El contexto nunca llegó a estar operativo.
+          }
+          this.ctx = null;
+        }
         return this.status;
       }
     }
