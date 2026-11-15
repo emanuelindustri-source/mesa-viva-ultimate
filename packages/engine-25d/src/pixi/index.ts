@@ -16,6 +16,8 @@ export { ThemeTextureAtlas } from './atlas/texture-atlas.js';
 export { disposeThemeAtlasCache, loadThemeAtlas } from './atlas/texture-cache.js';
 export type { DragControllerOptions } from './drag/drag-controller.js';
 export { DragController } from './drag/drag-controller.js';
+export type { DragDirectorOptions } from './drag/drag-director.js';
+export { DragDirector } from './drag/drag-director.js';
 export { ParticleSystem } from './effects/particle-system.js';
 export { boardAssetId, cardAssetId, tileAssetId } from './entities/asset-id.js';
 export { BoardGrid } from './entities/board-grid.js';

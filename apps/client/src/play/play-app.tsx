@@ -33,7 +33,7 @@ import { useSensory } from './use-sensory.js';
 import './play.css';
 
 type PlayView = 'lobby' | 'game' | 'remote' | 'room' | 'profile' | 'shop' | 'settings';
-interface GameConfig { readonly game: GameKey; readonly mode: PlayMode; readonly humanCount: number; readonly botLevel: BotLevel; }
+interface GameConfig { readonly game: GameKey; readonly mode: PlayMode; readonly humanCount: number; readonly botLevel: BotLevel; readonly seats?: readonly import('./game-session.js').PlayerSeat[]; }
 
 export function PlayApp() {
   const settings = useSettings();
@@ -68,13 +68,17 @@ export function PlayApp() {
     setToast(`+${application.reward.xp} XP · +${application.reward.chips} fichas`);
   }, [remoteState, remoteRoom]);
 
-  const start = (game: GameKey, mode: PlayMode, humanCount: number, botLevel: BotLevel): void => {
-    const next = newGameSession({ game, mode, humanName: profile.displayName, botLevel, humanCount, seed: Date.now() });
+  const start = (game: GameKey, mode: PlayMode, humanCount: number, botLevel: BotLevel, seats?: readonly import('./game-session.js').PlayerSeat[]): void => {
+    const next = newGameSession({ game, mode, humanName: profile.displayName, botLevel, humanCount, seed: Date.now(), ...(seats !== undefined ? { seats } : {}) });
     reported.current = false;
     setSession(next);
-    setConfig({ game, mode, humanCount, botLevel });
+    setConfig({ game, mode, humanCount, botLevel, ...(seats !== undefined ? { seats } : {}) });
     setView('game');
     telemetry.track('match.started', { game, mode });
+  };
+
+  const salaStart = (game: GameKey, seats: readonly import('./game-session.js').PlayerSeat[]): void => {
+    start(game, 'local', seats.length, 'competitivo', seats);
   };
 
   const finished = (outcome: 'victoria' | 'derrota' | 'empate'): void => {
@@ -97,7 +101,7 @@ export function PlayApp() {
       reported.current = false;
       return;
     }
-    start(config.game, config.mode, config.humanCount, config.botLevel);
+    start(config.game, config.mode, config.humanCount, config.botLevel, config.seats);
   };
 
   const exitGame = (): void => {
@@ -139,18 +143,18 @@ export function PlayApp() {
   };
 
   return (
-    <div class="pagina play-app">
-      <TopNav active="play" compact />
-      <div class="play-barra">
+    <div class={`pagina play-app ${view === 'game' || view === 'remote' ? 'play-app--inmersiva' : ''}`}>
+      {view !== 'game' && view !== 'remote' && <TopNav active="play" compact />}
+      {view !== 'game' && view !== 'remote' && <div class="play-barra">
         <a class="boton boton--secundario" href={routeHref('')}><Home size={16} /> Portal</a>
         <button class="boton boton--secundario" type="button" onClick={() => setView('lobby')}>Salón</button>
         <button class="boton boton--secundario" type="button" onClick={() => setView('profile')}><User size={16} /> {profile.displayName}</button>
         <button class="boton boton--secundario" type="button" onClick={() => setView('shop')}><ShoppingBag size={16} /> Tienda</button>
         <button class="boton boton--secundario" type="button" onClick={() => setAudioOpen(true)}><Headphones size={16} /> Audio</button>
         <span class="play-barra__fichas"><Volume2 size={15} /> {profile.chips} fichas</span>
-      </div>
-      {view === 'lobby' && <><AdBanner vip={settings.vip} consent={settings.adsConsent} onUpgrade={vip} /><Lobby profile={profile} themeState={themeState} settings={settings} onStart={start} onRoom={() => setView('room')} onProfile={() => setView('profile')} onShop={() => setView('shop')} onSettings={() => setView('settings')} onAudio={() => setAudioOpen(true)} /></>}
-      {view === 'game' && session !== null && <GamePanel session={session} theme={themeState.theme} settings={settings} sensory={sensory} externalRevision={roomRevision} onChange={() => hostGame?.broadcast()} onExit={exitGame} onRestart={restart} onFinished={finished} />}
+      </div>}
+      {view === 'lobby' && <><AdBanner vip={settings.vip} consent={settings.adsConsent} onUpgrade={vip} /><Lobby profile={profile} themeState={themeState} settings={settings} onStart={start} onSalaStart={salaStart} onRoom={() => setView('room')} onProfile={() => setView('profile')} onShop={() => setView('shop')} onSettings={() => setView('settings')} onAudio={() => setAudioOpen(true)} /></>}
+      {view === 'game' && session !== null && <GamePanel session={session} theme={themeState.theme} settings={settings} sensory={sensory} chips={profile.chips} externalRevision={roomRevision} onChange={() => hostGame?.broadcast()} onExit={exitGame} onRestart={restart} onFinished={finished} />}
       {view === 'remote' && remoteState !== null && <RemoteGamePanel state={remoteState} playerId={remoteRoom?.currentPlayerId ?? ''} theme={themeState.theme} settings={settings} onAction={(action) => remoteRoom?.sendAction(action)} onExit={exitGame} />}
       {view === 'room' && <RoomPanel profileName={profile.displayName} theme={themeState.theme} settings={settings} botLevel="competitivo" onHostGame={hostStart} onGuestState={guestState} onExit={() => setView('lobby')} />}
       {view === 'profile' && <ProfilePanel profile={profile} onBack={() => setView('lobby')} onShop={() => setView('shop')} onReward={() => void reward()} />}
@@ -160,7 +164,7 @@ export function PlayApp() {
       <Dialog open={audioOpen} title="Estudio de audio y háptica" onClose={() => setAudioOpen(false)} wide><AudioStudioPanel settings={settings} sensory={sensory} /></Dialog>
       <ConsentDialog open={consentOpen} onClose={() => setConsentOpen(false)} />
       <RewardedAdHost />
-      <footer class="pie"><p>Mesa Viva · Fichas virtuales sin valor monetario real. Sin apuestas.</p><p><a class="enlace" href={routeHref('privacy')}>Privacidad</a> · <a class="enlace" href={routeHref('terms')}>Términos</a></p></footer>
+      {view !== 'game' && view !== 'remote' && <footer class="pie"><p>Mesa Viva · Fichas virtuales sin valor monetario real. Sin apuestas.</p><p><a class="enlace" href={routeHref('privacy')}>Privacidad</a> · <a class="enlace" href={routeHref('terms')}>Términos</a></p></footer>}
     </div>
   );
 }

@@ -135,3 +135,48 @@
   margin-left: auto;
 }
 
+.sala-juegos__cabecera {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.sala-juegos__cabecera h2 { margin: 4px 0 6px; }
+.sala-juegos__nota { margin: 0; color: var(--tenue); font-size: 0.8rem; max-width: 520px; line-height: 1.55; }
+.sala-juegos__acciones { display: flex; gap: 8px; flex-wrap: wrap; }
+.sala-juegos__acciones .boton { min-height: 44px; padding: 0 18px; font-size: 0.84rem; }
+.sala-juegos__acciones .boton[disabled] { opacity: 0.45; cursor: not-allowed; }
+.sala-juegos__rejilla { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+.sala-juegos__vacio { color: var(--tenue); font-size: 0.74rem; margin: 0; }
+
+.invitado {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--panel) 92%, #fff 4%), var(--panel));
+  min-width: 0;
+}
+
+.invitado--owner { border-color: color-mix(in srgb, var(--oro) 50%, var(--borde)); }
+.invitado .retrato { width: 52px; height: 52px; border-radius: 50%; overflow: hidden; flex: 0 0 auto; border: 2px solid color-mix(in srgb, var(--oro) 55%, transparent); }
+.invitado div { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+.invitado strong, .invitado input { font-size: 0.82rem; font-weight: 700; color: var(--tinta); }
+.invitado input { width: 100%; border: 1px solid transparent; border-radius: 7px; background: transparent; padding: 2px 4px; font: inherit; font-size: 0.82rem; }
+.invitado input:hover, .invitado input:focus { border-color: var(--borde); background: var(--fondo-alto); outline: none; }
+.invitado small { color: var(--tenue); font-size: 0.64rem; }
+.invitado__insignia { padding: 3px 8px; border-radius: 999px; background: color-mix(in srgb, var(--oro) 20%, transparent); color: var(--oro); font-size: 0.56rem; font-weight: 800; letter-spacing: 0.08em; }
+.invitado__quitar { display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid var(--borde); border-radius: 9px; background: transparent; color: var(--tenue); cursor: pointer; }
+.invitado__quitar:hover { border-color: var(--rojo); color: var(--rojo); }
+
+@media (max-width: 720px) {
+  .sala-juegos__acciones { width: 100%; }
+  .sala-juegos__acciones .boton { flex: 1; }
+  .invitado .retrato { width: 42px; height: 42px; }
+}
+

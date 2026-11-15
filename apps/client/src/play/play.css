@@ -2,5 +2,15 @@
 @import './play-mode.css';
 @import './play-panels.css';
 @import './play-game.css';
+@import './table-shell.css';
+@import './table-seat-cards.css';
+@import './table-seat-layout.css';
+@import './table-hud.css';
+@import './table-chat.css';
+@import './card-art.css';
+@import './table-history.css';
+@import './table-sheets.css';
+@import './board-chess.css';
+@import './board-showcase.css';
 @import './play-ads.css';
 @import './play-room.css';

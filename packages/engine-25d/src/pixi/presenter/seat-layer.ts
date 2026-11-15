@@ -18,6 +18,7 @@ export interface SeatLayerOptions {
   readonly seatLayer: Container;
   readonly boardLayer: Container;
   readonly reducedMotion: boolean;
+  readonly showSeats?: boolean;
 }
 
 /** Asientos con rango/turno/chat y tablero de casillas compartido. */
@@ -26,9 +27,11 @@ export class SeatLayer {
   private readonly seats = new Map<string, PlayerSeat>();
   private readonly pool: ObjectPool<PlayerSeat>;
   private readonly board: BoardGrid;
+  private readonly showSeats: boolean;
 
   constructor(options: SeatLayerOptions) {
     this.options = options;
+    this.showSeats = options.showSeats !== false;
     this.pool = new ObjectPool<PlayerSeat>({
       initial: 4,
       max: 8,
@@ -45,11 +48,16 @@ export class SeatLayer {
   }
 
   render(snapshot: TableSnapshot): void {
-    const ids = new Set(snapshot.seats.map((seat) => seat.id));
+    const ids = this.showSeats ? new Set(snapshot.seats.map((seat) => seat.id)) : new Set<string>();
     for (const [id, entity] of this.seats) {
       if (ids.has(id)) continue;
       this.pool.release(entity);
       this.seats.delete(id);
+    }
+    if (!this.showSeats) {
+      this.board.setBoard(snapshot.board.kind, snapshot.board.rows || 8, snapshot.board.columns || 8, snapshot.board.highlighted);
+      this.board.visible = snapshot.board.kind !== 'ninguno';
+      return;
     }
     const viewer = Math.max(0, viewerSeatIndex(snapshot));
     const slots = seatsFor(snapshot.seats.length, this.options.layout, viewer);

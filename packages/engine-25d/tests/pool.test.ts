@@ -16,7 +16,8 @@ describe('object pooling', () => {
     });
     expect(pool.stats).toMatchObject({ created: 3, free: 3, inUse: 0 });
     const first = pool.acquire();
-    expect(first.alive).toBe(true);
+    expect(first.alive).toBe(false);
+    first.alive = true;
     expect(pool.stats.inUse).toBe(1);
     expect(pool.release(first)).toBe(true);
     expect(first.alive).toBe(false);

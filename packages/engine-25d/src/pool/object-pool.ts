@@ -46,7 +46,9 @@ export class ObjectPool<T> {
   prewarm(count: number): void {
     const target = Math.min(this.max, Math.max(0, Math.floor(count)));
     while (this.created < target) {
-      this.freeItems.push(this.createItem());
+      const item = this.createItem();
+      if (this.resetItem !== null) this.resetItem(item);
+      this.freeItems.push(item);
       this.created += 1;
     }
   }

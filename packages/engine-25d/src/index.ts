@@ -11,6 +11,8 @@ export type { CameraPreset } from './camera/presets.js';
 export { CAMERA_PRESETS, cameraForFormat, gyroParallax } from './camera/presets.js';
 export type { PlanePoint, ProjectedPoint, ProjectorOptions } from './camera/projector.js';
 export { Projector } from './camera/projector.js';
+export type { CardDropHooks, DropKind, DropPoint, DropReason, DropResult, DropZone } from './drag/drop-session.js';
+export { CardDropSession, zoneAt } from './drag/drop-session.js';
 export type { DragGestureOptions, GestureEndResult, GestureVelocity, PointerSample } from './drag/gesture.js';
 export { DragGesture } from './drag/gesture.js';
 export type { DragFrame, DragPhysicsConfig, DragShadow, DragVelocity } from './drag/physics.js';
@@ -104,6 +106,7 @@ export { detectRenderCapabilities, planRender } from './render/mode.js';
 export {
   snapshotFromBlackjack,
   snapshotFromCaida,
+  snapshotFromChess,
   snapshotFromColors,
   snapshotFromDomino,
 } from './state/adapters.js';
@@ -115,6 +118,7 @@ export type {
   CardZone,
   ChipSnapshot,
   DiceSnapshot,
+  DropHint,
   SeatSnapshot,
   TableSnapshot,
   TileSnapshot,

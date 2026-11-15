@@ -90,6 +90,11 @@ export class TableStage implements StageHandle {
       textures: this.options.textures ?? null,
       reducedMotion: this.reducedMotion,
       quality: this.quality,
+      showSeats: this.options.showSeats !== false,
+      onCardDrop: (result) => {
+        this.particles?.emit('stars', result.at.x, result.at.y, this.options.theme, this.quality === 'alta' ? 14 : 8);
+        this.options.onCardDrop?.(result);
+      },
     }, this.feltHolder);
     this.interaction = new StageInteraction(() => this.scene, this.focusRing);
     this.particles = new ParticleSystem(this.quality);
@@ -99,7 +104,6 @@ export class TableStage implements StageHandle {
     this.resizeObserver = new ResizeObserver(() => this.resize());
     this.resizeObserver.observe(this.options.container);
   }
-
   private readonly tick = (): void => {
     if (this.disposed || this.scene === null) return;
     const dt = this.app.ticker.deltaMS / 1000;
@@ -107,14 +111,12 @@ export class TableStage implements StageHandle {
     this.particles?.update(dt);
     this.monitor.record(this.app.ticker.deltaMS);
   };
-
   resize(viewport?: ViewportInfo): void {
     if (this.disposed || this.scene === null) return;
     this.scene.resize(viewport ?? measureViewport(this.options.container, this.options.viewport));
     this.app.renderer.resize(this.scene.layout.width, this.scene.layout.height);
     this.interaction?.reset();
   }
-
   render(snapshot: TableSnapshot): void {
     this.scene?.render(snapshot);
     const counts = this.scene?.counts;
@@ -131,9 +133,12 @@ export class TableStage implements StageHandle {
     if (over && this.previousPhase !== snapshot.phase) this.celebrate();
     this.previousPhase = snapshot.phase;
   }
-
   setHandHidden(hidden: boolean): void {
     this.scene?.presenter.setHandHidden(hidden);
+  }
+  async capture(): Promise<string | null> {
+    if (this.scene === null) return null;
+    return this.app.renderer.extract.base64(this.app.stage);
   }
 
   enableMotion(engine: MotionSensorEngine): void {
@@ -165,23 +170,18 @@ export class TableStage implements StageHandle {
   pickAt(screenX: number, screenY: number): string | null {
     return this.interaction?.pickAt(screenX, screenY) ?? null;
   }
-
   focusNext(direction: 'up' | 'down' | 'left' | 'right', wrap = true): string | null {
     return this.interaction?.focusNext(direction, wrap) ?? null;
   }
-
   get performance(): ReturnType<StageBenchmark['report']> {
     return this.bench.report();
   }
-
   benchmark(seconds = 3): ReturnType<StageBenchmark['run']> {
     return this.bench.run(seconds);
   }
-
   get viewportInfo(): ViewportInfo | null {
     return this.scene?.viewport ?? null;
   }
-
   destroy(): void {
     if (this.disposed) return;
     this.disposed = true;

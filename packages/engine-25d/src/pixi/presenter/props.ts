@@ -35,7 +35,7 @@ export class PropPresenter {
       36,
     );
     this.dicePool = this.makePool<DiceEntity>(
-      () => new DiceEntity(layout.tileHeight * 1.1, shadow, theme),
+      () => new DiceEntity(Math.max(70, layout.cardWidth * 1.35), shadow, theme),
       (entity) => entity.deactivate(),
       (entity) => entity.destroyVisual(),
       layers.tokens,

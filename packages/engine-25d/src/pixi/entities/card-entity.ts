@@ -45,6 +45,7 @@ export class CardEntity extends TableEntity {
   private readonly back = new Container();
   private readonly faceBase = new Graphics();
   private readonly gloss = new Graphics();
+  private readonly halo = new Graphics();
   private readonly art = new Sprite();
   private readonly rankText: Text;
   private readonly suitText: Text;
@@ -64,7 +65,8 @@ export class CardEntity extends TableEntity {
     this.art.anchor.set(0.5);
     this.face.addChild(this.faceBase, this.art, this.rankText, this.suitText, this.gloss);
     this.back.addChild(this.makeBack(), this.backText);
-    this.visual.addChild(this.face, this.back);
+    this.halo.visible = false;
+    this.visual.addChild(this.halo, this.face, this.back);
     this.addChild(this.visual);
     this.face.visible = true;
     this.back.visible = false;
@@ -93,6 +95,23 @@ export class CardEntity extends TableEntity {
   setCard(card: CardVisual, animate = false): void {
     this.drawFace(card);
     if (this.faceUp !== card.faceUp) this.flip(card.faceUp, animate);
+  }
+
+  /** Halo dorado neón para cartas capturables o el pozo de descarte. */
+  setDropHighlight(active: boolean): void {
+    if (active === this.halo.visible && !active) return;
+    this.halo.visible = active;
+    if (!active) return;
+    const width = this.entityWidth;
+    const height = this.entityHeight;
+    const radius = width * 0.14;
+    this.halo
+      .clear()
+      .roundRect(-width / 2 - 9, -height / 2 - 9, width + 18, height + 18, radius)
+      .fill({ color: '#ffd76a', alpha: 0.16 })
+      .stroke({ width: 10, color: '#ffca52', alpha: 0.18 })
+      .stroke({ width: 4, color: '#ffe9a8', alpha: 0.85 })
+      .stroke({ width: 1.5, color: '#ffffff', alpha: 0.9 });
   }
 
   private drawFace(card: CardVisual): void {

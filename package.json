@@ -1,6 +1,6 @@
 {
   "name": "mesa-viva-ultimate",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "description": "Mesa Viva Ultimate: plataforma multiplataforma de juegos de cartas y mesa con motor 2.5D",
   "packageManager": "pnpm@12.21.0",

@@ -33,4 +33,10 @@ export const GAME_SHOWCASE: readonly GameShowcase[] = [
     description: 'Una baraja original de colores y símbolos con estelas neón, robos y cambios de dirección.',
     rules: ['Empareja color o símbolo con la carta superior del descarte.', 'Salta, reversa, roba dos y comodines cambian el ritmo de la mesa.', 'Grita “¡Última!” al quedarte con una carta y llega a 500 puntos.'],
   },
+  {
+    key: 'ajedrez', name: 'Ajedrez de Club', family: 'tablero', players: '2 jugadores',
+    hook: 'Jaque mate, enroque y coronación.',
+    description: 'Un tablero de nogal con piezas de volumen, reglas completas y bots de tres niveles.',
+    rules: ['Las blancas mueven primero; el objetivo es dar jaque mate al rey rival.', 'El enroque, la captura al paso y la coronación están disponibles.', 'Tablas por ahogado, 50 movimientos o material insuficiente.'],
+  },
 ];

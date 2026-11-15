@@ -46,7 +46,7 @@ export function LandingPage() {
         <section class="seccion" aria-labelledby="juegos">
           <div class="seccion__titulo">
             <p class="sobrelinea">Catálogo jugable</p>
-            <h2 id="juegos">Cuatro mesas, cuatro formas de ganar.</h2>
+            <h2 id="juegos">Cinco mesas, cinco formas de ganar.</h2>
             <p>Toca un juego para ver sus reglas y abre la mesa cuando estés listo.</p>
           </div>
           <GameGallery />

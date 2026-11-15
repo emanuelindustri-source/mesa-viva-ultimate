@@ -1,0 +1,196 @@
+.play-app--inmersiva {
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+.mesa-pantalla {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  min-height: 520px;
+  overflow: hidden;
+  background: radial-gradient(120% 90% at 50% 8%, #2a1c12 0%, #0b0806 70%);
+  color: var(--tinta);
+  touch-action: manipulation;
+}
+
+.mesa-pantalla__lienzo {
+  position: absolute;
+  inset: 0;
+}
+
+.mesa-pantalla .mesa-25d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: block;
+}
+
+.mesa-pantalla canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.mesa-25d[data-kind='cargando']::after {
+  content: 'Preparando la mesa…';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #d9c39b;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  animation: mesa-carga 1.6s ease-in-out infinite;
+}
+
+@keyframes mesa-carga {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.95; }
+}
+
+.mesa-pantalla::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(70% 55% at 50% 46%, transparent 55%, rgb(0 0 0 / 28%) 100%),
+    linear-gradient(180deg, rgb(0 0 0 / 22%) 0%, transparent 18%, transparent 78%, rgb(0 0 0 / 34%) 100%);
+}
+
+.mesa-pantalla[data-holiday] .mesa-pantalla::after {
+  background: radial-gradient(70% 55% at 50% 46%, transparent 58%, rgb(0 0 0 / 24%) 100%);
+}
+
+.hud-mesa {
+  position: absolute;
+  z-index: 20;
+  top: max(10px, env(safe-area-inset-top));
+  left: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 6px 10px;
+  border: 1px solid color-mix(in srgb, var(--oro) 34%, transparent);
+  border-radius: 18px;
+  background: color-mix(in srgb, #120d09 72%, transparent);
+  box-shadow: 0 14px 38px rgb(0 0 0 / 45%), inset 0 1px 0 rgb(255 255 255 / 8%);
+  backdrop-filter: blur(16px) saturate(1.15);
+}
+
+.hud-mesa__titulo {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+.hud-mesa__titulo strong {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(0.98rem, 1.6vw, 1.28rem);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 2px 10px rgb(0 0 0 / 60%);
+}
+
+.hud-mesa__turno {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  color: #e2d3b4;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hud-mesa__turno i {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #8a7a5f;
+  box-shadow: 0 0 0 3px rgb(255 255 255 / 6%);
+}
+
+.hud-mesa__turno--yo {
+  color: #ffe9a8;
+}
+
+.hud-mesa__turno--yo i {
+  background: #ffd76a;
+  box-shadow: 0 0 12px #ffca52, 0 0 0 3px rgb(255 202 82 / 14%);
+  animation: latido-turno 1.6s ease-in-out infinite;
+}
+
+@keyframes latido-turno {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.28); opacity: 0.85; }
+}
+
+.hud-mesa__fichas {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--oro) 40%, transparent);
+  background: linear-gradient(160deg, rgb(255 214 106 / 18%), rgb(120 78 20 / 18%));
+  color: #ffe9a8;
+  font-size: 0.78rem;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+
+.boton-hud {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 13px;
+  background: linear-gradient(160deg, rgb(255 255 255 / 9%), rgb(255 255 255 / 2%));
+  color: #f3e5c6;
+  cursor: pointer;
+  transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+}
+
+.boton-hud:hover,
+.boton-hud:focus-visible {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--oro) 60%, transparent);
+  background: color-mix(in srgb, var(--oro) 18%, transparent);
+  color: #fff2cd;
+}
+
+.hud-lateral {
+  position: absolute;
+  z-index: 20;
+  top: calc(max(10px, env(safe-area-inset-top)) + 62px);
+  right: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hud-lateral .boton-hud {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: color-mix(in srgb, #120d09 70%, transparent);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 24px rgb(0 0 0 / 38%);
+}
+

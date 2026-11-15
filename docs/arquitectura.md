@@ -1,8 +1,10 @@
 # Arquitectura de Mesa Viva Ultimate
 
-**Estado:** Fase 5 entregada. Portal `/`, app jugable `/play/`, salas QR/PIN,
-PWA offline-first, identidad procedural y mezcla de audio multicanal conectados.
-La Fase 6 prepara el catálogo mundial y el `.aab` Android.
+**Estado:** Fase 6 entregada. Portal `/`, app jugable `/play/` a 100dvh, salón
+de club procedural, mesa ovalada 2.5D, arrastre táctil global, historial lateral,
+sala persistente, chat con emojis y cinco juegos (Caída, Dominó, Blackjack,
+Colores y Ajedrez de Club). La Fase 7 prepara Ludo, Escaleras y Póker y el `.aab`
+Android.
 
 ## Visión
 

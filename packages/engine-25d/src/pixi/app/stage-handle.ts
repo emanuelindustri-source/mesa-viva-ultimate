@@ -9,5 +9,7 @@ export interface StageHandle {
   render(snapshot: TableSnapshot): void;
   resize(viewport?: ViewportInfo): void;
   setHandHidden(hidden: boolean): void;
+  /** Captura opcional de la mesa para compartir o depurar visualmente. */
+  capture?(): Promise<string | null>;
   destroy(): void;
 }

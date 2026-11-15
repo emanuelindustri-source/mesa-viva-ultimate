@@ -22,8 +22,8 @@ export function Hero() {
           <span class="hero__brillo"> vivo.</span>
         </h1>
         <p class="hero__texto">
-          Cartas venezolanas, dominó, blackjack y colores con una mesa 2.5D,
-          banda sonora multicanal y 19 festividades que cambian el color, la música y los destellos.
+          Caída venezolana, dominó, blackjack, colores y ajedrez de club sobre una mesa 2.5D
+          con salón atmosférico, banda sonora multicanal y 19 festividades.
         </p>
         <div class="hero__acciones">
           <a class="boton boton--principal" href={routeHref('play')}>
@@ -37,7 +37,7 @@ export function Hero() {
           </a>
         </div>
         <dl class="hero__datos">
-          <div><dt>4</dt><dd>juegos jugables</dd></div>
+          <div><dt>5</dt><dd>juegos jugables</dd></div>
           <div><dt>19</dt><dd>festividades</dd></div>
           <div><dt>11</dt><dd>idiomas</dd></div>
           <div><dt>7.1</dt><dd>audio discreto</dd></div>

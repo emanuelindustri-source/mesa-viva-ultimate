@@ -35,6 +35,7 @@ export class ShadowView extends Sprite {
     this.anchor.set(0.5);
     this.tint = 0x000000;
     this.alpha = 0.4;
+    this.visible = false;
     this.eventMode = 'none';
   }
 

@@ -1,4 +1,4 @@
-import type { SvgAsset } from '@mesa-viva/design-system';
+import { type SvgAsset, splitSvg } from '@mesa-viva/design-system';
 
 /** SVG mínimo autocontenido, sin red ni archivos externos. */
 export function svgToDataUri(markup: string): string {
@@ -33,10 +33,12 @@ export interface SvgCellRequest {
 /** Documento de celda con el SVG original escalado a su hueco del atlas. */
 export function svgCellDocument(request: SvgCellRequest): string {
   const { asset, width, height } = request;
+  const parts = splitSvg(asset.markup);
+  const body = parts?.body ?? asset.markup;
   return [
     `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"`,
     ` viewBox="${asset.viewBox}" preserveAspectRatio="xMidYMid meet">`,
-    asset.markup,
+    body,
     '</svg>',
   ].join('');
 }

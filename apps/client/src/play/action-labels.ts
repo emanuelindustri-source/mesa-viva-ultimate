@@ -90,7 +90,7 @@ function colorsOptions(session: GameSession, actions: readonly unknown[]): Actio
 /** Convierte acciones legales de core en botones legibles para cualquier juego. */
 export function actionOptionsFor(session: GameSession): readonly ActionOption[] {
   const actions = session.legalActions;
-  if (actions.length === 0) return [];
+  if (actions.length === 0 || session.game.key === 'ajedrez') return [];
   if (session.game.key === 'caida') return caidaOptions(session, actions);
   if (session.game.key === 'domino') return dominoOptions(session, actions);
   if (session.game.key === 'blackjack') return blackjackOptions(actions);

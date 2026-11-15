@@ -2,6 +2,7 @@ import type { Theme, ViewportInfo } from '@mesa-viva/design-system';
 import type { Container } from 'pixi.js';
 import { CameraRig } from '../../camera/camera-rig.js';
 import { Projector } from '../../camera/projector.js';
+import type { DropResult } from '../../drag/drop-session.js';
 import { type StageLayout, stageLayoutFor } from '../../layout/stage-layout.js';
 import type { QualityTier } from '../../perf/quality.js';
 import { qualitySettings } from '../../perf/quality.js';
@@ -19,6 +20,8 @@ export interface StageSceneOptions {
   readonly textures: TextureProvider | null;
   readonly reducedMotion: boolean;
   readonly quality: QualityTier;
+  readonly onCardDrop?: (result: DropResult) => void;
+  readonly showSeats?: boolean;
 }
 
 /** Escena interna: layout, cámara, proyector, tapete y presentador. */
@@ -30,6 +33,8 @@ export class StageScene {
   private readonly stageRoot: Container;
   private readonly layers: StageLayers;
   private readonly feltHolder: Container;
+  private readonly onCardDrop: ((result: DropResult) => void) | undefined;
+  private readonly showSeats: boolean;
   viewport: ViewportInfo;
   layout: StageLayout;
   camera: CameraRig;
@@ -46,6 +51,8 @@ export class StageScene {
     this.stageRoot = options.stage;
     this.layers = options.layers;
     this.feltHolder = feltHolder;
+    this.onCardDrop = options.onCardDrop;
+    this.showSeats = options.showSeats !== false;
     this.viewport = options.viewport;
     this.layout = stageLayoutFor(options.viewport, { pixelRatio: qualitySettings(options.quality).maxPixelRatio });
     this.camera = new CameraRig({
@@ -55,7 +62,7 @@ export class StageScene {
       reducedMotion: options.reducedMotion,
     });
     this.projector = makeProjector(this.layout);
-    this.felt = new TableFelt(this.layout, this.projector, this.theme);
+    this.felt = new TableFelt(this.layout, this.projector, this.theme, options.reducedMotion);
     this.feltHolder.addChild(this.felt.container);
     this.presenter = this.makePresenter();
   }
@@ -69,6 +76,8 @@ export class StageScene {
       stage: this.stageRoot,
       projector: () => this.projector,
       reducedMotion: this.reducedMotion,
+      showSeats: this.showSeats,
+      ...(this.onCardDrop !== undefined ? { onCardDrop: this.onCardDrop } : {}),
     });
   }
 
@@ -78,7 +87,7 @@ export class StageScene {
     this.camera.resize(this.layout.width, this.layout.height, this.layout.camera);
     this.projector = makeProjector(this.layout);
     this.felt.destroy();
-    this.felt = new TableFelt(this.layout, this.projector, this.theme);
+    this.felt = new TableFelt(this.layout, this.projector, this.theme, this.reducedMotion);
     this.feltHolder.addChild(this.felt.container);
     this.presenter.destroy();
     this.presenter = this.makePresenter();
@@ -95,6 +104,7 @@ export class StageScene {
     this.camera.applyTo(this.projector);
     this.presenter.sync(this.projector, this.layout);
     this.felt.updateLight(this.camera.parallaxOffsetX, this.camera.parallaxOffsetY);
+    this.felt.update(dtSeconds, this.camera.parallaxOffsetX, this.camera.parallaxOffsetY);
   }
 
   get counts(): TablePresenter['counts'] {

@@ -67,6 +67,12 @@ export interface BoardSnapshot {
   readonly highlighted: readonly string[];
 }
 
+export interface DropHint {
+  readonly cardId: string;
+  readonly kind: 'capture' | 'discard' | 'table';
+  readonly label?: string;
+}
+
 export interface TableSnapshot {
   readonly gameId: string;
   readonly phase: string;
@@ -80,6 +86,7 @@ export interface TableSnapshot {
   readonly chips: readonly ChipSnapshot[];
   readonly tokens: readonly TokenSnapshot[];
   readonly board: BoardSnapshot;
+  readonly drops: readonly DropHint[];
   readonly canInteract: boolean;
 }
 
@@ -104,6 +111,7 @@ export function emptySnapshot(gameId: string, viewerId: string): TableSnapshot {
     chips: [],
     tokens: [],
     board: EMPTY_BOARD,
+    drops: [],
     canInteract: false,
   };
 }

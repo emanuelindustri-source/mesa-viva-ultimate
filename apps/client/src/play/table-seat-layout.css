@@ -1,0 +1,29 @@
+.asientos-flotantes--2 .tarjeta-jugador--0 { left: 16px; bottom: 118px; }
+.asientos-flotantes--2 .tarjeta-jugador--1 { left: 50%; top: 78px; transform: translateX(-50%); }
+.asientos-flotantes--3 .tarjeta-jugador--0 { left: 16px; bottom: 118px; }
+.asientos-flotantes--3 .tarjeta-jugador--1 { left: 16px; top: 78px; }
+.asientos-flotantes--3 .tarjeta-jugador--2 { right: 76px; top: 78px; }
+.asientos-flotantes--4 .tarjeta-jugador--0 { left: 16px; bottom: 118px; }
+.asientos-flotantes--4 .tarjeta-jugador--1 { left: 50%; top: 78px; transform: translateX(-50%); }
+.asientos-flotantes--4 .tarjeta-jugador--2 { right: 76px; top: 78px; }
+.asientos-flotantes--4 .tarjeta-jugador--3 { right: 76px; bottom: 118px; }
+
+.asientos-flotantes--1 .tarjeta-jugador--0 { left: 16px; bottom: 118px; }
+.asientos-flotantes--5 .tarjeta-jugador--0 { left: 16px; bottom: 118px; }
+.asientos-flotantes--5 .tarjeta-jugador--1 { left: 16px; top: 78px; }
+.asientos-flotantes--5 .tarjeta-jugador--2 { right: 76px; top: 78px; }
+.asientos-flotantes--5 .tarjeta-jugador--3 { right: 76px; bottom: 118px; }
+.asientos-flotantes--5 .tarjeta-jugador--4 { left: 50%; top: 78px; transform: translateX(-50%); }
+
+@media (max-width: 720px) {
+  .tarjeta-jugador { width: min(168px, 44vw); padding: 6px; }
+  .tarjeta-jugador__marco { width: 40px; height: 40px; }
+  .tarjeta-jugador__datos strong { font-size: 0.72rem; }
+  .tarjeta-jugador__datos small { font-size: 0.6rem; }
+  .asientos-flotantes--2 .tarjeta-jugador--0,
+  .asientos-flotantes--3 .tarjeta-jugador--0,
+  .asientos-flotantes--4 .tarjeta-jugador--0 { bottom: 104px; }
+  .hud-mesa__turno { display: none; }
+  .hud-mesa__fichas { padding: 6px 9px; }
+  .hud-lateral { top: calc(max(10px, env(safe-area-inset-top)) + 60px); }
+}

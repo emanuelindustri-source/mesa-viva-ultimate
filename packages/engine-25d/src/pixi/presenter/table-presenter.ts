@@ -1,6 +1,7 @@
 import type { Theme } from '@mesa-viva/design-system';
 import type { Container } from 'pixi.js';
 import type { Projector } from '../../camera/projector.js';
+import type { DropResult } from '../../drag/drop-session.js';
 import type { StageLayout } from '../../layout/stage-layout.js';
 import type { FocusItem } from '../../picking/navigation.js';
 import type { HitTarget } from '../../picking/picking.js';
@@ -20,6 +21,8 @@ export interface TablePresenterOptions {
   readonly stage: Container;
   readonly projector: () => Projector;
   readonly reducedMotion: boolean;
+  readonly onCardDrop?: (result: DropResult) => void;
+  readonly showSeats?: boolean;
 }
 
 /** Orquesta las capas y traduce `TableSnapshot` a entidades reutilizadas. */
@@ -38,6 +41,7 @@ export class TablePresenter {
       stage: options.stage,
       projector: options.projector,
       reducedMotion: options.reducedMotion,
+      ...(options.onCardDrop !== undefined ? { onCardDrop: options.onCardDrop } : {}),
     };
     this.cardLayer = new CardLayer({ ...common, layer: options.layers.cards });
     this.tileLayer = new TileLayer({ ...common, layer: options.layers.cards });
@@ -48,12 +52,13 @@ export class TablePresenter {
       seatLayer: options.layers.seats,
       boardLayer: options.layers.board,
       reducedMotion: options.reducedMotion,
+      showSeats: options.showSeats !== false,
     });
     this.props = new PropPresenter(options.layers, options.layout, options.theme, options.reducedMotion);
   }
 
   render(snapshot: TableSnapshot): void {
-    this.cardLayer.render(snapshot.hand, snapshot.tableCards);
+    this.cardLayer.render(snapshot.hand, snapshot.tableCards, snapshot.drops, snapshot.canInteract);
     this.tileLayer.render(snapshot.tiles);
     this.seatLayer.render(snapshot);
     this.props.render(snapshot);

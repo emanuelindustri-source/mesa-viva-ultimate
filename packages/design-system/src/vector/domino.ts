@@ -20,21 +20,34 @@ const PIPS: Readonly<Record<number, readonly (readonly [number, number])[]>> = {
   12: [[0.25, 0.12], [0.5, 0.12], [0.75, 0.12], [0.25, 0.36], [0.5, 0.36], [0.75, 0.36], [0.25, 0.6], [0.5, 0.6], [0.75, 0.6], [0.25, 0.84], [0.5, 0.84], [0.75, 0.84]],
 };
 
-function halfPips(value: number, offsetX: number, color: string): string {
+function halfPips(value: number, offsetX: number): string {
   const positions = PIPS[value] ?? [];
-  return positions
-    .map(([x, y]) => el('circle', { cx: offsetX + x * HALF, cy: y * HEIGHT, r: value > 9 ? 8 : 10, fill: color }))
-    .join('');
+  const radius = value > 9 ? 7.4 : value > 6 ? 8.4 : 9.6;
+  return positions.map(([x, y]) => {
+    const cx = offsetX + x * HALF;
+    const cy = y * HEIGHT;
+    return (
+      el('circle', { cx: cx + 1, cy: cy + 2, r: radius, fill: '#c9b691', opacity: 0.55 }) +
+      el('circle', { cx, cy, r: radius, fill: '#3a2b1a' }) +
+      el('circle', { cx: cx - radius * 0.28, cy: cy - radius * 0.3, r: radius * 0.3, fill: '#fffdf5', opacity: 0.5 })
+    );
+  }).join('');
 }
 
 export function buildDominoTile(a: number, b: number): SvgAsset {
   const id = safeId('ficha-domino', String(a), String(b));
   const body =
-    el('rect', { x: 0, y: 0, width: WIDTH, height: HEIGHT, rx: 18, fill: '#fff8e7', stroke: '#3e2723', 'stroke-width': 6 }) +
-    el('rect', { x: 8, y: 8, width: WIDTH - 16, height: HEIGHT - 16, rx: 12, fill: 'none', stroke: '#d7ccc8', 'stroke-width': 2 }) +
-    halfPips(a, 0, '#3e2723') +
-    halfPips(b, HALF, '#3e2723') +
-    el('line', { x1: HALF, y1: 14, x2: HALF, y2: HEIGHT - 14, stroke: '#3e2723', 'stroke-width': 4, 'stroke-linecap': 'round' });
+    el('rect', { x: 4, y: 7, width: WIDTH - 8, height: HEIGHT - 8, rx: 20, fill: '#8d7350', opacity: 0.55 }) +
+    el('rect', { width: WIDTH, height: HEIGHT, rx: 20, fill: '#e2d3b0' }) +
+    el('rect', { x: 3, y: 3, width: WIDTH - 6, height: HEIGHT - 6, rx: 17, fill: '#fffdf3' }) +
+    el('path', { d: 'M8 12 H292 V26 H8 Z', fill: '#ffffff', opacity: 0.8 }) +
+    el('rect', { x: 10, y: 10, width: WIDTH - 20, height: HEIGHT - 20, rx: 13, fill: 'none', stroke: '#d9c9a4', 'stroke-width': 2 }) +
+    el('rect', { x: 14, y: 14, width: WIDTH - 28, height: HEIGHT - 28, rx: 10, fill: 'none', stroke: '#a89066', 'stroke-width': 1, opacity: 0.7 }) +
+    halfPips(a, 0) +
+    halfPips(b, HALF) +
+    el('rect', { x: HALF - 2, y: 16, width: 4, height: HEIGHT - 32, rx: 2, fill: '#8d7350' }) +
+    el('circle', { cx: HALF, cy: 16, r: 3.4, fill: '#b99a66' }) +
+    el('circle', { cx: HALF, cy: HEIGHT - 16, r: 3.4, fill: '#b99a66' });
   return {
     id,
     kind: 'ficha-domino',

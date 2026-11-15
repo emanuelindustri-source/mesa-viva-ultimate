@@ -84,8 +84,7 @@ export type {
   PlayerId,
 } from './engine/types.js';
 export { chooseBlackjackAction } from './games/blackjack/ai.js';
-export { legalBlackjackActions } from './games/blackjack/flow.js';
-// Blackjack 21
+export { legalBlackjackActions } from './games/blackjack/flow.js';// Blackjack 21
 export { BLACKJACK_META, blackjackModule } from './games/blackjack/module.js';
 export { blackjackResult } from './games/blackjack/rules.js';
 export { createBlackjackState } from './games/blackjack/setup.js';
@@ -114,6 +113,22 @@ export type {
   CaidaState,
 } from './games/caida/types.js';
 export type { CaidaView } from './games/caida/view.js';
+export { chooseChessAction } from './games/chess/ai.js';
+// Ajedrez de Club
+export { CHESS_META, chessModule } from './games/chess/module.js';
+export { chessResult, legalChessActions } from './games/chess/rules.js';
+export { createChessState } from './games/chess/setup.js';
+export type {
+  ChessAction,
+  ChessColor,
+  ChessKind,
+  ChessMove,
+  ChessPiece,
+  ChessPlayer,
+  ChessPromotion,
+  ChessState,
+  ChessView,
+} from './games/chess/types.js';
 export { chooseColorsAction } from './games/colores/ai.js';
 // Cartas de Colores
 export { COLORS_META, colorsModule } from './games/colores/module.js';

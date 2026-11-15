@@ -5,6 +5,17 @@ import { caidaPoints } from '../common/spanish-deck.js';
 import { endCaidaRound, nextCaidaRound } from './setup.js';
 import type { CaidaAction, CaidaState } from './types.js';
 
+const SUIT_NAMES: Readonly<Record<string, string>> = {
+  oro: 'oros',
+  copa: 'copas',
+  espada: 'espadas',
+  basto: 'bastos',
+};
+
+function cardLabel(card: { readonly rank: number; readonly suit: string }): string {
+  return `${card.rank} de ${SUIT_NAMES[card.suit] ?? card.suit}`;
+}
+
 function pushLog(state: CaidaState, message: string): void {
   state.log.push(message);
   if (state.log.length > 60) state.log.splice(0, state.log.length - 60);
@@ -83,6 +94,7 @@ export function applyCaidaAction(
     next.table = next.table.slice(0, index);
     me.captured.push(card, ...removed);
     let points = 0;
+    pushLog(next, `${me.name} captura ${cardLabel(card)}`);
     if (next.table.length === 0) {
       points = wasLast ? 5 : 4;
       pushLog(
@@ -99,7 +111,7 @@ export function applyCaidaAction(
     me.roundPoints += points;
   } else {
     next.table.push(card);
-    pushLog(next, `${me.name} juega una carta a la mesa`);
+    pushLog(next, `${me.name} juega ${cardLabel(card)} a la mesa`);
   }
 
   if (next.deck.length > 0 && me.hand.length < 3) {

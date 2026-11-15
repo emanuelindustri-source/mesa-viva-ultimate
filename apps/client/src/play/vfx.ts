@@ -38,6 +38,10 @@ export const GAME_VFX: Readonly<Record<GameKey, Partial<Record<VfxEvent, VfxConf
     victoria: { colors: ['#f4d06f', '#c9a227', '#fff4e0'], count: 90, spread: 100, shapes: ['circle'], shockwave: true, shine: true, aura: 'rgba(201,162,39,0.4)' },
     derrota: { colors: ['#455a64', '#b3261e'], count: 40, spread: 50, shapes: ['circle'], shockwave: false, shine: false, aura: 'rgba(69,90,100,0.25)' },
   },
+  ajedrez: {
+    victoria: { colors: ['#f4d06f', '#e9c06a', '#fff4e0', '#8a5a34'], count: 150, spread: 120, shapes: ['circle', 'star', 'square'], shockwave: true, shine: true, aura: 'rgba(233,192,106,0.4)' },
+    derrota: { colors: ['#455a64', '#8a5a34'], count: 60, spread: 70, shapes: ['circle'], shockwave: false, shine: false, aura: 'rgba(69,90,100,0.25)' },
+  },
 };
 
 export function vfxFor(game: GameKey, event: VfxEvent): VfxConfig {

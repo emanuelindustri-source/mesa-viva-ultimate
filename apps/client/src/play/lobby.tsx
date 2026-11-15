@@ -4,14 +4,18 @@ import { useState } from 'preact/hooks';
 import { GameEmblem } from '../ui/brand-mark.js';
 import type { AppSettings } from '../ui/settings.js';
 import type { AppThemeState } from '../ui/use-theme.js';
+import { BoardShowcase } from './board-showcase.js';
 import { GAME_DEFINITIONS, GAME_KEYS, type GameKey } from './game-defs.js';
-import type { PlayMode } from './game-session.js';
+import type { PlayerSeat, PlayMode } from './game-session.js';
+import { SalaPanel } from './sala-panel.js';
+import { loadSala, saveSala } from './sala-store.js';
 
 interface LobbyProps {
   readonly profile: PlayerProfile;
   readonly themeState: AppThemeState;
   readonly settings: AppSettings;
   readonly onStart: (game: GameKey, mode: PlayMode, humanCount: number, botLevel: BotLevel) => void;
+  readonly onSalaStart: (game: GameKey, seats: readonly PlayerSeat[]) => void;
   readonly onRoom: () => void;
   readonly onProfile: () => void;
   readonly onShop: () => void;
@@ -19,11 +23,12 @@ interface LobbyProps {
   readonly onAudio: () => void;
 }
 
-export function Lobby({ profile, themeState, settings, onStart, onRoom, onProfile, onShop, onSettings, onAudio }: LobbyProps) {
+export function Lobby({ profile, themeState, settings, onStart, onSalaStart, onRoom, onProfile, onShop, onSettings, onAudio }: LobbyProps) {
   const [game, setGame] = useState<GameKey>('caida');
   const [mode, setMode] = useState<PlayMode>('solo');
   const [botLevel, setBotLevel] = useState<BotLevel>('competitivo');
   const [humanCount, setHumanCount] = useState(2);
+  const [guests, setGuests] = useState(loadSala);
   const definition = GAME_DEFINITIONS[game];
   const countOptions = game === 'domino' ? [2, 4] : Array.from({ length: Math.max(2, definition.maxPlayers) - 1 }, (_, index) => index + 2);
   const effectiveHumans = game === 'domino' ? (humanCount >= 4 ? 4 : 2) : Math.max(2, Math.min(definition.maxPlayers, humanCount));
@@ -31,7 +36,7 @@ export function Lobby({ profile, themeState, settings, onStart, onRoom, onProfil
     <div class="play-lobby">
       <section class="play-hero">
         <div>
-          <p class="sobrelinea">Mesa Viva · Fase 5</p>
+          <p class="sobrelinea">Mesa Viva · v0.8.0 · Estudio</p>
           <h1>Tu mesa, tus reglas.</h1>
           <p>Juega solo contra bots, comparte el dispositivo o abre una sala con PIN y QR. La mesa se adapta a tu pantalla y a tu festividad.</p>
         </div>
@@ -59,6 +64,16 @@ export function Lobby({ profile, themeState, settings, onStart, onRoom, onProfil
           })}
         </div>
       </section>
+
+      <SalaPanel
+        ownerName={profile.displayName}
+        guests={guests}
+        gameName={definition.name}
+        onGuests={(next) => { setGuests([...next]); saveSala(next); }}
+        onStart={(seats) => onSalaStart(game, seats)}
+      />
+
+      <BoardShowcase />
 
       <section class="play-seccion play-config">
         <div>

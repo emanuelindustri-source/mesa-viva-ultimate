@@ -7,9 +7,12 @@
 Plataforma multiplataforma de juegos de cartas y juegos de mesa con motor 2.5D,
 modo offline, multijugador híbrido y monetización compatible con Google Play.
 
-**Estado actual:** Fase 5 — Portal y Online entregada (v0.7.0). Portal `/`,
-app jugable `/play/`, 19 festividades × claro/oscuro, salas QR/PIN, audio
-multicanal, PWA offline-first y monetización con límites de frecuencia.
+**Estado actual:** Fase 6 — Reconstrucción Visual de Estudio y Ajedrez entregada
+(v0.8.0). Portal `/`, app jugable `/play/` a 100dvh, salón de club procedural,
+mesa ovalada 2.5D, arrastre táctil infalible, historial lateral, sala persistente,
+chat con emojis y cinco juegos: Caída, Dominó, Blackjack, Colores y Ajedrez de
+Club. PWA offline-first, 19 festividades × claro/oscuro y monetización con
+límites de frecuencia.
 
 ## Identidad visual y experiencia
 

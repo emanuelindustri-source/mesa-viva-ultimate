@@ -1,0 +1,187 @@
+.tablero-ajedrez {
+  position: absolute;
+  z-index: 14;
+  left: 50%;
+  top: 53%;
+  transform: translate(-50%, -50%);
+  width: min(72vh, 86vw);
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.tablero-ajedrez__marco {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 4.5%;
+  border-radius: 20px;
+  background:
+    linear-gradient(135deg, #b97a3f 0%, #6b3f22 28%, #3a2111 55%, #7d4a26 82%, #c58a4a 100%);
+  box-shadow:
+    0 30px 60px rgb(0 0 0 / 55%),
+    0 6px 0 #2a170b,
+    inset 0 0 0 2px rgb(255 220 150 / 38%),
+    inset 0 2px 4px rgb(255 255 255 / 25%);
+  transform: perspective(1500px) rotateX(5deg);
+  transform-origin: 50% 100%;
+  pointer-events: auto;
+}
+
+.tablero-ajedrez__marco::before {
+  content: '';
+  position: absolute;
+  inset: 2.1%;
+  border-radius: 12px;
+  border: 2px solid #e9c06a;
+  box-shadow: 0 0 0 1px rgb(90 50 15 / 70%), inset 0 0 18px rgb(0 0 0 / 35%);
+  pointer-events: none;
+}
+
+.tablero-ajedrez__placa {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  top: -20px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 16px;
+  border: 1px solid #e9c06a;
+  border-radius: 999px;
+  background: linear-gradient(160deg, #24160c, #0f0a06);
+  box-shadow: 0 8px 18px rgb(0 0 0 / 55%);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.tablero-ajedrez__placa span { color: #e9c06a; font-weight: 800; }
+.tablero-ajedrez__placa strong { color: #f7e8c8; font-weight: 650; font-size: 0.62rem; }
+.tablero-ajedrez__placa em { padding: 1px 7px; border-radius: 999px; background: #b3172f; color: #fff2e8; font-style: normal; font-weight: 800; animation: jaque-late 0.9s ease-in-out infinite; }
+
+@keyframes jaque-late {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+
+.tablero-ajedrez__celdas,
+.tablero-ajedrez__piezas {
+  position: absolute;
+  inset: 4.5%;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+}
+
+.tablero-ajedrez__piezas {
+  display: block;
+  pointer-events: none;
+}
+
+.casilla {
+  position: relative;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 22%), inset 0 -1px 0 rgb(0 0 0 / 18%);
+}
+
+.casilla--clara { background: linear-gradient(145deg, #f4dfb6, #e2c48f); }
+.casilla--oscura { background: linear-gradient(145deg, #9a6234, #6d3f1e); }
+.casilla--ultima { box-shadow: inset 0 0 0 4px rgb(255 215 106 / 42%); }
+.casilla--elegida { box-shadow: inset 0 0 0 4px #ffd76a, inset 0 0 22px rgb(255 202 82 / 40%); }
+.casilla--jaque { box-shadow: inset 0 0 0 4px #ff5a6a, inset 0 0 26px rgb(255 60 80 / 45%); }
+
+.casilla__coord {
+  position: absolute;
+  left: 3px;
+  bottom: 1px;
+  font-size: clamp(6px, 0.85vmin, 11px);
+  font-weight: 800;
+  color: rgb(35 22 10 / 55%);
+  pointer-events: none;
+}
+
+.casilla--oscura .casilla__coord { color: rgb(255 245 220 / 55%); }
+
+.objetivo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 26%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffe9a8, #c99a2e);
+  box-shadow: 0 0 14px rgb(255 215 106 / 70%);
+  pointer-events: none;
+}
+
+.objetivo--captura {
+  width: 78%;
+  background: none;
+  border: 4px solid #ffd76a;
+  box-shadow: 0 0 18px rgb(255 202 82 / 65%), inset 0 0 18px rgb(255 202 82 / 35%);
+}
+
+.pieza-ajedrez {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 12.5%;
+  height: 12.5%;
+  display: grid;
+  place-items: center;
+  font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', Georgia, serif;
+  font-size: clamp(22px, 7.8vmin, 70px);
+  line-height: 1;
+  transition: transform 0.26s cubic-bezier(0.3, 0.8, 0.25, 1), filter 0.2s ease;
+  will-change: transform;
+  user-select: none;
+}
+
+.pieza-ajedrez--blanco {
+  color: #fff8e8;
+  -webkit-text-stroke: 1.4px #3d2a16;
+  text-shadow: 0 3px 0 #2a1a0a, 0 7px 12px rgb(0 0 0 / 45%);
+}
+
+.pieza-ajedrez--negro {
+  color: #241a12;
+  -webkit-text-stroke: 1.1px #e9c06a;
+  text-shadow: 0 3px 0 #0c0805, 0 7px 12px rgb(0 0 0 / 50%), 0 0 10px rgb(233 192 106 / 18%);
+}
+
+.pieza-ajedrez--elegida {
+  filter: drop-shadow(0 0 10px #ffd76a) brightness(1.15);
+}
+
+.tablero-ajedrez__aviso {
+  margin: 0;
+  padding: 5px 14px;
+  border: 1px solid color-mix(in srgb, var(--oro) 32%, transparent);
+  border-radius: 999px;
+  background: rgb(12 8 5 / 78%);
+  color: #d9c39b;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+.tablero-ajedrez--fin { opacity: 0.92; }
+
+@media (max-width: 720px) {
+  .tablero-ajedrez { width: min(62vh, 92vw); top: 51%; }
+  .pieza-ajedrez { font-size: clamp(20px, 7.2vmin, 46px); }
+  .tablero-ajedrez__placa span { display: none; }
+}
+
+@media (max-height: 560px) {
+  .tablero-ajedrez { width: min(66vh, 60vw); top: 50%; }
+  .tablero-ajedrez__aviso { display: none; }
+}

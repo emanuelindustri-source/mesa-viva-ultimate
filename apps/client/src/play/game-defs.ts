@@ -5,11 +5,15 @@ import {
   blackjackModule,
   type CaidaAction,
   type CaidaState,
+  type ChessAction,
+  type ChessState,
   type ColorsAction,
   type ColorsState,
   caidaModule,
+  chessModule,
   chooseBlackjackAction,
   chooseCaidaAction,
+  chooseChessAction,
   chooseColorsAction,
   chooseDominoAction,
   colorsModule,
@@ -21,12 +25,13 @@ import {
 import {
   snapshotFromBlackjack,
   snapshotFromCaida,
+  snapshotFromChess,
   snapshotFromColors,
   snapshotFromDomino,
   type TableSnapshot,
 } from '@mesa-viva/engine-25d';
 
-export type GameKey = 'caida' | 'domino' | 'blackjack' | 'colores';
+export type GameKey = 'caida' | 'domino' | 'blackjack' | 'colores' | 'ajedrez';
 
 type AnyModule = IGameModule<unknown, unknown, unknown>;
 
@@ -72,9 +77,15 @@ export const GAME_DEFINITIONS: Readonly<Record<GameKey, GameDefinition>> = {
     choose: (state, player, level, legal) => chooseColorsAction(state as ColorsState, player, level, legal as readonly ColorsAction[]),
     snapshot: (view, viewer) => snapshotFromColors(view as never, viewer),
   },
+  ajedrez: {
+    key: 'ajedrez', name: 'Ajedrez de Club', family: 'tablero', module: asModule(chessModule),
+    defaultPlayers: 2, minPlayers: 2, maxPlayers: 2, hook: 'Jaque mate, enroque y coronación',
+    choose: (state, player, level, legal) => chooseChessAction(state as ChessState, player, level, legal as readonly ChessAction[]),
+    snapshot: (view, viewer) => snapshotFromChess(view as never, viewer),
+  },
 };
 
-export const GAME_KEYS: readonly GameKey[] = ['caida', 'domino', 'blackjack', 'colores'];
+export const GAME_KEYS: readonly GameKey[] = ['caida', 'domino', 'blackjack', 'colores', 'ajedrez'];
 
 export function gameDefinition(key: GameKey): GameDefinition {
   return GAME_DEFINITIONS[key];

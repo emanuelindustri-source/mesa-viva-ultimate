@@ -29,6 +29,14 @@ export function snapshotFromCaida(view: CaidaView, viewerId: string): TableSnaps
     zone: 'hand',
     slot,
   }));
+  const myTurn = view.turnPlayer === viewerId && view.phase === 'playing';
+  const ranks = new Set(hand.map((card) => card.rank));
+  const drops = myTurn
+    ? [
+        ...tableCards.filter((card) => ranks.has(card.rank)).map((card) => ({ cardId: card.id, kind: 'capture' as const })),
+        { cardId: 'mesa', kind: 'table' as const },
+      ]
+    : [];
   return {
     ...base,
     phase: view.phase,
@@ -36,7 +44,8 @@ export function snapshotFromCaida(view: CaidaView, viewerId: string): TableSnaps
     seats,
     tableCards,
     hand,
-    canInteract: view.turnPlayer === viewerId && view.phase === 'playing',
+    drops,
+    canInteract: myTurn,
   };
 }
 
@@ -75,6 +84,9 @@ export function snapshotFromColors(view: ColorsView, viewerId: string): TableSna
     seats,
     tableCards,
     hand,
+    drops: view.turnPlayer === viewerId && top !== null
+      ? [{ cardId: top.id, kind: 'discard' }]
+      : [],
     canInteract: view.turnPlayer === viewerId && view.phase === 'playing',
   };
 }

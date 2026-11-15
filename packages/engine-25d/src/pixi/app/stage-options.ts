@@ -1,4 +1,5 @@
 import type { Theme, ViewportInfo } from '@mesa-viva/design-system';
+import type { DropResult } from '../../drag/drop-session.js';
 import type { MotionSensorEngine } from '../../motion/sensor-engine.js';
 import type { QualityTier } from '../../perf/quality.js';
 import type { RenderPlan } from '../../render/mode.js';
@@ -17,4 +18,6 @@ export interface TableStageOptions {
   readonly onShake?: (intensity: number) => void;
   readonly onFaceDown?: (down: boolean) => void;
   readonly onStatus?: (reason: string) => void;
+  readonly onCardDrop?: (result: DropResult) => void;
+  readonly showSeats?: boolean;
 }
