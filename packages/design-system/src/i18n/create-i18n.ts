@@ -33,7 +33,7 @@ export function normalizeLocale(input?: string): SupportedLocale {
 
 /** Idioma del navegador, luego `Intl`, luego español de Venezuela. */
 export function detectLocale(input?: string): SupportedLocale {
-  if (input !== undefined && input.trim().length > 0) return normalizeLocale(input);
+  if (input !== undefined) return normalizeLocale(input);
   try {
     if (typeof navigator !== 'undefined' && navigator.language) return normalizeLocale(navigator.language);
   } catch {
